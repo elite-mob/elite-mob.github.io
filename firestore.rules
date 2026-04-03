@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Aggregated public stats (written by signed-in anonymous users from the portfolio app)
+    match /site_stats/summary {
+      allow read: if true;
+      allow create, update: if request.auth != null;
+    }
+  }
+}
