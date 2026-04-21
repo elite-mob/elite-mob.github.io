@@ -7,7 +7,7 @@ function ReviewCard({ t, index, visible }: { t: Testimonial; index: number; visi
   return (
     <article
       className={cn(
-        'relative rounded-2xl sm:rounded-3xl border border-primary/15 bg-card/85 backdrop-blur-sm shadow-sm transition-all duration-300',
+        'relative rounded-2xl sm:rounded-3xl border border-primary/20 glass-card shadow-sm transition-all duration-300',
         'hover:border-primary/35 hover:shadow-md hover:shadow-primary/[0.06]',
         visible ? 'animate-fade-in-up' : 'opacity-0',
       )}

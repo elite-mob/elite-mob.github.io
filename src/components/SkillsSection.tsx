@@ -66,7 +66,7 @@ export const SkillsSection = () => {
             return (
               <div
                 key={id}
-                className={`group rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-border/70 bg-card shadow-sm hover:shadow-md hover:border-border transition-all duration-300 relative overflow-hidden ${
+                className={`group rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-border/70 glass-card shadow-sm hover:shadow-md hover:border-border transition-all duration-300 relative overflow-hidden ${
                   isSectionVisible ? `animate-fade-in-up ${delayClass}` : 'opacity-0'
                 }`}
               >

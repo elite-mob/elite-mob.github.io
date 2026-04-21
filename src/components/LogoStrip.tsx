@@ -33,7 +33,7 @@ export const LogoStrip = () => {
               <div
                 className={[
                   'group flex min-h-[3.75rem] sm:min-h-[4rem] items-center justify-center rounded-xl',
-                  'border border-border/60 bg-card shadow-sm',
+                  'border border-border/60 glass-card shadow-sm',
                   'px-5 py-3.5 sm:px-6 sm:py-4',
                   'text-center text-sm sm:text-[0.95rem] font-semibold tracking-[0.045em] text-foreground',
                   'transition-[color,background-color,border-color,box-shadow] duration-300 ease-out',

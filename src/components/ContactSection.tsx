@@ -235,15 +235,15 @@ export const ContactSection = () => {
               isSectionVisible ? 'animate-fade-in-up stagger-delay-3' : 'opacity-0'
             }`}
           >
-            <li className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card px-3.5 py-2.5 min-h-[44px] shadow-sm">
+            <li className="inline-flex items-center gap-2 rounded-full border border-border/70 glass-card px-3.5 py-2.5 min-h-[44px] shadow-sm">
               <ShieldCheck className="w-4 h-4 text-primary shrink-0" aria-hidden />
               <span>NDAs &amp; confidentiality respected</span>
             </li>
-            <li className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card px-3.5 py-2.5 min-h-[44px] shadow-sm">
+            <li className="inline-flex items-center gap-2 rounded-full border border-border/70 glass-card px-3.5 py-2.5 min-h-[44px] shadow-sm">
               <Clock className="w-4 h-4 text-primary shrink-0" aria-hidden />
               <span>{contactCtaContent.replyWindow}</span>
             </li>
-            <li className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card px-3.5 py-2.5 min-h-[44px] shadow-sm">
+            <li className="inline-flex items-center gap-2 rounded-full border border-border/70 glass-card px-3.5 py-2.5 min-h-[44px] shadow-sm">
               <Lock className="w-4 h-4 text-primary shrink-0" aria-hidden />
               <span>Form data used only to reply, never sold</span>
             </li>
@@ -320,7 +320,7 @@ export const ContactSection = () => {
 
               {!emailJsConfig && (
                 <p className="text-xs sm:text-sm text-foreground/85 mb-4 p-3 rounded-lg border border-border bg-muted/40">
-                  Direct messages from this form are not configured here. Use the links under Find Me Here.
+                  Form is visible, but email delivery is not configured in this environment yet.
                 </p>
               )}
 
@@ -353,7 +353,6 @@ export const ContactSection = () => {
                     placeholder="Your name"
                     maxLength={100}
                     required
-                    disabled={!emailJsConfig}
                     className={`h-10 sm:h-11 md:h-12 bg-secondary/50 border-primary/20 focus:border-primary/50 focus:ring-2 focus:ring-primary/40 focus:ring-offset-2 focus:ring-offset-background transition-all duration-300 text-sm sm:text-base hover:border-primary/30 ${formErrors.name ? 'border-destructive' : ''}`}
                   />
                   {formErrors.name && (
@@ -376,7 +375,6 @@ export const ContactSection = () => {
                     placeholder="you@company.com"
                     maxLength={255}
                     required
-                    disabled={!emailJsConfig}
                     className={`h-10 sm:h-11 md:h-12 bg-secondary/50 border-primary/20 focus:border-primary/50 focus:ring-2 focus:ring-primary/40 focus:ring-offset-2 focus:ring-offset-background transition-all duration-300 text-sm sm:text-base hover:border-primary/30 ${formErrors.email ? 'border-destructive' : ''}`}
                   />
                   {formErrors.email && (
@@ -399,7 +397,6 @@ export const ContactSection = () => {
                     rows={5}
                     maxLength={2000}
                     required
-                    disabled={!emailJsConfig}
                     className={`bg-secondary/50 border-primary/20 focus:border-primary/50 focus:ring-2 focus:ring-primary/40 focus:ring-offset-2 focus:ring-offset-background resize-none transition-all duration-300 min-h-[100px] sm:min-h-[120px] md:min-h-[140px] text-sm sm:text-base hover:border-primary/30 ${formErrors.message ? 'border-destructive' : ''}`}
                   />
                   {formErrors.message && (
@@ -412,7 +409,7 @@ export const ContactSection = () => {
                     type="submit" 
                     variant="hero" 
                     size="lg" 
-                    disabled={!emailJsConfig || isSubmitting}
+                    disabled={isSubmitting}
                     className="w-full min-h-[44px] h-11 sm:h-11 md:h-12 gap-2 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 group/btn font-semibold disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base transform-3d hover:translate-y-[-2px] hover:translate-z-15 active:scale-95"
                   >
                     <Send className="w-4 h-4 sm:w-5 sm:h-5 group-hover/btn:translate-x-1 transition-transform" />

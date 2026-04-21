@@ -55,7 +55,7 @@ export const AboutSection = () => {
               return (
                 <div
                   key={item.title}
-                  className="rounded-2xl border border-border/70 bg-card shadow-sm p-5 sm:p-6 transition-shadow duration-300 hover:shadow-md"
+                  className="rounded-2xl border border-border/70 glass-card shadow-sm p-5 sm:p-6 transition-shadow duration-300 hover:shadow-md"
                 >
                   <div className="p-2 rounded-lg bg-primary/10 border border-primary/18 w-fit mb-3">
                     <Icon className="w-5 h-5 text-primary" aria-hidden />
@@ -77,7 +77,7 @@ export const AboutSection = () => {
               {aboutContent.principles.map((p) => (
                 <div
                   key={p.title}
-                  className="rounded-2xl border border-border/70 bg-card shadow-sm p-5 sm:p-6"
+                  className="rounded-2xl border border-border/70 glass-card shadow-sm p-5 sm:p-6"
                 >
                   <h4 className="font-display font-semibold text-foreground text-sm sm:text-base mb-2">{p.title}</h4>
                   <p className="text-xs sm:text-sm text-foreground/82 leading-relaxed">{p.body}</p>

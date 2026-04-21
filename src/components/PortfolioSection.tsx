@@ -231,7 +231,7 @@ export const PortfolioSection = () => {
                 key={value}
                 onClick={() => setActiveFilter(value)}
                 data-active-filter={value}
-                className={`inline-flex items-center justify-center gap-1.5 sm:gap-2 min-h-[44px] h-11 sm:h-12 rounded-lg px-3 sm:px-4 md:px-6 text-xs sm:text-sm md:text-base font-semibold shadow-md scale-105 backdrop-blur-sm border-2 border-primary/55 hover:border-primary/75 text-foreground bg-card/90 hover:bg-card transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background group active:scale-95 ${
+                className={`inline-flex items-center justify-center gap-1.5 sm:gap-2 min-h-[44px] h-11 sm:h-12 rounded-lg px-3 sm:px-4 md:px-6 text-xs sm:text-sm md:text-base font-semibold shadow-md scale-105 border-2 border-primary/50 hover:border-primary/70 text-foreground glass-card transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background group active:scale-95 ${
                   showFilters ? `animate-filter-button ${delayClass}` : 'opacity-0'
                 }`}
                 aria-pressed={true}
@@ -303,7 +303,7 @@ export const PortfolioSection = () => {
             return (
               <div
                 key={stat.label}
-                className={`group relative text-center rounded-xl sm:rounded-2xl border border-border/70 bg-card shadow-sm px-3 py-5 sm:px-4 sm:py-6 md:py-7 transition-colors duration-300 hover:bg-card hover:border-border hover:shadow-md ${
+                className={`group relative text-center rounded-xl sm:rounded-2xl border border-border/70 glass-card shadow-sm px-3 py-5 sm:px-4 sm:py-6 md:py-7 transition-colors duration-300 hover:border-border hover:shadow-md ${
                   isSectionVisible ? `animate-fade-in-scale ${delayClass}` : 'opacity-0'
                 }`}
               >

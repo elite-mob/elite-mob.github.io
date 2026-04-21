@@ -60,7 +60,7 @@ export const HeroSection = () => {
           className="max-w-3xl mx-auto text-center"
           {...(prefersReducedMotion ? {} : { initial: heroMotion.initial, animate: heroMotion.animate, transition: heroMotion.transition })}
         >
-          <div className="rounded-2xl sm:rounded-3xl border border-primary/22 bg-background/84 backdrop-blur-lg px-5 py-9 sm:px-9 sm:py-11 md:px-12 md:py-12 shadow-4d">
+          <div className="glass-card rounded-2xl sm:rounded-3xl border-primary/22 px-5 py-9 sm:px-9 sm:py-11 md:px-12 md:py-12 shadow-4d">
             <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-primary mb-4">
               {heroContent.eyebrow}
             </p>

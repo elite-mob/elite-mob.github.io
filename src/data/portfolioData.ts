@@ -573,22 +573,25 @@ export const projects: Project[] = [
   {
     id: 'mobile-14',
     title: 'Virtual Bar - iOS, Android',
-    description: `Built a real-time, location-powered social app that helps users discover and privately connect with people who are physically present at the same venue.`,
+    description:
+      'Real-time social discovery app for meeting people nearby at bars, clubs, and local spots. Browse who is currently around you, match on shared interests, and start private chats in a lower-pressure environment designed to reduce face-to-face rejection anxiety.',
     category: 'mobile',
     technologies: ['React Native', 'Node.js', 'WebSocket', 'Azure'],
     imageUrl: virtualBar,
     link: 'https://apps.apple.com/us/app/virtual-bar-llc/id1670608081',
     duration: '2 months',
     role: 'Full Stack Developer',
-    challenge: `The app needed to support live presence, interest-based discovery, and real-time private messaging while giving users confidence that profiles and venue activity were current and accurate. Latency and trust were both important product concerns.`,
-    solution: `I built the mobile experience in React Native with a Node.js backend hosted on Azure. WebSockets powered live profile, presence, and messaging updates, while location-aware flows tied discovery to real-world venues. I focused on making the experience feel responsive, privacy-conscious, and socially approachable.`,
+    challenge:
+      'The product depended on trustworthy live context: users needed confidence that profiles represented people actually at the same venue right now. We also had to keep messaging immediate, discovery relevant, and the overall experience socially safe and approachable.',
+    solution:
+      'Built with React Native and a Node.js backend on Azure. WebSockets handled real-time presence, profile updates, and chat delivery. Location-aware discovery flows surfaced nearby users with shared interests while preserving privacy-conscious interaction patterns.',
     features: [
-      'Real-time profiles & presence at venues',
-      'Location-based discovery (bars, clubs, local spots)',
-      'Interest-based connections & private chat',
-      'Low-pressure, rejection-friendly socializing',
-      'See who is around you before you approach',
-      'WebSockets & Azure backend',
+      'Live venue presence and profile discovery',
+      'Location-based matching at bars, clubs, and local spots',
+      'Interest-based connections with private chat',
+      'No catfishing-here positioning and trust-focused UX',
+      'Low-pressure socializing before face-to-face interaction',
+      'Real-time messaging via WebSockets on Azure',
       'iOS and Android'
     ],
   },
@@ -640,23 +643,26 @@ export const projects: Project[] = [
   {
     id: 'mobile-17',
     title: 'Scroll Stoppers - iOS, Android, Web',
-    description: `Built a client-facing video creation platform that simplifies script-driven recording with teleprompter support and automatic uploads into a production workflow.`,
+    description:
+      'Exclusive app for Scroll Stoppers clients to make custom marketing video recording simple and stress-free: personalized scripts, integrated on-screen teleprompter, and automatic upload to the production team for editing, polishing, and distribution.',
     category: 'mobile',
     technologies: ['Flutter', 'React', 'Node.js', 'Express', 'Camera'],
     imageUrl: scrollStoppers,
     link: 'https://apps.apple.com/us/app/scroll-stoppers/id6746020654',
     duration: '3 months',
     role: 'Full Stack Developer',
-    challenge: `The product needed to make on-camera recording feel approachable for non-technical users while supporting teleprompter functionality, guided scripts, capture reliability, and direct delivery into an editing pipeline.`,
-    solution: `I built the mobile application in Flutter for iOS and Android, with React and Node.js supporting the broader system and upload workflows. The app was designed around a focused recording experience where users could follow personalized scripts, capture content smoothly, and send it directly into production without manual file handling.`,
+    challenge:
+      'Non-technical business owners needed to record confidently on camera without juggling strategy notes, script files, and manual transfer steps. The app had to guide delivery in-session and move footage straight into an editing pipeline with high reliability.',
+    solution:
+      'Built the client app in Flutter (iOS/Android) with React + Node.js services behind upload and production workflows. The recording flow centers on team-authored scripts, teleprompter pacing, and one-tap capture-to-production handoff so clients only focus on showing up and recording.',
     features: [
-      'Custom scripts from the Scroll Stoppers team',
-      'On-screen teleprompter for natural delivery',
-      'Automatic upload to production, no manual transfers',
-      'Fast turnaround on studio-edited videos',
-      'Exclusive to clients as part of the full video system',
-      'Focus on showing up, team handles strategy through distribution',
-      'Flutter + React + Node'
+      'Custom scripts planned by the Scroll Stoppers team',
+      'Integrated on-screen teleprompter for confident delivery',
+      'Automatic upload to production (no file transfer steps)',
+      'Production team handles edit, polish, and distribution',
+      'Built for busy business owners to record fast',
+      'Exclusive client app in the Scroll Stoppers system',
+      'Flutter + React + Node.js stack'
     ],
   },
   {
@@ -685,71 +691,81 @@ export const projects: Project[] = [
   {
     id: 'mobile-19',
     title: 'WHMCS for iOS',
-    description: `Rebuilt the WHMCS iPhone app to provide a more modern mobile experience around support tickets, onboarding, and business insights.`,
+    description:
+      'Re-engineered WHMCS for iOS from the ground up for a richer, modern mobile experience. Includes a full support-ticket feature set with guided onboarding, business insights/performance overview, secure login, and dark mode, with regular update-ready architecture for future features.',
     category: 'mobile',
     technologies: ['Swift', 'UIKit', 'WHMCS API', 'REST API', 'LocalAuthentication', 'Keychain'],
     imageUrl: whmcs,
     link: 'https://apps.apple.com/us/app/whmcs/id1516241118',
     duration: '12 months',
     role: 'Mobile Developer',
-    challenge: `The app needed to make support-ticket workflows, authentication, attachments, and reporting feel natural on mobile, while preserving security and improving the overall onboarding experience for new users.`,
-    solution: `I built the application in Swift and UIKit with WHMCS API integration for ticketing, attachments, replies, and dashboard data. I also supported onboarding, dark mode, and secure access patterns using platform-native authentication and secure storage flows so the app felt polished, trustworthy, and easy to use in production environments.`,
+    challenge:
+      'Deliver complete support-ticket functionality on iPhone without losing depth: status/department filtering, rich-text replies, attachments, and predefined responses—while also supporting secure access (Face ID/Touch ID), onboarding, and clear business overview data.',
+    solution:
+      'Built in Swift/UIKit with WHMCS API integration for ticket browsing, replies, attachments, and open-ticket flows. Added guided onboarding, dashboard performance views, rich-text support tools, and native iOS security (LocalAuthentication + secure storage) with dark-mode support for daily production use.',
     features: [
       'Guided onboarding',
-      'Business insights & performance overview',
+      'Business insights/performance overview',
       'Browse tickets by status and department',
       'View and respond to support tickets',
       'Rich-text formatting',
       'Display and download attachments',
       'Predefined support replies',
       'Open new tickets',
-      'Face ID & Touch ID',
+      'Face ID/fingerprint security',
       'Dark mode'
     ],
   },
   {
     id: 'mobile-20',
     title: 'European Watch Co - Watches - iOS, Android',
-    description: `Built a luxury watch marketplace app that supports buying, selling, trade requests, Apple Pay checkout, favorites, and editorial-style listings across iOS and Android.`,
+    description:
+      'Trusted by watch enthusiasts since 1993, now in-app: buy, sell, or trade directly with European Watch Company, request a quote, checkout with Apple Pay, and save favorites. Listings refresh throughout the day with detailed write-ups and extensive photography across new, pre-owned, and vintage Swiss/German pieces.',
     category: 'mobile',
     technologies: ['Swift', 'Java', 'CoreData', 'Apple Pay', 'iOS', 'Android'],
     imageUrl: europeanWatch,
     link: 'https://apps.apple.com/us/app/european-watch-co-watches/id428419037',
     duration: '5 months',
     role: 'Mobile Developer',
-    challenge: `The app needed to present an inventory-heavy luxury catalog with a high-trust, premium feel while supporting quote requests, commerce workflows, and rich photography without sacrificing performance.`,
-    solution: `I built native mobile experiences in Swift and Java, using structured catalog and detail views to support image-heavy listings and long-form product content. CoreData helped maintain a resilient browsing experience, and Apple Pay integration streamlined purchase workflows for users ready to transact directly in-app.`,
+    challenge:
+      'Translate a long-established, trust-driven watch business into mobile: support buy/sell/trade and quote workflows, preserve premium storytelling for each listing, keep inventory fresh throughout the day, and deliver a polished transaction experience for high-value products.',
+    solution:
+      'Built native iOS (Swift) and Android (Java) clients with structured catalog/detail experiences for image-rich listings and editorial-style descriptions. CoreData improved resilience and browsing continuity; Apple Pay enabled fast in-app purchasing, while quote and trade flows supported concierge-style commerce.',
     features: [
-      'Buy, sell, and trade',
-      'In-app quotes',
+      'Buy, sell, or trade directly in-app',
+      'Request watch quotes in-app',
       'Apple Pay checkout',
-      'Save favorite watches',
-      'Detailed write-ups per listing',
+      'Save and manage favorite watches',
+      'Detailed write-ups for each listing',
       'Inventory updated throughout the day',
-      'Extensive photography & collection browsing',
-      'New, pre-owned, and vintage, top Swiss & German brands',
+      'Extensive photography and collection browsing',
+      'New, pre-owned, and vintage Swiss/German brands',
       'iOS and Android'
     ],
   },
   {
     id: 'mobile-21',
     title: 'Betaciety - iOS',
-    description: `Built an iOS product review community where users could discover products, post ratings by feature, and organize saved discoveries into personalized boards.`,
+    description:
+      'Community for discovering new products and sharing real user experiences: scroll a discovery feed shaped by interests, open posts for feature-by-feature ratings, and save finds into personalized interest boards to shop smarter and help brands improve.',
     category: 'mobile',
     technologies: ['Swift', 'UIKit', 'Firebase', 'CoreData'],
     imageUrl: betaciety,
     link: 'https://apps.apple.com/us/app/betaciety/id1503601686',
     duration: '3 months',
     role: 'iOS Developer',
-    challenge: `The app needed to support product discovery, interest-based browsing, and feature-level review detail without overwhelming users. Saved content and personalized organization also had to feel fast and intuitive.`,
-    solution: `I developed the app in Swift and UIKit, with Firebase powering feed and community interactions and CoreData supporting local caching and personalized boards. The experience was designed to make browsing, saving, and comparing product insights feel lightweight and useful rather than cluttered.`,
+    challenge:
+      'Balance exploration and clarity: users needed fast product discovery, feature-level review depth, and category personalization without feed fatigue. The app also had to make saved discoveries and interest-board organization feel effortless on mobile.',
+    solution:
+      'Built in Swift/UIKit with Firebase for feed, community activity, and interaction flows; CoreData for local caching and personal board state. Discovery and save mechanics were tuned around interest bars, category preferences, and lightweight transitions from browse to save to compare.',
     features: [
-      'Discover feed tuned to your interests',
-      'Per-post ratings by feature',
+      'Discovery feed based on your interests',
+      'Feature-by-feature product ratings',
       '13 product categories (tech, food & beverage, beauty, household, pets, etc.)',
-      'Personal interest boards from community discoveries',
-      'Engage with brands & smarter shopping flows',
-      'Tailored boards for comfortable discovery',
+      'Personalized interest boards for saved discoveries',
+      'Engage favorite brands and shop smarter',
+      'Interest bars you can personalize over time',
+      'Community-powered reviews and recommendations',
       'Swift · iOS'
     ],
   },
