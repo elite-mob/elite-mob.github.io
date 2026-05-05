@@ -1,8 +1,10 @@
-import { ArrowDown, Code2, Smartphone, Brain, CheckCircle2 } from 'lucide-react';
+import { ArrowDown, Code2, Smartphone, Brain, CheckCircle2, CalendarClock } from 'lucide-react';
 import heroBg from '@/assets/background1.png';
 import { navigateToPortfolio, navigateToSection } from '@/lib/navigation';
-import { heroContent } from '@/data/siteContent';
+import { heroContent, scheduleMeetingContent } from '@/data/siteContent';
 import { motion, useReducedMotion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { getScheduleMeetingUrl } from '@/lib/scheduleMeeting';
 
 const heroMotion = {
   initial: { opacity: 0, y: 14 },
@@ -12,6 +14,7 @@ const heroMotion = {
 
 export const HeroSection = () => {
   const prefersReducedMotion = useReducedMotion();
+  const scheduleMeetingUrl = getScheduleMeetingUrl();
 
   return (
     <section
@@ -94,6 +97,23 @@ export const HeroSection = () => {
               >
                 {heroContent.primaryCta}
               </button>
+              {scheduleMeetingUrl && (
+                <Button
+                  type="button"
+                  variant="heroOutline"
+                  size="lg"
+                  className="min-h-[48px] rounded-xl px-6 sm:px-8 text-base gap-2 active:scale-[0.98]"
+                  onClick={() =>
+                    window.open(scheduleMeetingUrl, '_blank', 'noopener,noreferrer')
+                  }
+                  data-analytics-button=""
+                  data-analytics-label="Schedule a meeting (hero)"
+                  aria-label={`${scheduleMeetingContent.ctaLabel} (opens in new tab)`}
+                >
+                  <CalendarClock className="w-5 h-5" aria-hidden />
+                  {scheduleMeetingContent.ctaLabel}
+                </Button>
+              )}
             </div>
 
             <p className="text-xs sm:text-sm text-foreground/70 mb-6">

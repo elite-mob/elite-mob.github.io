@@ -2,8 +2,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { RouterNavButton } from '@/components/RouterNavButton';
-import { Send, Github, SquareStackIcon, Sparkles, MessageSquare, Lock, ShieldCheck, Clock } from 'lucide-react';
-import { contactCtaContent } from '@/data/siteContent';
+import { Send, Github, SquareStackIcon, Sparkles, MessageSquare, Lock, ShieldCheck, Clock, CalendarClock } from 'lucide-react';
+import { contactCtaContent, scheduleMeetingContent } from '@/data/siteContent';
+import { getScheduleMeetingUrl } from '@/lib/scheduleMeeting';
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import emailjs from '@emailjs/browser';
@@ -44,6 +45,7 @@ export const ContactSection = () => {
   const { toast } = useToast();
   const emailJsConfig = useMemo(() => getEmailJsConfig(), []);
   const contactEmailHint = useMemo(() => getContactEmailHint(), []);
+  const scheduleMeetingUrl = useMemo(() => getScheduleMeetingUrl(), []);
   const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.1 });
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
@@ -282,6 +284,39 @@ export const ContactSection = () => {
                 ))}
               </div>
             </div>
+
+            {scheduleMeetingUrl && (
+              <div
+                className={`rounded-2xl border border-border/70 glass-card p-4 sm:p-5 backdrop-blur-md ${
+                  isSectionVisible ? 'animate-slide-in-left' : 'opacity-0'
+                }`}
+              >
+                <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-1.5">
+                  Intro call
+                </p>
+                <h3 className="font-display text-base sm:text-lg font-bold text-foreground mb-2">
+                  {scheduleMeetingContent.contactCardTitle}
+                </h3>
+                <p className="text-xs sm:text-sm text-foreground/78 mb-4 leading-relaxed">
+                  {scheduleMeetingContent.contactCardSupporting}
+                </p>
+                <Button
+                  type="button"
+                  variant="heroOutline"
+                  size="lg"
+                  className="w-full min-h-[44px] gap-2 shadow-md"
+                  onClick={() =>
+                    window.open(scheduleMeetingUrl, '_blank', 'noopener,noreferrer')
+                  }
+                  data-analytics-button=""
+                  data-analytics-label="Schedule a meeting (contact)"
+                  aria-label={`${scheduleMeetingContent.ctaLabel} (opens in new tab)`}
+                >
+                  <CalendarClock className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden />
+                  {scheduleMeetingContent.ctaLabel}
+                </Button>
+              </div>
+            )}
 
             <div className="space-y-2">
               <div className="inline-flex items-center gap-1 sm:gap-1.5 pl-1.5 sm:pl-2 pr-1.5 sm:pr-2 py-0.5 sm:py-1 rounded-full glass-card border border-primary/20 backdrop-blur-md bg-background/60 whitespace-nowrap w-fit">

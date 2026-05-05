@@ -57,6 +57,13 @@ export const contactCtaContent = {
   replyWindow: 'Typically replies within 24-48 hours on business days.',
 } as const;
 
+/** Copy for optional booking link (`VITE_SCHEDULE_MEETING_URL`). */
+export const scheduleMeetingContent = {
+  ctaLabel: 'Schedule a meeting',
+  contactCardTitle: 'Book a call',
+  contactCardSupporting: 'Pick a time that works across timezones (opens your scheduler in a new tab).',
+} as const;
+
 /**
  * Fallback when a project has neither `resultMetric` nor `outcomeHighlight` in portfolioData.
  * TODO: Prefer filling outcomeHighlight or resultMetric per project for ship-quality cards.
