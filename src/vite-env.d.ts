@@ -23,6 +23,8 @@ interface ImportMetaEnv {
   readonly VITE_CONTACT_EMAIL?: string;
   /** Optional: Cal.com / Calendly / etc. — enables “Schedule a meeting” CTAs when set */
   readonly VITE_SCHEDULE_MEETING_URL?: string;
+  /** Firebase Cloud Function URL for portfolio chat Q&A (POST …/chat) */
+  readonly VITE_CHAT_API_URL?: string;
 }
 
 interface ImportMeta {

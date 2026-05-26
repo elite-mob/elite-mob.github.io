@@ -126,6 +126,34 @@ export const logHomeSectionView = async (params: {
   });
 };
 
+/** Portfolio chatbot opened. */
+export const logChatOpen = async (): Promise<void> => {
+  const analytics = await getAnalyticsInstance();
+  if (!analytics) return;
+  logEvent(analytics, 'chat_open');
+};
+
+/** Chat intent classified (no message body). */
+export const logChatIntent = async (params: { intent: string }): Promise<void> => {
+  const analytics = await getAnalyticsInstance();
+  if (!analytics) return;
+  logEvent(analytics, 'chat_intent', { intent: params.intent.slice(0, 32) });
+};
+
+/** User completed Calendly scheduling flow in chat. */
+export const logChatScheduleComplete = async (): Promise<void> => {
+  const analytics = await getAnalyticsInstance();
+  if (!analytics) return;
+  logEvent(analytics, 'chat_schedule_complete');
+};
+
+/** Grounded project Q&A called OpenAI proxy. */
+export const logChatApiCall = async (): Promise<void> => {
+  const analytics = await getAnalyticsInstance();
+  if (!analytics) return;
+  logEvent(analytics, 'chat_api_call');
+};
+
 /** Primary clicks on `<button>`, `[role="button"]`, and tracked links (`data-analytics-button`). Sent to GA4 via Firebase. */
 export const logButtonClick = async (params: {
   button_label: string;

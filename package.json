@@ -11,7 +11,8 @@
     "check": "npm run lint && tsc --noEmit",
     "preview": "vite preview",
     "optimize-images": "node scripts/optimize-images.js",
-    "prebuild": "npm run optimize-images"
+    "build:chat-knowledge": "node scripts/build-chat-knowledge.mjs",
+    "prebuild": "npm run optimize-images && npm run build:chat-knowledge"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

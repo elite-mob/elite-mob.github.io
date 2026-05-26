@@ -6,7 +6,7 @@ import { absoluteUrl } from '@/lib/site';
 import { RouterNavButton } from '@/components/RouterNavButton';
 
 const Privacy = () => {
-  const lastUpdated = 'March 2025';
+  const lastUpdated = 'May 2026';
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -63,6 +63,23 @@ const Privacy = () => {
                 When you submit the contact form, your name, email address, and message are transmitted to process your
                 inquiry. Delivery may rely on a third-party email provider. Messages are used only to respond to you
                 and are not sold or used for unrelated marketing.
+              </p>
+
+              <h2>Portfolio chat assistant</h2>
+              <p>
+                The site may offer a chat assistant that answers questions about Hans Chan&apos;s portfolio and helps you
+                book a call. It is not a general-purpose AI chatbot: unrelated questions are answered with a short
+                on-site message and are not sent to external AI services.
+              </p>
+              <p>
+                When you ask about projects, skills, or experience, your message and relevant excerpts from public
+                portfolio content may be sent to a secure server function, which calls OpenAI (model gpt-4.1-mini) to
+                generate a reply grounded in that content only. Chat messages are not stored in a database on this site.
+              </p>
+              <p>
+                When you book a call through the assistant, your name, email, and meeting topic may be used to prefill
+                Calendly (or another scheduler you configure) and may be sent via the same email provider as the contact
+                form so Hans can follow up. Scheduling is handled by that third-party tool under its own privacy policy.
               </p>
 
               <h2>Optional visit statistics</h2>

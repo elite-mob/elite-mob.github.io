@@ -16,6 +16,7 @@ import Index from "./pages/Index";
 import ProjectDetail from "./pages/ProjectDetail";
 import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
+import { ChatbotWidget } from "@/components/chatbot/ChatbotWidget";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,6 +55,7 @@ const App = () => {
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <ChatbotWidget />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
