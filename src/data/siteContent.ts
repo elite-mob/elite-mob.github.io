@@ -87,6 +87,7 @@ export const trustStripContent = {
     'Serve',
     'CheckSammy',
     'PrimeAI',
+    'Krackwins'
   ] as const,
   footnote: 'From shipped projects.',
 } as const;
