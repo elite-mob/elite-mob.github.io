@@ -6,10 +6,10 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 
 const navLinks = [
   { href: '#home', label: 'Home', path: '/' },
-  { href: '#portfolio', label: 'Portfolio', path: '/' },
   { href: '#about', label: 'About', path: '/' },
-  { href: '#reviews', label: 'Reviews', path: '/' },
+  { href: '#portfolio', label: 'Portfolio', path: '/' },
   { href: '#skills', label: 'Skills', path: '/' },
+  { href: '#reviews', label: 'Reviews', path: '/' },
   { href: '#contact', label: 'Contact', path: '/' },
 ];
 

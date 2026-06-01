@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "optimize-images": "node scripts/optimize-images.js",
     "build:chat-knowledge": "node scripts/build-chat-knowledge.mjs",
+    "fetch-portfolio-screenshots": "node scripts/fetch-portfolio-screenshots.mjs",
     "prebuild": "npm run optimize-images && npm run build:chat-knowledge"
   },
   "dependencies": {

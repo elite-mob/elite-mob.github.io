@@ -1,10 +1,12 @@
 import { Project } from '@/data/portfolioData';
 import { RouterNavButton } from '@/components/RouterNavButton';
+import { ProjectImageSlider } from '@/components/ProjectImageSlider';
+import { getProjectSliderImages } from '@/lib/portfolioGallery';
 import { logProjectCardClick } from '@/integrations/firebase/analytics';
 import { Code2, Smartphone, Brain } from 'lucide-react';
 import { use3DTilt } from '@/hooks/use-3d-tilt';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /** Home grid card: teaser only; outcome, role, stack, and CTAs live on the project detail page. */
 
@@ -57,6 +59,12 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
     });
   };
 
+  const sliderImages = useMemo(
+    () => getProjectSliderImages(project.id, project.imageUrl),
+    [project.id, project.imageUrl],
+  );
+  const hasVisual = sliderImages.length > 0 && sliderImages[0] !== '/placeholder.svg';
+
   return (
     <article
       ref={combinedRef}
@@ -70,18 +78,11 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
           className="absolute inset-0 z-[1] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
           aria-label={`Open case study: ${project.title}`}
         >
-          {project.imageUrl && project.imageUrl !== '/placeholder.svg' ? (
-            <img
-              src={project.imageUrl}
-              alt=""
-              sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
-              loading={index < 6 ? 'eager' : 'lazy'}
-              decoding="async"
-              fetchPriority={index < 6 ? 'high' : undefined}
-              draggable={false}
-              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 select-none"
-              onContextMenu={(e) => e.preventDefault()}
-              onDragStart={(e) => e.preventDefault()}
+          {hasVisual ? (
+            <ProjectImageSlider
+              images={sliderImages}
+              alt={`${project.title} preview`}
+              priority={index < 6}
             />
           ) : (
             <>

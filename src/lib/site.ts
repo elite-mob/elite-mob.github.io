@@ -9,7 +9,7 @@ export const SITE_URL = (import.meta.env.VITE_SITE_URL ?? 'https://elite-mob.git
 export const SITE_NAME = 'Hans Chan';
 export const DEFAULT_TITLE = `${SITE_NAME} | Full-Stack Developer | Web, Mobile & AI`;
 export const DEFAULT_DESCRIPTION =
-  'Full-stack developer based in China. Portfolio: web, mobile, and AI, trusted by startups and enterprises. 40+ shipped projects. Clear communication, on-time delivery, outcomes you can count on.';
+  'Full-stack developer portfolio: web, mobile, and AI, trusted by startups and enterprises. 40+ shipped projects. Clear communication, on-time delivery, outcomes you can count on.';
 
 /** Bundled avatar used for og:image / Twitter cards; Vite emits a hashed /assets/... URL in production. */
 export const DEFAULT_OG_IMAGE_PATH = defaultOgImage;

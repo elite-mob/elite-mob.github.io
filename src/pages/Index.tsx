@@ -72,10 +72,10 @@ const Index = () => {
       <main id="main-content" tabIndex={-1} className="relative z-10 transform-3d outline-none">
         <HeroSection />
         <LogoStrip />
-        <PortfolioSection />
         <AboutSection />
-        <ReviewsSection />
+        <PortfolioSection />
         <SkillsSection />
+        <ReviewsSection />
         <ContactSection />
       </main>
       <Footer />

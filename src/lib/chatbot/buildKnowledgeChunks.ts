@@ -5,7 +5,7 @@ import {
   heroContent,
   trustStripContent,
 } from '@/data/siteContent';
-import { techStackGroups } from '@/data/skillsData';
+import { techStackGroups, getProficiencyTier } from '@/data/skillsData';
 import { testimonials } from '@/data/testimonials';
 import type { Project } from '@/data/portfolioData';
 import type { KnowledgeChunk } from '@/lib/chatbot/types';
@@ -43,7 +43,7 @@ export function buildKnowledgeChunks(projects: readonly Project[]): KnowledgeChu
         footerTagline,
       ].join('\n'),
       '/#about',
-      ['hans', 'chan', 'engineer', 'full-stack', 'china'],
+      ['hans', 'chan', 'engineer', 'full-stack'],
     ),
     chunk(
       'site-about',
@@ -76,10 +76,15 @@ export function buildKnowledgeChunks(projects: readonly Project[]): KnowledgeChu
       'site-skills',
       'Skills and tech stack',
       techStackGroups
-        .map((g) => `${g.label}: ${g.items.join(', ')}`)
+        .map((g) =>
+          `${g.label}: ${g.items.map((i) => `${i.name} (${getProficiencyTier(i.level)})`).join(', ')}`,
+        )
         .join('\n'),
       '/#skills',
-      techStackGroups.flatMap((g) => [...g.items.map((i) => i.toLowerCase()), g.label.toLowerCase()]),
+      techStackGroups.flatMap((g) => [
+        ...g.items.map((i) => i.name.toLowerCase()),
+        g.label.toLowerCase(),
+      ]),
     ),
     chunk(
       'site-reviews',

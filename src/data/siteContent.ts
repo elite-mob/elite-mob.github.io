@@ -11,14 +11,14 @@ export const heroContent = {
   primaryCta: 'View Case Studies',
   trustBullets: [
     '10+ years shipping live products: marketplaces, health, social, and device-adjacent apps',
-    'Based in China; single technical owner from architecture through release, async-friendly, US/EU-overlap friendly',
+    'Single technical owner from architecture through release, async-friendly, US/EU-overlap friendly',
     'NDAs respected; references when confidentiality allows',
   ],
 } as const;
 
 export const aboutContent = {
   intro:
-    "I'm Hans Chan, based in China, with 10+ years shipping full-stack web, mobile, and AI for startups through large platforms, owning architecture to release with clear, direct communication.",
+    "I'm Hans Chan, with 10+ years shipping full-stack web, mobile, and AI for startups through large platforms, owning architecture to release with clear, direct communication.",
   highlights: [
     {
       title: 'End-to-end ownership',
@@ -72,7 +72,7 @@ export const caseStudyResultPlaceholder =
   'Add a client-approved KPI on this project (users, revenue, latency, uptime, or similar).';
 
 /** Footer one-line tagline (location + role). */
-export const footerTagline = 'Full-stack engineer · China';
+export const footerTagline = 'Full-stack engineer · Web, Mobile & AI';
 
 /**
  * Homepage trust strip (below hero). Optional: swap for logo assets when approved.

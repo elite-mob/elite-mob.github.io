@@ -7,8 +7,9 @@ import { navigateToSection, navigateToPortfolio } from '@/lib/navigation';
 
 const footerLinks = [
   { hash: '#home', label: 'Home', isPortfolio: false },
-  { hash: '#portfolio', label: 'Portfolio', isPortfolio: true },
   { hash: '#about', label: 'About', isPortfolio: false },
+  { hash: '#portfolio', label: 'Portfolio', isPortfolio: true },
+  { hash: '#skills', label: 'Skills', isPortfolio: false },
   { hash: '#reviews', label: 'Reviews', isPortfolio: false },
   { hash: '#contact', label: 'Contact', isPortfolio: false },
 ] as const;

@@ -19,12 +19,8 @@ export function JsonLdHome() {
         url: SITE_URL,
         image: ogImageUrl(DEFAULT_OG_IMAGE_PATH),
         jobTitle: 'Full-Stack Developer',
-        nationality: {
-          '@type': 'Country',
-          name: 'China',
-        },
         description:
-          'Freelance full-stack engineer based in China, specializing in web, mobile, and AI. Ships production software for startups and enterprises.',
+          'Freelance full-stack engineer specializing in web, mobile, and AI. Ships production software for startups and enterprises.',
         sameAs: [...SAME_AS_LINKS],
         knowsAbout: [
           'Web Development',

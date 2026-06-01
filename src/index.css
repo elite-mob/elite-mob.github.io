@@ -694,6 +694,71 @@
     }
   }
 
+  /* Portfolio card image slider — Ken Burns + light sweep */
+  .animate-portfolio-ken-burns-a {
+    animation: portfolio-ken-burns-a 14s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  .animate-portfolio-ken-burns-b {
+    animation: portfolio-ken-burns-b 16s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  .animate-portfolio-ken-burns-c {
+    animation: portfolio-ken-burns-c 18s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  @keyframes portfolio-ken-burns-a {
+    0% {
+      transform: scale(1) translate3d(0, 0, 0);
+    }
+    100% {
+      transform: scale(1.14) translate3d(-2.5%, -1.5%, 0);
+    }
+  }
+
+  @keyframes portfolio-ken-burns-b {
+    0% {
+      transform: scale(1.05) translate3d(-1%, 0, 0);
+    }
+    100% {
+      transform: scale(1.16) translate3d(2%, -2%, 0);
+    }
+  }
+
+  @keyframes portfolio-ken-burns-c {
+    0% {
+      transform: scale(1) translate3d(1%, -1%, 0);
+    }
+    100% {
+      transform: scale(1.12) translate3d(-1.5%, 1.5%, 0);
+    }
+  }
+
+  .animate-portfolio-shimmer {
+    animation: portfolio-shimmer 2.8s ease-in-out infinite;
+  }
+
+  @keyframes portfolio-shimmer {
+    0% {
+      transform: translateX(-120%) skewX(-12deg);
+    }
+    100% {
+      transform: translateX(320%) skewX(-12deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-portfolio-ken-burns-a,
+    .animate-portfolio-ken-burns-b,
+    .animate-portfolio-ken-burns-c,
+    .animate-portfolio-shimmer {
+      animation: none !important;
+    }
+  }
+
   /* Filter Button Animation */
   .animate-filter-button {
     animation: filter-button-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
