@@ -8,7 +8,9 @@
 
 ## Before deploying
 
-1. **Environment variables** (see `.env.example`)
+1. **GitHub Pages source** — Settings → Pages → **GitHub Actions** (not “Deploy from a branch”). If the site shows a blank page, open View Source: a broken deploy still has `<script src="/src/main.tsx">` instead of `/assets/index-*.js`.
+
+2. **Environment variables** (see `.env.example`)
    - EmailJS: `VITE_EMAILJS_*` for the contact form
    - Optional: `VITE_CONTACT_EMAIL`, `VITE_SCHEDULE_MEETING_URL`, `VITE_CHAT_API_URL`
    - Firebase: `VITE_FIREBASE_*` for analytics and visit stats (see `docs/`)
