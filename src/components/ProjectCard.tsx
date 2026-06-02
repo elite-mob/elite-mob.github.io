@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils';
 interface ProjectCardProps {
   project: Project;
   index: number;
-  /** Portfolio grid is visible — avoids hiding card previews behind opacity-0 entrance state. */
+  /** Portfolio grid is visible, avoids hiding card previews behind opacity-0 entrance state. */
   revealed?: boolean;
 }
 

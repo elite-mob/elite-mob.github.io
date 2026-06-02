@@ -1,6 +1,6 @@
 /**
  * Grouped tech stack for the Skills section (proficiency bars).
- * Levels are self-assessed for production work — adjust to stay accurate.
+ * Levels are self-assessed for production work, adjust to stay accurate.
  */
 
 export type TechCategoryId = 'frontend' | 'backend' | 'mobile' | 'aiData' | 'devops';
@@ -9,7 +9,7 @@ export type ProficiencyTier = 'Expert' | 'Advanced' | 'Proficient' | 'Capable';
 
 export type TechSkill = {
   name: string;
-  /** 0–100, shown as a filled bar when the section enters view */
+  /** 0-100, shown as a filled bar when the section enters view */
   level: number;
 };
 
@@ -27,10 +27,10 @@ export function getProficiencyTier(level: number): ProficiencyTier {
 }
 
 export const proficiencyLegend: readonly { tier: ProficiencyTier; range: string }[] = [
-  { tier: 'Expert', range: '90–100%' },
-  { tier: 'Advanced', range: '80–89%' },
-  { tier: 'Proficient', range: '70–79%' },
-  { tier: 'Capable', range: '60–69%' },
+  { tier: 'Expert', range: '90-100%' },
+  { tier: 'Advanced', range: '80-89%' },
+  { tier: 'Proficient', range: '70-79%' },
+  { tier: 'Capable', range: '60-69%' },
 ] as const;
 
 export const techStackGroups: readonly TechCategory[] = [

@@ -652,7 +652,7 @@ export const projects: Project[] = [
     duration: '12 months',
     role: 'Mobile Developer',
     challenge:
-      'Deliver complete support-ticket functionality on iPhone without losing depth: status/department filtering, rich-text replies, attachments, and predefined responses—while also supporting secure access (Face ID/Touch ID), onboarding, and clear business overview data.',
+      'Deliver complete support-ticket functionality on iPhone without losing depth: status/department filtering, rich-text replies, attachments, and predefined responses, while also supporting secure access (Face ID/Touch ID), onboarding, and clear business overview data.',
     solution:
       'Built in Swift/UIKit with WHMCS API integration for ticket browsing, replies, attachments, and open-ticket flows. Added guided onboarding, dashboard performance views, rich-text support tools, and native iOS security (LocalAuthentication + secure storage) with dark-mode support for daily production use.',
     features: [

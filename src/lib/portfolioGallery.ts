@@ -14,7 +14,7 @@ function fileNameFromGalleryUrl(url: string): string {
   }
 }
 
-/** A–Z by file name (case-insensitive, numeric segments ordered naturally). */
+/** A-Z by file name (case-insensitive, numeric segments ordered naturally). */
 export function sortGalleryUrls(urls: string[]): string[] {
   return [...urls].sort((a, b) =>
     fileNameFromGalleryUrl(a).localeCompare(fileNameFromGalleryUrl(b), undefined, {
@@ -29,7 +29,7 @@ export function getProjectGalleryPaths(projectId: string): string[] {
   return sortGalleryUrls((manifest[projectId] ?? []).map(publicAssetUrl));
 }
 
-/** All images in a project's gallery folder — used as slider slides. */
+/** All images in a project's gallery folder, used as slider slides. */
 export function getProjectSliderImages(projectId: string, fallbackArtwork?: string): string[] {
   const gallery = getProjectGalleryPaths(projectId);
   if (gallery.length > 0) return gallery;

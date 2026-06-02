@@ -1,6 +1,6 @@
 /**
  * Scans public/portfolio-gallery/{projectId}-{slug}/ on dev + build.
- * Drop any supported image into a project folder — sliders pick it up automatically.
+ * Drop any supported image into a project folder, sliders pick it up automatically.
  */
 
 import { readFile, writeFile } from 'node:fs/promises';

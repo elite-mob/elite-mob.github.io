@@ -722,7 +722,7 @@
     }
   }
 
-  /* Portfolio card image slider — Ken Burns + light sweep */
+  /* Portfolio card image slider, Ken Burns + light sweep */
   .portfolio-slide-layer {
     transition-property: opacity;
     transition-timing-function: cubic-bezier(0.45, 0, 0.15, 1);

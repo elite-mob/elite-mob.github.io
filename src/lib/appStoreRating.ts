@@ -157,7 +157,7 @@ export async function fetchAppRatings(storeLinks: string[]): Promise<AppRating[]
   return sortRatingsByPlatform(ratings);
 }
 
-/** iOS first, then Android — stable order when both stores are linked. */
+/** iOS first, then Android, stable order when both stores are linked. */
 export function sortRatingsByPlatform(ratings: AppRating[]): AppRating[] {
   const order: Record<StorePlatform, number> = { ios: 0, android: 1 };
   return [...ratings].sort((a, b) => order[a.platform] - order[b.platform]);

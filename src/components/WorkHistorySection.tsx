@@ -23,7 +23,7 @@ function formatPeriod(period: string): string {
       const label = month.charAt(0) + month.slice(1).toLowerCase();
       return `${label} ${year}`;
     })
-    .join(' – ');
+    .join(' - ');
 }
 
 function isCurrentRole(period: string): boolean {
@@ -95,7 +95,7 @@ function ExperienceEntry({
                 </span>
               )}
               <time
-                dateTime={periodLabel.replace(' – ', '/')}
+                dateTime={periodLabel.replace(' - ', '/')}
                 className="font-mono text-[11px] sm:text-xs font-medium tabular-nums text-muted-foreground"
               >
                 {periodLabel}

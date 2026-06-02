@@ -99,20 +99,20 @@ export const trustStripContent = {
   footnote: 'From shipped projects.',
 } as const;
 
-/** Portfolio chatbot copy (scoped assistant — not general ChatGPT). */
+/** Portfolio chatbot copy (scoped assistant, not general ChatGPT). */
 export const chatbotCopy = {
   launcherLabel: 'Ask about my work',
   title: 'Portfolio assistant',
   subtitle: 'Questions about my projects, skills, and booking a call.',
   welcome:
-    'Hi — I can answer questions about my portfolio and experience, or help you book a call via Calendly. What would you like to know?',
+    'Hi, I can answer questions about my portfolio and experience, or help you book a call via Calendly. What would you like to know?',
   quickActions: [
     { label: 'Book a call', message: 'I want to schedule a meeting' },
     { label: 'Skills & stack', message: 'What technologies do you work with?' },
     { label: 'AI projects', message: 'Tell me about your AI projects' },
   ] as const,
   offTopic:
-    'I’m a portfolio assistant — I only cover this site’s work and booking a call. Try “What mobile apps are in the portfolio?” or “Book a meeting”.',
+    'I’m a portfolio assistant, I only cover this site’s work and booking a call. Try “What mobile apps are in the portfolio?” or “Book a meeting”.',
   unclear:
     'I can answer questions about projects and experience on this site, or help you book a call. Which do you need?',
   apiUnavailable:
@@ -123,13 +123,13 @@ export const chatbotCopy = {
   thinking: 'Looking that up…',
   schedule: {
     prompts: {
-      start: 'Great — I’ll help you book a call. First, what’s your name?',
+      start: 'Great, I’ll help you book a call. First, what’s your name?',
       name: 'Thanks! What email should we use for the invite?',
       email: 'What would you like to discuss on the call? (e.g. new app, consulting, role)',
       topic: 'What timezone are you in? (helps when picking a slot)',
-      timezone: 'Almost done — pick a time on the next screen.',
+      timezone: 'Almost done, pick a time on the next screen.',
       complete: (name: string, topic: string) =>
-        `Thanks, ${name}. Topic: ${topic}. Open Calendly below to choose a time — your name and email will be prefilled.`,
+        `Thanks, ${name}. Topic: ${topic}. Open Calendly below to choose a time, your name and email will be prefilled.`,
     },
     openCalendlyLabel: 'Open Calendly to pick a time',
     skipTopic: 'skip',

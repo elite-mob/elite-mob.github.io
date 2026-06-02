@@ -2,20 +2,20 @@
 
 ## Automated in CI
 
-- `npm run check` — ESLint + TypeScript
-- `npm run build` — Vite production build + sitemap generation
+- `npm run check`, ESLint + TypeScript
+- `npm run build`, Vite production build + sitemap generation
 - GitHub Pages deploy (`.github/workflows/deploy.yml`)
 
 ## Before deploying
 
-1. **GitHub Pages source** — Settings → Pages → **GitHub Actions** (not “Deploy from a branch”). If the site shows a blank page, open View Source: a broken deploy still has `<script src="/src/main.tsx">` instead of `/assets/index-*.js`.
+1. **GitHub Pages source**, Settings → Pages → **GitHub Actions** (not “Deploy from a branch”). If the site shows a blank page, open View Source: a broken deploy still has `<script src="/src/main.tsx">` instead of `/assets/index-*.js`.
 
 2. **Environment variables** (see `.env.example`)
    - EmailJS: `VITE_EMAILJS_*` for the contact form
    - Optional: `VITE_CONTACT_EMAIL`, `VITE_SCHEDULE_MEETING_URL`, `VITE_CHAT_API_URL`
    - Firebase: `VITE_FIREBASE_*` for analytics and visit stats (see `docs/`)
 
-2. **GitHub Secrets** — mirror the same `VITE_*` values for the deploy workflow.
+2. **GitHub Secrets**, mirror the same `VITE_*` values for the deploy workflow.
 
 3. **Manual smoke test**
    - Home, portfolio filters, project detail, privacy, 404

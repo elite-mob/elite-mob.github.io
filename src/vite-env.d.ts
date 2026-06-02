@@ -21,7 +21,7 @@ interface ImportMetaEnv {
   readonly VITE_EMAILJS_TO_EMAIL?: string;
   /** Optional: used only in error toasts as a fallback contact line */
   readonly VITE_CONTACT_EMAIL?: string;
-  /** Optional: Cal.com / Calendly / etc. — enables “Schedule a meeting” CTAs when set */
+  /** Optional: Cal.com / Calendly / etc., enables “Schedule a meeting” CTAs when set */
   readonly VITE_SCHEDULE_MEETING_URL?: string;
   /** Optional OpenAI chat via Firebase Function; omit for built-in local Q&A */
   readonly VITE_CHAT_API_URL?: string;

@@ -36,7 +36,7 @@ export const SkillsSection = () => {
               Tech stack <span className="gradient-text-transparent">by domain</span>
             </>
           }
-          description="Production tools across frontend, backend, mobile, AI, and shipping — depth where it counts."
+          description="Production tools across frontend, backend, mobile, AI, and shipping, depth where it counts."
           visible={isSectionVisible}
         />
 

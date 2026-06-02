@@ -67,7 +67,7 @@ export function ProjectImageSlider({
   if (slides.length === 0) return null;
 
   const single = slides.length === 1;
-  /** Ken Burns only on detail hero — 3D transforms on cards caused blank/grey previews in some browsers. */
+  /** Ken Burns only on detail hero, 3D transforms on cards caused blank/grey previews in some browsers. */
   const motionReady = variant === 'hero' && inView && !reduceMotion;
 
   return (

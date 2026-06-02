@@ -17,14 +17,14 @@ Scoped assistant on the portfolio site: project Q&A (OpenAI gpt-4.1-mini via Fir
 2. Set `VITE_SCHEDULE_MEETING_URL` to your Calendly event link (same as hero/contact).
 3. After deploying the function (below), set `VITE_CHAT_API_URL` to the function URL, e.g.  
    `https://us-central1-YOUR_PROJECT.cloudfunctions.net/chat`
-4. `npm run dev` — chat launcher appears bottom-right.
+4. `npm run dev`, chat launcher appears bottom-right.
 
 Chat knowledge is loaded from `src/data/chatKnowledge.json` (regenerate when portfolio copy changes; the app can also rebuild chunks from `portfolioData` at runtime if that file is empty).
 
 ## Firebase function setup
 
 1. Install Firebase CLI and log in: `firebase login`
-2. Edit [`.firebaserc`](../.firebaserc) — set `default` to your Firebase project ID (same as `VITE_FIREBASE_PROJECT_ID`).
+2. Edit [`.firebaserc`](../.firebaserc), set `default` to your Firebase project ID (same as `VITE_FIREBASE_PROJECT_ID`).
 3. Install function dependencies:
 
    ```bash
@@ -39,8 +39,8 @@ Chat knowledge is loaded from `src/data/chatKnowledge.json` (regenerate when por
 
 5. Optional env for deploy (Firebase console or `firebase functions:config`):
 
-   - `OPENAI_MODEL` — default `gpt-4.1-mini`
-   - `ALLOWED_ORIGINS` — comma-separated, e.g. `https://elite-mob.github.io,http://localhost:8080`
+   - `OPENAI_MODEL`, default `gpt-4.1-mini`
+   - `ALLOWED_ORIGINS`, comma-separated, e.g. `https://elite-mob.github.io,http://localhost:8080`
 
 6. Deploy:
 
@@ -54,7 +54,7 @@ Chat knowledge is loaded from `src/data/chatKnowledge.json` (regenerate when por
 
 Add repository secret:
 
-- `VITE_CHAT_API_URL` — production function URL
+- `VITE_CHAT_API_URL`, production function URL
 
 Existing secrets `VITE_SCHEDULE_MEETING_URL` and EmailJS vars are used for scheduling and optional meeting-intent email.
 

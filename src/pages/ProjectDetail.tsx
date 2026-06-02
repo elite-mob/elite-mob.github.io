@@ -251,7 +251,7 @@ const ProjectDetail = () => {
         {/* Hero Section */}
         <section className="container mx-auto px-4 sm:px-6 mb-10 sm:mb-12 md:mb-20">
           <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
-            {/* Project gallery — artwork + live link previews */}
+            {/* Project gallery, artwork + live link previews */}
             <div className={`relative group ${isHeroImageVisible ? 'animate-slide-in-left' : 'opacity-0'}`} ref={heroImageRef}>
               <div className="rounded-3xl overflow-hidden glass-card shadow-4d ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-500 bg-secondary/30">
                 <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] min-h-[220px] max-h-[min(70vh,720px)]">

@@ -1,6 +1,6 @@
 /**
  * Slug for portfolio-gallery folder names (public/portfolio-gallery/{folder}/).
- * Format: `{projectId}-{title-slug}` — unique, readable, matches portfolioData.
+ * Format: `{projectId}-{title-slug}`, unique, readable, matches portfolioData.
  */
 export function portfolioGalleryFolderName(projectId: string, title: string): string {
   const slug = title

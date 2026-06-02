@@ -77,7 +77,7 @@ export function parseProjectsWithLinks(source) {
   return projects;
 }
 
-/** A–Z by file name (case-insensitive, numeric segments ordered naturally). */
+/** A-Z by file name (case-insensitive, numeric segments ordered naturally). */
 export function sortGalleryFileNames(names) {
   return [...names].sort((a, b) =>
     a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }),
