@@ -27,7 +27,7 @@ export const getAnalyticsInstance = (): Promise<Analytics | null> => {
     const appVersion = import.meta.env.VITE_APP_VERSION ?? '0.0.0';
     const appName = import.meta.env.VITE_APP_NAME ?? 'portfolio';
 
-    setDefaultEventParameters(analytics, {
+    setDefaultEventParameters({
       app_version: appVersion,
       web_app_name: appName,
     });
