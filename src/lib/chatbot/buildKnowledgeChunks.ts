@@ -105,7 +105,7 @@ export function buildKnowledgeChunks(projects: readonly Project[]): KnowledgeChu
       'site-reviews',
       'Client testimonials',
       testimonials
-        .map((t) => `"${t.quote}" — ${t.attribution}${t.context ? ` (${t.context})` : ''}`)
+        .map((t) => `"${t.quote}" (${t.attribution}${t.context ? `; ${t.context}` : ''})`)
         .join('\n\n'),
       '/#reviews',
       ['testimonial', 'review', 'client', 'recommend'],

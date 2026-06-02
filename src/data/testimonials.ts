@@ -76,7 +76,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'Working with them was a very fluid and easy process—they responded quickly and clearly to my ideas and questions and worked collaboratively to help me develop a custom app...',
+      'Working with them was a very fluid and easy process. They responded quickly and clearly to my ideas and questions and worked collaboratively to help me develop a custom app...',
     attribution: 'Lindsay · Founder',
     initials: 'LI',
     context: 'iOS & Android',
@@ -84,7 +84,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'Professional, reliable, and incredibly talented—he exceeded all expectations. He delivered an app our users genuinely love, and the entire process felt smooth and well-managed from start to finish.',
+      'Professional, reliable, and incredibly talented. He exceeded all expectations. He delivered an app our users genuinely love, and the entire process felt smooth and well-managed from start to finish.',
     attribution: 'Jeremy Freund. · CTO',
     initials: 'JF',
     context: 'Web',
