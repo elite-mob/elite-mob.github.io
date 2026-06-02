@@ -77,6 +77,13 @@ export const footerTagline = 'Full-stack engineer · Web, Mobile & AI';
 /**
  * Homepage trust strip (below hero). Optional: swap for logo assets when approved.
  */
+/** Homepage experience / work history section. */
+export const workHistoryContent = {
+  eyebrow: 'EXPERIENCE',
+  supporting:
+    'Full-stack delivery across web, mobile, and backend, from solo ownership to leading small teams on contract and product work.',
+} as const;
+
 export const trustStripContent = {
   eyebrow: 'SELECTED COLLABORATIONS',
   supporting: 'Teams and products behind shipped work.',

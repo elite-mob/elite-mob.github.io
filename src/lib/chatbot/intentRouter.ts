@@ -35,6 +35,11 @@ const PROJECT_PATTERNS = [
 const NAVIGATE_PATTERNS: { pattern: RegExp; target: string }[] = [
   { pattern: /\b(contact|get in touch|reach out|email me)\b/i, target: '/#contact' },
   { pattern: /\b(about you|about section|who are you)\b/i, target: '/#about' },
+  { pattern: /\b(work history|experience section|employment history|resume|cv)\b/i, target: '/#experience' },
+  {
+    pattern: /\b(work history|experience section|employment history|your resume|career history)\b/i,
+    target: '/#experience',
+  },
   { pattern: /\b(reviews?|testimonials?)\b/i, target: '/#reviews' },
   { pattern: /\b(skills? section|tech stack section)\b/i, target: '/#skills' },
   { pattern: /\b(portfolio section|case studies|view projects)\b/i, target: '/#portfolio' },

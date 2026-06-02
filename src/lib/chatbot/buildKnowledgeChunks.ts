@@ -7,6 +7,8 @@ import {
 } from '@/data/siteContent';
 import { techStackGroups, getProficiencyTier } from '@/data/skillsData';
 import { testimonials } from '@/data/testimonials';
+import { workExperiences } from '@/data/workHistoryData';
+import { workHistoryContent } from '@/data/siteContent';
 import type { Project } from '@/data/portfolioData';
 import type { KnowledgeChunk } from '@/lib/chatbot/types';
 
@@ -62,6 +64,19 @@ export function buildKnowledgeChunks(projects: readonly Project[]): KnowledgeChu
       [contactCtaContent.heading, contactCtaContent.supporting, contactCtaContent.replyWindow].join('\n'),
       '/#contact',
       ['hire', 'contact', 'timeline', 'proposal'],
+    ),
+    chunk(
+      'site-experience',
+      'Work history',
+      [
+        workHistoryContent.supporting,
+        ...workExperiences.map(
+          (e) =>
+            `${e.title} at ${e.company} (${e.period}): ${e.summary} ${e.achievements.join(' ')}`,
+        ),
+      ].join('\n'),
+      '/#experience',
+      ['experience', 'work history', 'employment', 'career', 'resume'],
     ),
     chunk(
       'site-trust',

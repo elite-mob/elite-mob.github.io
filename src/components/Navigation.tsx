@@ -8,6 +8,7 @@ import { SITE_BRAND } from '@/lib/site';
 const navLinks = [
   { href: '#home', label: 'Home', path: '/' },
   { href: '#about', label: 'About', path: '/' },
+  { href: '#experience', label: 'Experience', path: '/' },
   { href: '#portfolio', label: 'Portfolio', path: '/' },
   { href: '#skills', label: 'Skills', path: '/' },
   { href: '#reviews', label: 'Reviews', path: '/' },
