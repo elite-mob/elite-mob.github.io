@@ -1,6 +1,6 @@
 /**
  * Homepage marketing copy and structured content.
- * TODO: Revisit metrics in trust bullets when you have figures you can cite publicly.
+ * Update trust bullets when you have client-approved metrics to cite publicly.
  */
 
 export const heroContent = {
@@ -66,7 +66,7 @@ export const scheduleMeetingContent = {
 
 /**
  * Fallback when a project has neither `resultMetric` nor `outcomeHighlight` in portfolioData.
- * TODO: Prefer filling outcomeHighlight or resultMetric per project for ship-quality cards.
+ * Prefer outcomeHighlight or resultMetric per project for stronger portfolio cards.
  */
 export const caseStudyResultPlaceholder =
   'Add a client-approved KPI on this project (users, revenue, latency, uptime, or similar).';
