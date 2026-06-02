@@ -26,8 +26,8 @@
     --muted: 200 18% 92%;
     --muted-foreground: 220 15% 45%;
 
-    --accent: 12 90% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 187 45% 92%;
+    --accent-foreground: 187 70% 28%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -40,7 +40,7 @@
 
     /* Custom design tokens - light & cool */
     --gradient-primary: linear-gradient(135deg, hsl(187 85% 42%) 0%, hsl(200 75% 48%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(12 90% 55%) 0%, hsl(40 100% 55%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(187 75% 42%) 0%, hsl(200 70% 48%) 100%);
     --gradient-hero: linear-gradient(180deg, hsl(200 25% 98%) 0%, hsl(200 30% 96%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100% / 0.9) 0%, hsl(200 20% 98% / 0.8) 100%);
     
@@ -104,15 +104,15 @@
     --secondary-foreground: 200 12% 92%;
     --muted: 220 11% 27%;
     --muted-foreground: 200 10% 58%;
-    --accent: 12 76% 56%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 187 35% 24%;
+    --accent-foreground: 187 55% 78%;
     --destructive: 0 58% 50%;
     --destructive-foreground: 0 0% 100%;
     --border: 220 10% 30%;
     --input: 220 10% 30%;
     --ring: 187 60% 50%;
     --gradient-primary: linear-gradient(135deg, hsl(187 58% 48%) 0%, hsl(200 52% 54%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(40 90% 54%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(187 58% 48%) 0%, hsl(200 52% 54%) 100%);
     --gradient-hero: linear-gradient(180deg, hsl(220 16% 17%) 0%, hsl(220 14% 20%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(220 14% 23% / 0.92) 0%, hsl(220 12% 20% / 0.88) 100%);
     --shadow-card: 0 4px 24px hsl(220 30% 4% / 0.22);
@@ -512,11 +512,34 @@
   }
 
   @keyframes glow-pulse {
-    0%, 100% { 
-      box-shadow: 0 0 10px hsl(12 100% 65% / 0.4), 0 0 20px hsl(12 100% 65% / 0.3), 0 0 30px hsl(12 100% 65% / 0.2);
+    0%, 100% {
+      box-shadow: 0 0 10px hsl(187 85% 48% / 0.35), 0 0 20px hsl(187 85% 48% / 0.2);
     }
-    50% { 
-      box-shadow: 0 0 20px hsl(12 100% 65% / 0.6), 0 0 30px hsl(12 100% 65% / 0.5), 0 0 40px hsl(12 100% 65% / 0.4);
+    50% {
+      box-shadow: 0 0 18px hsl(187 85% 48% / 0.5), 0 0 28px hsl(187 85% 48% / 0.35);
+    }
+  }
+
+  @keyframes trust-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-trust-marquee {
+    animation: trust-marquee 42s linear infinite;
+  }
+
+  .animate-trust-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-trust-marquee {
+      animation: none;
     }
   }
 

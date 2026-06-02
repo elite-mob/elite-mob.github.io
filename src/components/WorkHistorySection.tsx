@@ -3,6 +3,8 @@ import { ChevronDown } from 'lucide-react';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { workHistoryContent } from '@/data/siteContent';
 import { workExperiences, type WorkExperience } from '@/data/workHistoryData';
+import { SectionBackdrop } from '@/components/SectionBackdrop';
+import { SectionHeader } from '@/components/SectionHeader';
 import {
   Collapsible,
   CollapsibleContent,
@@ -168,49 +170,20 @@ export const WorkHistorySection = () => {
       className="py-20 md:py-28 relative overflow-hidden scroll-mt-24"
       ref={sectionRef}
     >
-      <div className="absolute inset-0 z-0 bg-section-elevated" aria-hidden />
-      <div
-        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.35] dark:opacity-[0.2]"
-        aria-hidden
-        style={{
-          backgroundImage: `
-            linear-gradient(hsl(var(--border) / 0.35) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(var(--border) / 0.35) 1px, transparent 1px)
-          `,
-          backgroundSize: '48px 48px',
-          maskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, black, transparent)',
-        }}
-      />
-      <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden" aria-hidden>
-        <div
-          className="absolute right-0 top-1/4 h-[min(50vh,24rem)] w-[min(80vw,28rem)] translate-x-1/3 rounded-full blur-[110px]"
-          style={{
-            background:
-              'radial-gradient(circle, hsl(187 55% 48% / 0.1) 0%, hsl(187 50% 52% / 0.03) 50%, transparent 70%)',
-          }}
-        />
-      </div>
+      <SectionBackdrop variant="elevated" grid />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <header
-          className={cn(
-            'text-center max-w-2xl mx-auto mb-10 sm:mb-12',
-            isSectionVisible ? 'animate-fade-in-up' : 'opacity-0',
-          )}
-        >
-          <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-primary mb-3">
-            {workHistoryContent.eyebrow}
-          </p>
-          <h2
-            id="experience-heading"
-            className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4"
-          >
-            Work <span className="gradient-text-transparent">history</span>
-          </h2>
-          <p className="text-sm sm:text-base text-foreground/75 leading-relaxed [text-wrap:balance]">
-            {workHistoryContent.supporting}
-          </p>
-        </header>
+        <SectionHeader
+          id="experience-heading"
+          eyebrow={workHistoryContent.eyebrow}
+          title={
+            <>
+              Work <span className="gradient-text-transparent">history</span>
+            </>
+          }
+          description={workHistoryContent.supporting}
+          visible={isSectionVisible}
+        />
 
         <div className={cn('max-w-5xl mx-auto space-y-14 sm:space-y-16', !isSectionVisible && 'opacity-0')}>
           {currentRoles.length > 0 && (

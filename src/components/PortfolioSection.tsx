@@ -2,7 +2,9 @@ import { useState, useEffect, useMemo } from 'react';
 import { projects, ProjectCategory, getPortfolioDisplayIndex } from '@/data/portfolioData';
 import { ProjectCard } from './ProjectCard';
 import { Button } from '@/components/ui/button';
-import { Code2, Smartphone, Brain, Layers, Sparkles, TrendingUp, Star } from 'lucide-react';
+import { Code2, Smartphone, Brain, Layers, Star } from 'lucide-react';
+import { SectionBackdrop } from '@/components/SectionBackdrop';
+import { SectionHeader } from '@/components/SectionHeader';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 
 type FilterType = 'all' | 'featured' | ProjectCategory;
@@ -126,12 +128,11 @@ export const PortfolioSection = () => {
       // Show filters after header (shorter delay on mobile)
       const timer1 = setTimeout(() => {
         setShowFilters(true);
-      }, isNavigatingToPortfolio ? 50 : 400);
+      }, isNavigatingToPortfolio ? 50 : 120);
       
-      // Show portfolio items after filters have animated
       const timer2 = setTimeout(() => {
         setShowPortfolioItems(true);
-      }, isNavigatingToPortfolio ? 200 : 1000);
+      }, isNavigatingToPortfolio ? 120 : 280);
       
       return () => {
         clearTimeout(timer1);
@@ -174,44 +175,26 @@ export const PortfolioSection = () => {
     <section
       id="portfolio"
       aria-labelledby="portfolio-heading"
-      className="py-20 md:py-28 relative overflow-hidden min-h-[50vh]"
+      className="py-20 md:py-28 relative overflow-hidden min-h-[50vh] scroll-mt-24"
       ref={sectionRef}
     >
-      <div className="absolute inset-0 z-0 bg-section-elevated" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden" aria-hidden>
-        <div
-          className="absolute left-1/2 top-[34%] h-[min(58vh,30rem)] w-[min(104vw,56rem)] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[72px] sm:blur-[90px]"
-          style={{
-            background:
-              'radial-gradient(circle at center, hsl(187 52% 50% / 0.07) 0%, hsl(187 52% 50% / 0.02) 42%, transparent 62%)',
-          }}
-        />
-      </div>
+      <SectionBackdrop variant="elevated" grid />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
           {filterAnnouncement}
         </div>
-        {/* Section Header - Enhanced */}
-        <div className={`text-center mb-10 sm:mb-12 md:mb-14 relative ${
-          isSectionVisible || showFilters ? 'animate-fade-in-up' : 'opacity-0'
-        }`}>
-          <h2
-            id="portfolio-heading"
-            className={`font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-3 sm:mb-4 md:mb-6 px-4 ${
-              isSectionVisible || showFilters ? 'animate-text-reveal stagger-delay-1' : 'opacity-0'
-            }`}
-          >
-            Case <span className="gradient-text-transparent">Studies</span>
-          </h2>
-          <p
-            className={`text-sm sm:text-base md:text-lg text-foreground/90 max-w-3xl mx-auto leading-relaxed px-4 mb-6 sm:mb-8 md:mb-9 ${
-              isSectionVisible || showFilters ? 'animate-fade-in-up stagger-delay-2' : 'opacity-0'
-            }`}
-          >
-            Shipped work with roles, stacks, and outcomes: filter by featured, web, mobile, or AI, then open a card for the full story.
-          </p>
-        </div>
+        <SectionHeader
+          id="portfolio-heading"
+          eyebrow="PORTFOLIO"
+          title={
+            <>
+              Case <span className="gradient-text-transparent">studies</span>
+            </>
+          }
+          description="Shipped work with roles, stacks, and outcomes. Filter by type, then open a card for the full story."
+          visible={isSectionVisible || showFilters}
+        />
 
         {/* Filter Buttons - Enhanced with better interactions */}
         <div className={`flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-8 sm:mb-12 md:mb-16 px-4 transition-opacity duration-500 ${
@@ -284,43 +267,6 @@ export const PortfolioSection = () => {
               <p className="text-foreground/72">Nothing in this filter. Try another or browse all.</p>
             </div>
           )}
-        </div>
-
-        {/* Stats: light inline strip; subtle hover */}
-        <div
-          className={`grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6 md:gap-8 lg:gap-10 mt-16 sm:mt-20 md:mt-24 relative ${
-            isSectionVisible ? 'animate-fade-in-up stagger-delay-6' : 'opacity-0'
-          }`}
-        >
-          {[
-            { value: '100+', label: 'Projects Delivered', icon: Layers },
-            { value: '200+', label: 'Clients Served', icon: Sparkles },
-            { value: '10+', label: 'Years Experience', icon: TrendingUp },
-            { value: '99%', label: 'Client Satisfaction', icon: Brain },
-          ].map((stat, index) => {
-            const Icon = stat.icon;
-            const delayClass = index === 0 ? 'stagger-delay-1' : index === 1 ? 'stagger-delay-2' : index === 2 ? 'stagger-delay-3' : 'stagger-delay-4';
-            return (
-              <div
-                key={stat.label}
-                className={`group relative text-center rounded-xl sm:rounded-2xl border border-border/70 glass-card shadow-sm px-3 py-5 sm:px-4 sm:py-6 md:py-7 transition-colors duration-300 hover:border-border hover:shadow-md ${
-                  isSectionVisible ? `animate-fade-in-scale ${delayClass}` : 'opacity-0'
-                }`}
-              >
-                <div className="relative z-10 flex flex-col items-center gap-2 sm:gap-2.5 md:gap-3">
-                  <div className="inline-flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg bg-primary/[0.08] text-primary ring-1 ring-primary/10 transition-transform duration-300 group-hover:scale-[1.03]">
-                    <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" aria-hidden />
-                  </div>
-                  <div className="font-display text-2xl sm:text-3xl md:text-4xl font-bold gradient-text-transparent leading-none tracking-tight">
-                    {stat.value}
-                  </div>
-                  <div className="text-foreground/74 text-[11px] sm:text-xs font-medium leading-snug max-w-[11rem] mx-auto">
-                    {stat.label}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
         </div>
       </div>
     </section>

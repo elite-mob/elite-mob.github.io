@@ -9,6 +9,7 @@ import { Code2, Smartphone, Brain } from 'lucide-react';
 import { use3DTilt } from '@/hooks/use-3d-tilt';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { useCallback, useMemo } from 'react';
+import { cn } from '@/lib/utils';
 
 /** Home grid card: teaser only; outcome, role, stack, and CTAs live on the project detail page. */
 
@@ -98,7 +99,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
         </RouterNavButton>
 
         {project.featured && (
-          <div className="absolute top-3 right-3 z-[2] px-2.5 py-1 rounded-lg bg-accent text-accent-foreground text-[11px] font-semibold uppercase tracking-wide shadow-sm">
+          <div className="absolute top-3 right-3 z-[2] px-2.5 py-1 rounded-lg bg-primary text-primary-foreground text-[11px] font-semibold uppercase tracking-wide shadow-sm ring-1 ring-primary/30">
             Featured
           </div>
         )}
@@ -119,7 +120,12 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
             </RouterNavButton>
           </h3>
           {storeLinks.length > 0 && (
-            <div className="pt-0.5 w-full min-w-0">
+            <div
+              className={cn(
+                'w-full min-w-0',
+                storeLinks.length > 1 ? 'pt-2 pb-1' : 'pt-1.5 pb-0.5',
+              )}
+            >
               <AppStoreRating storeLinks={storeLinks} variant="compact" enabled={isVisible} />
             </div>
           )}

@@ -274,7 +274,7 @@ const ProjectDetail = () => {
                 </div>
               </div>
               {project.featured && (
-                <div className="absolute top-4 right-4 z-[4] px-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-semibold animate-glow-pulse">
+                <div className="absolute top-4 right-4 z-[4] px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold ring-1 ring-primary/30">
                   Featured
                 </div>
               )}
@@ -545,7 +545,14 @@ const ProjectDetail = () => {
                         {relatedProject.title}
                       </h3>
                       {projectHasStoreRating(relatedProject) && (
-                        <div className="mt-1.5">
+                        <div
+                          className={cn(
+                            'w-full min-w-0',
+                            getStoreLinksForProject(relatedProject).length > 1
+                              ? 'mt-2 mb-1'
+                              : 'mt-1.5',
+                          )}
+                        >
                           <AppStoreRating
                             storeLinks={getStoreLinksForProject(relatedProject)}
                             variant="compact"

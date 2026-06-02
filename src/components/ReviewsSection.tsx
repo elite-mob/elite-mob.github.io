@@ -4,6 +4,8 @@ import { Quote } from 'lucide-react';
 import { testimonials, type Testimonial } from '@/data/testimonials';
 import { testimonialAvatarSrc } from '@/lib/linkedinProfile';
 import { cn } from '@/lib/utils';
+import { SectionBackdrop } from '@/components/SectionBackdrop';
+import { SectionHeader } from '@/components/SectionHeader';
 
 function testimonialDisplayName(attribution: string): string {
   return attribution.split(' · ')[0]?.trim() || attribution;
@@ -101,39 +103,20 @@ export const ReviewsSection = () => {
       className="py-20 md:py-28 relative overflow-hidden scroll-mt-24"
       ref={sectionRef}
     >
-      <div className="absolute inset-0 z-0 bg-section-elevated" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden" aria-hidden>
-        <div
-          className="absolute right-0 top-1/3 h-[min(50vh,28rem)] w-[min(90vw,36rem)] translate-x-1/4 rounded-full blur-[100px] opacity-90"
-          style={{
-            background:
-              'radial-gradient(circle at center, hsl(187 55% 48% / 0.07) 0%, hsl(187 50% 52% / 0.02) 55%, transparent 70%)',
-          }}
-        />
-      </div>
+      <SectionBackdrop variant="elevated" grid />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <header
-          className={`text-center max-w-3xl mx-auto mb-12 sm:mb-14 md:mb-16 ${
-            isSectionVisible ? 'animate-fade-in-up' : 'opacity-0'
-          }`}
-        >
-          <h2
-            id="reviews-heading"
-            className={`font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-5 ${
-              isSectionVisible ? 'animate-text-reveal stagger-delay-2' : 'opacity-0'
-            }`}
-          >
-            What people <span className="gradient-text-transparent">say</span>
-          </h2>
-          <p
-            className={`text-sm sm:text-base text-foreground/78 leading-relaxed [text-wrap:balance] ${
-              isSectionVisible ? 'animate-fade-in-up stagger-delay-3' : 'opacity-0'
-            }`}
-          >
-            Representative feedback from shipped work; update testimonials data when NDAs require anonymization.
-          </p>
-        </header>
+        <SectionHeader
+          id="reviews-heading"
+          eyebrow="REVIEWS"
+          title={
+            <>
+              What people <span className="gradient-text-transparent">say</span>
+            </>
+          }
+          description="Representative feedback from shipped work."
+          visible={isSectionVisible}
+        />
 
         <div
           className={cn(

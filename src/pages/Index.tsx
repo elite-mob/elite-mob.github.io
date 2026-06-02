@@ -74,8 +74,8 @@ const Index = () => {
         <HeroSection />
         <LogoStrip />
         <AboutSection />
-        <WorkHistorySection />
         <PortfolioSection />
+        <WorkHistorySection />
         <SkillsSection />
         <ReviewsSection />
         <ContactSection />
