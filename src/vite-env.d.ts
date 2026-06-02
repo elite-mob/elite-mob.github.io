@@ -23,8 +23,10 @@ interface ImportMetaEnv {
   readonly VITE_CONTACT_EMAIL?: string;
   /** Optional: Cal.com / Calendly / etc. — enables “Schedule a meeting” CTAs when set */
   readonly VITE_SCHEDULE_MEETING_URL?: string;
-  /** Firebase Cloud Function URL for portfolio chat Q&A (POST …/chat) */
+  /** Optional OpenAI chat via Firebase Function; omit for built-in local Q&A */
   readonly VITE_CHAT_API_URL?: string;
+  /** Optional CORS proxy for Play Store ratings on static GitHub Pages */
+  readonly VITE_PLAY_STORE_CORS_PROXY?: string;
 }
 
 interface ImportMeta {
@@ -34,4 +36,10 @@ interface ImportMeta {
 declare module '*.pdf' {
   const src: string;
   export default src;
+}
+
+/** Built by vite-plugin-portfolio-gallery from public/portfolio-gallery/ */
+declare module 'virtual:portfolio-gallery' {
+  const manifest: Record<string, string[]>;
+  export default manifest;
 }

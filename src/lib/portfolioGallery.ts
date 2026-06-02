@@ -1,24 +1,21 @@
-import galleryManifest from '@/data/portfolioGallery.json';
+import galleryManifest from 'virtual:portfolio-gallery';
 
 type GalleryManifest = Record<string, string[]>;
 
 const manifest = galleryManifest as GalleryManifest;
 
-/** Fetched live previews from project links (public/portfolio-gallery). */
+/** Images from public/portfolio-gallery/{projectId}-{slug}/ (auto-scanned on dev + build). */
 export function getProjectGalleryPaths(projectId: string): string[] {
   return manifest[projectId] ?? [];
 }
 
-/** Primary card image plus any fetched link previews (deduped). */
-export function getProjectSliderImages(projectId: string, primaryImage?: string): string[] {
-  const fetched = getProjectGalleryPaths(projectId);
-  const images: string[] = [];
+/** All images in a project's gallery folder — used as slider slides. */
+export function getProjectSliderImages(projectId: string, fallbackArtwork?: string): string[] {
+  const gallery = getProjectGalleryPaths(projectId);
+  if (gallery.length > 0) return gallery;
 
-  if (primaryImage && primaryImage !== '/placeholder.svg') {
-    images.push(primaryImage);
+  if (fallbackArtwork && fallbackArtwork !== '/placeholder.svg') {
+    return [fallbackArtwork];
   }
-  for (const src of fetched) {
-    if (!images.includes(src)) images.push(src);
-  }
-  return images.length > 0 ? images : primaryImage ? [primaryImage] : [];
+  return [];
 }

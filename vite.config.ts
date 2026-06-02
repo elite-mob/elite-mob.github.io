@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import portfolioGalleryPlugin from "./scripts/vite-plugin-portfolio-gallery.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageJson = JSON.parse(
@@ -90,7 +91,7 @@ export default defineConfig(({ mode }) => ({
       },
     },
   },
-  plugins: [react(), injectOgImageMeta()],
+  plugins: [react(), portfolioGalleryPlugin(), injectOgImageMeta()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

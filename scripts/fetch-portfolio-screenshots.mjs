@@ -1,37 +1,32 @@
 /**
  * Fetches live previews from portfolio project links via Microlink, saves under
- * public/portfolio-gallery/, and writes src/data/portfolioGallery.json.
+ * public/portfolio-gallery/{projectId}-{slug}/, and syncs src/data/portfolioGallery.json
+ * from all images in each project folder.
  *
  * Run: npm run fetch-portfolio-screenshots
- * Cached by link hash — skips URLs already on disk.
+ * Skips files already on disk for each project folder.
  */
 
-import { createHash } from 'node:crypto';
-import { mkdir, readFile, writeFile, access } from 'node:fs/promises';
+import { readFile, writeFile, access, cp, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import sharp from 'sharp';
+import {
+  GALLERY_ROOT,
+  buildGalleryManifest,
+  galleryFolderName,
+  listGalleryImageFiles,
+  parseProjects,
+  parseProjectsWithLinks,
+  scanGalleryFolder,
+  ensureGalleryFolder,
+} from './portfolio-gallery-utils.mjs';
 
 const ROOT = process.cwd();
 const DATA_FILE = join(ROOT, 'src', 'data', 'portfolioData.ts');
-const OUT_DIR = join(ROOT, 'public', 'portfolio-gallery');
 const MANIFEST_FILE = join(ROOT, 'src', 'data', 'portfolioGallery.json');
 
 const CONCURRENCY = 1;
 const REQUEST_GAP_MS = 2500;
-
-function hashLink(link) {
-  return createHash('sha256').update(link).digest('hex').slice(0, 14);
-}
-
-function parseProjects(source) {
-  const projects = [];
-  const blockRegex = /id:\s*'([^']+)'[\s\S]*?link:\s*'([^']+)'/g;
-  let match;
-  while ((match = blockRegex.exec(source)) !== null) {
-    projects.push({ id: match[1], link: match[2] });
-  }
-  return projects;
-}
 
 function isAppStoreLink(link) {
   return /apps\.apple\.com|play\.google\.com|itunes\.apple\.com/i.test(link);
@@ -92,92 +87,100 @@ async function downloadOptimized(url, destPath) {
     .toFile(destPath);
 }
 
-async function fetchLinkGallery(link) {
-  const hash = hashLink(link);
-  const dir = join(OUT_DIR, hash);
-  await mkdir(dir, { recursive: true });
+async function copyGalleryFromSource(sourceDir, destDir) {
+  await mkdir(destDir, { recursive: true });
+  const files = await listGalleryImageFiles(sourceDir);
+  for (const file of files) {
+    await cp(join(sourceDir, file), join(destDir, file));
+  }
+}
+
+async function fetchProjectGallery(project, linkCache) {
+  const { folder, dir } = await ensureGalleryFolder(project.id, project.title);
+
+  if (isSocialOnly(project.link)) {
+    return scanGalleryFolder(folder);
+  }
+
+  const cached = linkCache.get(project.link);
+  if (cached?.dir && (await fileExists(cached.dir))) {
+    await copyGalleryFromSource(cached.dir, dir);
+    const paths = await scanGalleryFolder(folder);
+    if (paths.length > 0) {
+      console.log(`  ↳ copied from ${cached.folder} → ${folder} (${paths.length} images)`);
+      linkCache.set(project.link, { dir, folder });
+      return paths;
+    }
+  }
 
   const tasks = [];
-  if (isAppStoreLink(link) || isSocialOnly(link)) {
+  if (isAppStoreLink(project.link)) {
     tasks.push({ key: 'preview', mobile: true });
   } else {
     tasks.push({ key: 'desktop', mobile: false });
     tasks.push({ key: 'mobile', mobile: true });
   }
 
-  const paths = [];
   for (const { key, mobile } of tasks) {
     const fileName = `${key}.webp`;
     const dest = join(dir, fileName);
-    const publicPath = `/portfolio-gallery/${hash}/${fileName}`;
 
-    if (await fileExists(dest)) {
-      paths.push(publicPath);
-      continue;
-    }
+    if (await fileExists(dest)) continue;
 
     try {
-      const shotUrl = await microlinkScreenshot(link, { mobile });
+      const shotUrl = await microlinkScreenshot(project.link, { mobile });
       await downloadOptimized(shotUrl, dest);
-      paths.push(publicPath);
-      console.log(`  ✓ ${key}: ${link}`);
+      console.log(`  ✓ ${key}: ${project.id} (${project.title})`);
     } catch (err) {
-      console.warn(`  ✗ ${key} (${link}): ${err.message}`);
+      console.warn(`  ✗ ${key} (${project.id}): ${err.message}`);
     }
     await new Promise((r) => setTimeout(r, REQUEST_GAP_MS));
   }
 
+  const paths = await scanGalleryFolder(folder);
+  if (paths.length > 0) {
+    linkCache.set(project.link, { dir, folder });
+  }
   return paths;
 }
 
 async function runPool(items, worker, limit) {
-  const results = new Array(items.length);
   let i = 0;
-
   async function next() {
     while (i < items.length) {
       const idx = i++;
-      results[idx] = await worker(items[idx], idx);
+      await worker(items[idx], idx);
     }
   }
-
   await Promise.all(Array.from({ length: limit }, () => next()));
-  return results;
 }
 
 async function main() {
   const source = await readFile(DATA_FILE, 'utf8');
-  const projects = parseProjects(source);
-  const uniqueLinks = [...new Set(projects.map((p) => p.link))];
+  const projects = parseProjectsWithLinks(source);
 
-  console.log(`Projects with links: ${projects.length}, unique URLs: ${uniqueLinks.length}`);
-  await mkdir(OUT_DIR, { recursive: true });
+  console.log(`Projects with links: ${projects.length}`);
+  await mkdir(GALLERY_ROOT, { recursive: true });
 
-  const linkToPaths = new Map();
+  const linkCache = new Map();
 
   await runPool(
-    uniqueLinks,
-    async (link) => {
-      if (isSocialOnly(link)) {
-        console.log(`Skipping social-only: ${link}`);
-        linkToPaths.set(link, []);
-        return;
-      }
-      console.log(`Fetching: ${link}`);
-      const paths = await fetchLinkGallery(link);
-      linkToPaths.set(link, paths);
+    projects,
+    async (project) => {
+      console.log(`Gallery: ${galleryFolderName(project.id, project.title)}`);
+      await fetchProjectGallery(project, linkCache);
     },
     CONCURRENCY,
   );
 
-  const manifest = {};
-  for (const { id, link } of projects) {
-    manifest[id] = linkToPaths.get(link) ?? [];
-  }
+  const manifest = await buildGalleryManifest(parseProjects(source));
 
   await writeFile(MANIFEST_FILE, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
   const withImages = Object.values(manifest).filter((arr) => arr.length > 0).length;
-  console.log(`\nWrote ${MANIFEST_FILE} (${withImages}/${projects.length} projects with fetched previews)`);
+  const totalImages = Object.values(manifest).reduce((n, arr) => n + arr.length, 0);
+  console.log(
+    `\nSynced ${MANIFEST_FILE}: ${withImages}/${Object.keys(manifest).length} projects with images (${totalImages} slides)`,
+  );
 }
 
 main().catch((err) => {
