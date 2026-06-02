@@ -169,12 +169,12 @@ export const ChatbotWidget = () => {
           }
         }
 
-        const response = await sendChatMessage({
+        const { response, usedRemoteApi } = await sendChatMessage({
           message: text,
           chunks,
           conversationId: conversationIdRef.current,
         });
-        void logChatApiCall();
+        if (usedRemoteApi) void logChatApiCall();
 
         setMessages((prev) => {
           const withoutThinking = prev.filter((m) => m.content !== chatbotCopy.thinking);
