@@ -25,14 +25,6 @@ export const GALLERY_IMAGE_EXT = new Set([
 
 const SKIP_FILES = new Set(['.ds_store', 'thumbs.db', 'desktop.ini']);
 
-/** Preferred slide order by basename (screenshots before logo artwork). */
-const BASENAME_ORDER = {
-  preview: -2,
-  desktop: -1,
-  mobile: 0,
-  artwork: 10,
-};
-
 export function getImageExtension(fileName) {
   const dot = fileName.lastIndexOf('.');
   if (dot <= 0) return '';
@@ -85,19 +77,11 @@ export function parseProjectsWithLinks(source) {
   return projects;
 }
 
-function galleryFileSortKey(fileName) {
-  const base = fileName.replace(/\.[^.]+$/i, '').toLowerCase();
-  if (BASENAME_ORDER[base] != null) return BASENAME_ORDER[base];
-  const numbered = fileName.match(/^(\d+)/);
-  if (numbered) return 10 + parseInt(numbered[1], 10);
-  return 100 + fileName.charCodeAt(0);
-}
-
+/** A–Z by file name (case-insensitive, numeric segments ordered naturally). */
 export function sortGalleryFileNames(names) {
-  return [...names].sort((a, b) => {
-    const diff = galleryFileSortKey(a) - galleryFileSortKey(b);
-    return diff !== 0 ? diff : a.localeCompare(b);
-  });
+  return [...names].sort((a, b) =>
+    a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }),
+  );
 }
 
 export async function listGalleryImageFiles(dir) {
