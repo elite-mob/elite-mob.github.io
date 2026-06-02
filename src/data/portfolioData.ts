@@ -1,59 +1,7 @@
 export type ProjectCategory = 'web' | 'mobile' | 'ai';
 
-import troutRoutes from '@/assets/troutroutes.png';
-import troutRoutesMobile from '@/assets/troutroutes-mobile.png';
-import primeAi from '@/assets/prime-ai.png';
-import equitableEarth from '@/assets/equitable-earth.png';
-import greenwolfCannabis from '@/assets/greenwolf-cannabis.png';
-import podIo from '@/assets/pod-io.png';
-import findersFee from '@/assets/finders-fee.png';
+import { projectArtworkUrl } from '@/lib/portfolioGalleryPaths';
 
-import reco from '@/assets/reco.png';
-import proWrldFit from '@/assets/pro-wrld-fit.png';
-import hiveSocial from '@/assets/hive-social.png';
-import soulPod from '@/assets/soul-pod.png';
-import rainRain from '@/assets/rain-rain.png';
-import poppyNotes from '@/assets/poppy-notes.png';
-import dimpleDating from '@/assets/dimple-dating.png';
-import checkSammy from '@/assets/check-sammy.png';
-import conquer from '@/assets/conquer.png';
-import seshFitness from '@/assets/sesh-fitness.png';
-import reboundDynamics from '@/assets/rebound-dynamics.png';
-import krackwins from '@/assets/krackwins.png';
-import sixPack from '@/assets/six-pack-fitness.png';
-import europeanWatch from '@/assets/european-watch.png';
-import whmcs from '@/assets/whmcs.png';
-import betaciety from '@/assets/betaciety.png';
-import elkConnect from '@/assets/elk-connect.png';
-import heartLand from '@/assets/heart-land.png';
-import virtualBar from '@/assets/virtual-bar.png';
-import scrollStoppers from '@/assets/scroll-stoppers.png';
-import sketchEdge from '@/assets/sketch-edge.png';
-import gowivo from '@/assets/gowivo.png';
-import footReflexology from '@/assets/foot-reflexology.png';
-import yodel from '@/assets/yodel.png';
-import oneNeighbor from '@/assets/one-neighbor.png';
-import deadshowz from '@/assets/deadshowz.png';
-import yobuddy from '@/assets/yobuddy.png';
-import tellyCollege from '@/assets/telly-college.png';
-import moonRabbit from '@/assets/moon-rabbit.png';
-import snackableAi from '@/assets/snackable-ai.png';
-import glitchLifeDeals from '@/assets/glitch-life-deals.png';
-import sierraInternational from '@/assets/sierra-international.png';
-import smokelab from '@/assets/smokelab.png';
-import myMoodAI from '@/assets/my-mood-ai.png';
-import serveOnline from '@/assets/serve-online.png';
-import live17 from '@/assets/live-17.png';
-import flava from '@/assets/flava.png';
-import toby from '@/assets/toby.png';
-import curb from '@/assets/curb.png';
-
-import athenaAi from '@/assets/athena-ai.png';
-
-/**
- * Portfolio projects: keep `outcomeHighlight` / `resultMetric` accurate for case study cards.
- * TODO: Add measurable outcomes where you can cite them; use resultMetric for card-specific KPI text.
- */
 export interface Project {
   id: string;
   title: string;
@@ -68,21 +16,18 @@ export interface Project {
   challenge?: string;
   solution?: string;
   features?: string[];
-  /** Recruiter-facing outcome line for the case study strip (optional) */
   outcomeHighlight?: string;
-  /** Optional KPI line for cards; takes precedence over outcomeHighlight when set. TODO: Set per project when you have numbers. */
   resultMetric?: string;
 }
 
 export const projects: Project[] = [
-  // Web Development Projects
   {
     id: 'web-1',
     title: 'TroutRoutes - 26M+ Users',
     description: `Built and scaled a fly fishing marketplace serving 26M+ users, with booking, payments, guide discovery, gear listings, and location-based experiences. The platform was later acquired by onX.`,
     category: 'web',
     technologies: ['React', 'Node.js', 'Express', 'Firebase', 'Stripe', 'Mapbox', 'CSV', 'Chart.js'],
-    imageUrl: troutRoutes,
+    imageUrl: projectArtworkUrl('web-1', 'TroutRoutes - 26M+ Users'),
     link: 'https://troutroutes.com/',
     featured: true,
     outcomeHighlight:
@@ -117,7 +62,7 @@ export const projects: Project[] = [
       'i18next',
       'REST APIs'
     ],
-    imageUrl: serveOnline,
+    imageUrl: projectArtworkUrl('web-2', 'ServeOnline, Clinics & Doctors Booking'),
     link: 'https://serveonline.lt/',
     featured: true,
     outcomeHighlight:
@@ -145,7 +90,7 @@ export const projects: Project[] = [
     description: `Built an AI platform for businesses and developers focused on workflow automation, API integrations, cost visibility, and low-latency AI interactions.`,
     category: 'web',
     technologies: ['React', 'TypeScript', 'Node.js', 'OpenAI API'],
-    imageUrl: primeAi,
+    imageUrl: projectArtworkUrl('web-3', 'PrimeAI'),
     link: 'https://www.prime.ai/',
     featured: true,
     duration: '4 months',
@@ -169,9 +114,9 @@ export const projects: Project[] = [
     description: `Delivered a collaborative workspace platform with real-time team communication, file sharing, and project management across web and mobile experiences.`,
     category: 'web',
     technologies: ['React', 'React Native', 'Node.js', 'Express', 'GraphQL', 'WebSocket'],
-    imageUrl: podIo,
+    imageUrl: projectArtworkUrl('web-4', 'Pod'),
     link: 'https://www.pod.io/',
-    featured: true,
+    featured: false,
     duration: '8 months',
     role: 'Full Stack Developer',
     challenge: `The platform required real-time synchronization across web and mobile clients while supporting team collaboration, shared files, and project data under concurrent usage. Consistency and responsiveness were critical to the product experience.`,
@@ -193,7 +138,7 @@ export const projects: Project[] = [
     description: `Built a cannabis e-commerce platform with strong SEO foundations, compliance-minded product presentation, and an education-first customer experience.`,
     category: 'web',
     technologies: ['Next.js', 'TypeScript', 'PostgreSQL', 'AWS', 'Stripe'],
-    imageUrl: greenwolfCannabis,
+    imageUrl: projectArtworkUrl('web-5', 'GreenWolf Cannabis'),
     link: 'https://greenwolfcannabis.com/',
     duration: '4 months',
     role: 'Full Stack Developer',
@@ -216,7 +161,7 @@ export const projects: Project[] = [
     description: `Developed a sustainability platform centered around document access, educational resources, and community engagement, including in-browser PDF viewing.`,
     category: 'web',
     technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'PDF.js'],
-    imageUrl: equitableEarth,
+    imageUrl: projectArtworkUrl('web-6', 'Equitable Earth'),
     link: 'https://www.eq-earth.com/',
     duration: '5 months',
     role: 'Full Stack Developer',
@@ -239,7 +184,7 @@ export const projects: Project[] = [
     description: `Built a real estate referral platform that connects seekers with agents, tracks referral relationships, and manages finder fee payments securely.`,
     category: 'web',
     technologies: ['React', 'Node.js', 'Express', 'Firebase', 'Stripe'],
-    imageUrl: findersFee,
+    imageUrl: projectArtworkUrl('web-7', 'Finders Fee'),
     link: 'https://www.findersfee.com',
     duration: '3 months',
     role: 'Full Stack Developer',
@@ -257,14 +202,13 @@ export const projects: Project[] = [
     ],
   },
 
-  // Mobile Development Projects
   {
     id: 'mobile-1',
     title: 'TroutRoutes by onX - iOS, Android',
     description: `Built a large-scale native mobile mapping product for fly fishing, covering 50,000+ streams and 280,000+ access points with GPS navigation, regulations, real-time conditions, and offline maps. The platform served 26M+ users and was acquired by onX.`,
     category: 'mobile',
     technologies: ['Swift', 'Java', 'Firebase', 'Stripe', 'Mapbox', 'Weather API'],
-    imageUrl: troutRoutesMobile,
+    imageUrl: projectArtworkUrl('mobile-1', 'TroutRoutes by onX - iOS, Android'),
     link: 'https://apps.apple.com/us/app/troutroutes-fly-fishing-app/id1423989574',
     featured: true,
     outcomeHighlight:
@@ -290,7 +234,7 @@ export const projects: Project[] = [
     description: `Built and scaled a subscription-based fitness and nutrition platform for women, supporting a 400k+ community with workout programs, coaching, recipes, progress tracking, and Apple Health integration.`,
     category: 'mobile',
     technologies: ['Swift', 'Kotlin', 'Firebase', 'Stripe', 'Superwall', 'HealthKit'],
-    imageUrl: seshFitness,
+    imageUrl: projectArtworkUrl('mobile-2', 'Sesh Fitness App - iOS, Android'),
     link: 'https://apps.apple.com/us/app/sesh-women-fitness-workouts/id1330316439',
     featured: true,
     duration: '7 months',
@@ -314,9 +258,9 @@ export const projects: Project[] = [
     description: `Built a social recommendation platform designed to prioritize authentic, people-driven recommendations over traditional ads and algorithm-heavy discovery.`,
     category: 'mobile',
     technologies: ['React Native', 'TypeScript', 'GraphQL', 'Node.js', 'Express', 'AWS', 'Video Processing', 'Banuba', 'img.ly'],
-    imageUrl: reco,
+    imageUrl: projectArtworkUrl('mobile-3', 'Reco Social - iOS, Android'),
     link: 'https://apps.apple.com/us/app/reco-social/id6742024490',
-    featured: true,
+    featured: false,
     duration: '1 month',
     role: 'Mobile Developer',
     challenge: `The product needed to feel social and engaging while preserving trust in the recommendation experience. Rich media support, creator workflows, and fast content delivery all had to work together without making the platform feel noisy or overly commercial.`,
@@ -338,9 +282,9 @@ export const projects: Project[] = [
     description: `Built a real-time dating app for iOS that combined swipe discovery, video-based LiveMatch sessions, stories, conversation prompts, and preference-based matching.`,
     category: 'mobile',
     technologies: ['Swift', 'Node.js', 'Express', 'WebSocket', 'VoxImplant', 'Firebase', 'AWS'],
-    imageUrl: dimpleDating,
+    imageUrl: projectArtworkUrl('mobile-4', 'Dimple, Date. Make Friends. LiveMatch. (iOS)'),
     link: 'https://apps.apple.com/us/app/dimple-dating-app/id1526816163',
-    featured: true,
+    featured: false,
     duration: '5 months',
     role: 'Full Stack Developer',
     challenge: `The app needed to support spontaneous and scheduled video interactions, low-latency messaging, rich profile preferences, and social engagement features without compromising responsiveness or trust. Real-time reliability was a major part of the product experience.`,
@@ -362,7 +306,7 @@ export const projects: Project[] = [
     description: `Built Android features for a high-usage sleep sound app offering long-form audio playback, multi-sound mixing, timers, reminders, and freemium subscription flows.`,
     category: 'mobile',
     technologies: ['Kotlin', 'Android', 'Background Services', 'Firebase', 'Media Player'],
-    imageUrl: rainRain,
+    imageUrl: projectArtworkUrl('mobile-5', 'Rain Rain Sleep Sounds - 500k+ Downloads, 11k+ Reviews - Android'),
     link: 'https://play.google.com/store/apps/details?id=com.timgostony.rainrain',
     featured: true,
     duration: '1 month',
@@ -386,7 +330,7 @@ export const projects: Project[] = [
     description: `Built and maintained iOS functionality for a fast-growing social platform with 2M+ users, including music integration, themed profiles, community discovery, reposting, and chronological feeds.`,
     category: 'mobile',
     technologies: ['Swift', 'Firebase', 'StoreKit', 'Spotify API', 'FCM', 'iOS'],
-    imageUrl: hiveSocial,
+    imageUrl: projectArtworkUrl('mobile-6', 'Hive - 2M+ Users - iOS'),
     link: 'https://apps.apple.com/us/app/hive-social/id1480835284',
     featured: true,
     duration: '10 months',
@@ -410,7 +354,7 @@ export const projects: Project[] = [
     description: `Built a mobile platform for field service providers to manage jobs, routes, scheduling, earnings, and real-time work updates within the sustainability and recycling space.`,
     category: 'mobile',
     technologies: ['React Native', 'Node.js', 'Express', 'Google Maps API', 'Stripe'],
-    imageUrl: checkSammy,
+    imageUrl: projectArtworkUrl('mobile-7', 'CheckSammy (provider app), iOS, Android'),
     link: 'https://apps.apple.com/us/app/checksammy-professional/id6505013198',
     duration: '8 months',
     role: 'Mobile Developer',
@@ -433,7 +377,7 @@ export const projects: Project[] = [
     description: `Built an iOS wellness app for guided rituals, breathwork, journaling, oracle cards, community engagement, and subscription-based spiritual content.`,
     category: 'mobile',
     technologies: ['Swift', 'SwiftUI', 'AudioKit', 'CoreData', 'StoreKit'],
-    imageUrl: soulPod,
+    imageUrl: projectArtworkUrl('mobile-8', 'SoulPod - iOS'),
     link: 'https://apps.apple.com/us/app/soulpod-breathwork-meditation/id1640481481',
     featured: false,
     duration: '2 months',
@@ -457,9 +401,9 @@ export const projects: Project[] = [
     description: `Built and modernized a popular ab training app with workout programs, offline videos, progress tracking, Health integration, in-app purchases, and a React Native migration strategy.`,
     category: 'mobile',
     technologies: ['React Native', 'Objective-C', 'Java', 'Native Bridge', 'HealthKit'],
-    imageUrl: sixPack,
+    imageUrl: projectArtworkUrl('mobile-9', '6 Pack Promise Plus by ATHLEAN-X - 30k+ Reviews - iOS, Android'),
     link: 'https://apps.apple.com/us/app/6-pack-promise-ultimate-abs/id633815621',
-    featured: false,
+    featured: true,
     duration: '3 months',
     role: 'Mobile Developer',
     challenge: `The app needed to preserve an established native experience while expanding workout content, monetization, and media features through a React Native migration. The challenge was balancing maintainability with performance across both platforms.`,
@@ -481,7 +425,7 @@ export const projects: Project[] = [
     description: `Built a mobile control and configuration experience for the ELK E27 Alarm Engine, supporting both certified installers and end users across security and home automation workflows.`,
     category: 'mobile',
     technologies: ['Swift', 'Java', 'WebSocket', 'Z-Wave', 'WiFi', 'Bluetooth'],
-    imageUrl: elkConnect,
+    imageUrl: projectArtworkUrl('mobile-10', 'ElkConnect - iOS, Android'),
     link: 'https://apps.apple.com/us/app/elkconnect/id1565150595',
     featured: false,
     duration: '28 months',
@@ -505,7 +449,7 @@ export const projects: Project[] = [
     description: `Built an iOS greeting card app that let users customize, save, and send digital cards across birthdays, invites, holidays, and everyday occasions.`,
     category: 'mobile',
     technologies: ['Swift', 'Firebase', 'StoreKit'],
-    imageUrl: poppyNotes,
+    imageUrl: projectArtworkUrl('mobile-11', 'PoppyNotes - iOS'),
     link: 'https://apps.apple.com/us/app/poppynotes-ecards-fun-notes/id1636563750',
     featured: false,
     duration: '3 months',
@@ -529,7 +473,7 @@ export const projects: Project[] = [
     description: `Built a location-aware mobile app for discovering local pickleball games, meeting players by skill level, and finding indoor or outdoor courts to join or rent.`,
     category: 'mobile',
     technologies: ['Swift', 'Kotlin', 'Firebase', 'Google Maps API'],
-    imageUrl: conquer,
+    imageUrl: projectArtworkUrl('mobile-12', 'Conquer - Pickleball - iOS, Android'),
     link: 'https://apps.apple.com/us/app/conquer-play-local-pickleball/id1571307040',
     featured: false,
     duration: '4 months',
@@ -553,7 +497,7 @@ export const projects: Project[] = [
     description: `Built an educational mobile experience that tells the story of central Minnesota through native plants, interactive maps, and park-based trail games.`,
     category: 'mobile',
     technologies: ['React Native', 'Node.js', 'Express', 'Firebase'],
-    imageUrl: heartLand,
+    imageUrl: projectArtworkUrl('mobile-13', 'heart+land - iOS, Android'),
     link: 'https://apps.apple.com/us/app/heart-land/id6749213689',
     duration: '3 months',
     role: 'Mobile Developer',
@@ -577,7 +521,7 @@ export const projects: Project[] = [
       'Real-time social discovery app for meeting people nearby at bars, clubs, and local spots. Browse who is currently around you, match on shared interests, and start private chats in a lower-pressure environment designed to reduce face-to-face rejection anxiety.',
     category: 'mobile',
     technologies: ['React Native', 'Node.js', 'WebSocket', 'Azure'],
-    imageUrl: virtualBar,
+    imageUrl: projectArtworkUrl('mobile-14', 'Virtual Bar - iOS, Android'),
     link: 'https://apps.apple.com/us/app/virtual-bar-llc/id1670608081',
     duration: '2 months',
     role: 'Full Stack Developer',
@@ -601,7 +545,7 @@ export const projects: Project[] = [
     description: `Built an iOS app for capturing floorplans, measurements, and project documentation, with 3D visualization and centralized property-related records.`,
     category: 'mobile',
     technologies: ['Swift', 'UIKit', 'ARKit', 'SceneKit', 'CoreData', 'VisionKit'],
-    imageUrl: sketchEdge,
+    imageUrl: projectArtworkUrl('mobile-15', 'Sketch Edge - iOS'),
     link: 'https://apps.apple.com/us/app/sketchedge/id6550914736',
     duration: '1 month',
     role: 'iOS Developer',
@@ -623,7 +567,7 @@ export const projects: Project[] = [
     description: `Built and modernized a warehouse management mobile platform covering inventory, orders, shipments, barcode scanning, and operational analytics across iOS and Android.`,
     category: 'mobile',
     technologies: ['React Native', 'Swift', 'Objective-C', 'Java', 'Node.js', 'AWS', 'Barcode Scanning'],
-    imageUrl: reboundDynamics,
+    imageUrl: projectArtworkUrl('mobile-16', 'Rebound Dynamics - iOS, Android'),
     link: 'https://www.reboundynamics.com/',
     duration: '12 months',
     role: 'Mobile Developer',
@@ -647,7 +591,7 @@ export const projects: Project[] = [
       'Exclusive app for Scroll Stoppers clients to make custom marketing video recording simple and stress-free: personalized scripts, integrated on-screen teleprompter, and automatic upload to the production team for editing, polishing, and distribution.',
     category: 'mobile',
     technologies: ['Flutter', 'React', 'Node.js', 'Express', 'Camera'],
-    imageUrl: scrollStoppers,
+    imageUrl: projectArtworkUrl('mobile-17', 'Scroll Stoppers - iOS, Android, Web'),
     link: 'https://apps.apple.com/us/app/scroll-stoppers/id6746020654',
     duration: '3 months',
     role: 'Full Stack Developer',
@@ -671,7 +615,7 @@ export const projects: Project[] = [
     description: `Built a cross-platform fitness app with workout planning, health data integration, progress tracking, and background activity support.`,
     category: 'mobile',
     technologies: ['React Native', 'HealthKit', 'Background Modes', 'iOS', 'Android'],
-    imageUrl: proWrldFit,
+    imageUrl: projectArtworkUrl('mobile-18', 'PRO WRLD FIT - iOS, Android'),
     link: 'https://www.instagram.com/pro.wrld.fit/',
     duration: '2 months',
     role: 'Mobile Developer',
@@ -695,7 +639,7 @@ export const projects: Project[] = [
       'Re-engineered WHMCS for iOS from the ground up for a richer, modern mobile experience. Includes a full support-ticket feature set with guided onboarding, business insights/performance overview, secure login, and dark mode, with regular update-ready architecture for future features.',
     category: 'mobile',
     technologies: ['Swift', 'UIKit', 'WHMCS API', 'REST API', 'LocalAuthentication', 'Keychain'],
-    imageUrl: whmcs,
+    imageUrl: projectArtworkUrl('mobile-19', 'WHMCS for iOS'),
     link: 'https://apps.apple.com/us/app/whmcs/id1516241118',
     duration: '12 months',
     role: 'Mobile Developer',
@@ -723,7 +667,7 @@ export const projects: Project[] = [
       'Trusted by watch enthusiasts since 1993, now in-app: buy, sell, or trade directly with European Watch Company, request a quote, checkout with Apple Pay, and save favorites. Listings refresh throughout the day with detailed write-ups and extensive photography across new, pre-owned, and vintage Swiss/German pieces.',
     category: 'mobile',
     technologies: ['Swift', 'Java', 'CoreData', 'Apple Pay', 'iOS', 'Android'],
-    imageUrl: europeanWatch,
+    imageUrl: projectArtworkUrl('mobile-20', 'European Watch Co - Watches - iOS, Android'),
     link: 'https://apps.apple.com/us/app/european-watch-co-watches/id428419037',
     duration: '5 months',
     role: 'Mobile Developer',
@@ -750,7 +694,7 @@ export const projects: Project[] = [
       'Community for discovering new products and sharing real user experiences: scroll a discovery feed shaped by interests, open posts for feature-by-feature ratings, and save finds into personalized interest boards to shop smarter and help brands improve.',
     category: 'mobile',
     technologies: ['Swift', 'UIKit', 'Firebase', 'CoreData'],
-    imageUrl: betaciety,
+    imageUrl: projectArtworkUrl('mobile-21', 'Betaciety - iOS'),
     link: 'https://apps.apple.com/us/app/betaciety/id1503601686',
     duration: '3 months',
     role: 'iOS Developer',
@@ -775,7 +719,7 @@ export const projects: Project[] = [
     description: `Built a mobile educational app that combines 3D body exploration with wellness-focused product education across iOS and Android.`,
     category: 'mobile',
     technologies: ['Swift', 'Java', 'SceneKit', 'UIKit'],
-    imageUrl: footReflexology,
+    imageUrl: projectArtworkUrl('mobile-22', 'Foot Reflexology Chart - iOS, Android'),
     link: 'https://apps.apple.com/us/app/foot-reflexology-chart/id929033534',
     duration: '2 months',
     role: 'Mobile Developer',
@@ -796,7 +740,7 @@ export const projects: Project[] = [
     description: `Built an iOS app for reservations, real-time park availability, and pass activation, helping users plan visits and reduce wait times.`,
     category: 'mobile',
     technologies: ['Swift', 'Objective-C', 'UIKit', 'PassKit'],
-    imageUrl: yodel,
+    imageUrl: projectArtworkUrl('mobile-23', 'Yodel - iOS'),
     link: 'https://apps.apple.com/us/app/yodel-app/id1515936878',
     duration: '4 months',
     role: 'iOS Developer',
@@ -818,7 +762,7 @@ export const projects: Project[] = [
     description: `Built a neighborhood services app that lets homeowners discover, purchase, and manage yard care and home services together for better pricing and simpler billing.`,
     category: 'mobile',
     technologies: ['React Native', 'Node.js', 'Express', 'Stripe'],
-    imageUrl: oneNeighbor,
+    imageUrl: projectArtworkUrl('mobile-24', 'OneNeighbor - iOS, Android'),
     link: 'https://apps.apple.com/us/app/oneneighbor/id1551432157',
     duration: '5 months',
     role: 'Full Stack Developer',
@@ -851,7 +795,7 @@ export const projects: Project[] = [
     description: `Built a dedicated Grateful Dead concert search app with powerful filtering, set list exploration, statistics, favorites, playlists, and optional streaming across iOS and Android.`,
     category: 'mobile',
     technologies: ['Objective-C', 'Java', 'CoreData', 'Streaming'],
-    imageUrl: deadshowz,
+    imageUrl: projectArtworkUrl('mobile-25', 'DeadShowZ - iOS, Android'),
     link: 'https://apps.apple.com/us/app/deadshowz/id1254621329',
     duration: '4 months',
     role: 'Mobile Developer',
@@ -874,9 +818,9 @@ export const projects: Project[] = [
     description: `Built a real-time sports insights platform delivering betting picks, live odds context, subscription packages, and push notifications across web and mobile.`,
     category: 'mobile',
     technologies: ['React', 'React Native', 'Node.js', 'PHP', 'MongoDB', 'Stripe', 'RevenueCat', 'OneSignal', 'AWS'],
-    imageUrl: krackwins,
+    imageUrl: projectArtworkUrl('mobile-26', 'Krackwins - 30k+ Monthly Revenue - Web, iOS, Android'),
     link: 'https://apps.apple.com/us/app/krackwins/id1454877056',
-    featured: false,
+    featured: true,
     duration: '20 months',
     role: 'Full Stack Developer',
     challenge: `The platform needed to release picks quickly, support multiple subscription tiers, synchronize billing across web and mobile, and deliver timely push notifications before odds shifted. Reliability and clarity were especially important for subscriber trust.`,
@@ -899,7 +843,7 @@ export const projects: Project[] = [
     description: `Built an on-demand laundry platform that lets customers request bags, schedule pickup, complete payment, and track delivery updates across web and mobile.`,
     category: 'mobile',
     technologies: ['React Native', 'PHP', 'OneSignal', 'AWS'],
-    imageUrl: gowivo,
+    imageUrl: projectArtworkUrl('mobile-27', 'Gowivo - iOS, Android, Web'),
     link: 'https://apps.apple.com/us/app/gowivo-app/id1510231902',
     duration: '2 months',
     role: 'Full Stack Developer',
@@ -921,7 +865,7 @@ export const projects: Project[] = [
     description: `Built an iOS social app focused on helping users discover friends, form new connections, and engage through profiles and feed-based interactions.`,
     category: 'mobile',
     technologies: ['Swift', 'Firebase', 'UIKit', 'CoreData'],
-    imageUrl: yobuddy,
+    imageUrl: projectArtworkUrl('mobile-28', 'Yobuddy - iOS'),
     link: 'https://yobuddyapp.com/',
     duration: '3 months',
     role: 'iOS Developer',
@@ -944,7 +888,7 @@ export const projects: Project[] = [
     description: `Built a multi-platform education platform for college learners with course delivery, study tools, progress tracking, and admin-facing content management.`,
     category: 'mobile',
     technologies: ['React Native', 'React', 'Firebase', 'PHP', 'AWS', 'Admin Panel'],
-    imageUrl: tellyCollege,
+    imageUrl: projectArtworkUrl('mobile-29', 'TellyCollege - iOS, Android, Web'),
     link: 'https://apps.apple.com/us/app/tellycollege/id1669570772',
     duration: '6 months',
     role: 'Full Stack Developer',
@@ -967,7 +911,7 @@ export const projects: Project[] = [
     description: `Built a wellness app that combines appointment booking, retail, gift cards, and branded content into a calm mobile experience for a modern acupuncture practice.`,
     category: 'mobile',
     technologies: ['React Native', 'Node.js', 'UIKit', 'Google Maps API'],
-    imageUrl: moonRabbit,
+    imageUrl: projectArtworkUrl('mobile-30', 'Moon Rabbit Acupuncture - iOS, Android'),
     link: 'https://apps.apple.com/us/app/moon-rabbit-acupuncture/id6566195077',
     duration: '2 months',
     role: 'Mobile Developer',
@@ -989,7 +933,7 @@ export const projects: Project[] = [
     description: `Built a short-form business learning app that delivers curated founder insights, interviews, and educational clips through a mobile-first video experience.`,
     category: 'mobile',
     technologies: ['React Native', 'Node.js', 'Media Player', 'OneSignal', 'REST API'],
-    imageUrl: snackableAi,
+    imageUrl: projectArtworkUrl('mobile-31', 'Snackable Business Insights - iOS, Android'),
     link: 'https://apps.apple.com/us/app/snackable-business-insights/id1555271270',
     duration: '4 months',
     role: 'Mobile Developer',
@@ -1012,7 +956,7 @@ export const projects: Project[] = [
     description: `Built a shopping and savings platform that surfaces curated deals, coupons, promotions, and occasional freebies across mobile and web.`,
     category: 'mobile',
     technologies: ['React Native', 'AWS', 'Amazon Product API', 'CoreData'],
-    imageUrl: glitchLifeDeals,
+    imageUrl: projectArtworkUrl('mobile-32', 'Glitch Life Deals - iOS, Android, Web'),
     link: 'https://apps.apple.com/us/app/glitch-life-deals/id1661142121',
     duration: '3 months',
     role: 'Mobile Developer',
@@ -1034,7 +978,7 @@ export const projects: Project[] = [
     description: `Built an iOS content hub for Sierra International Machinery featuring video streaming, equipment browsing, podcast access, and company updates.`,
     category: 'mobile',
     technologies: ['Swift', 'UIKit', 'AVKit', 'CoreData'],
-    imageUrl: sierraInternational,
+    imageUrl: projectArtworkUrl('mobile-33', 'Sierra International Machinery - iOS'),
     link: 'https://apps.apple.com/us/app/sierra-international-machinery/id6448870769',
     duration: '3 months',
     role: 'iOS Developer',
@@ -1056,7 +1000,7 @@ export const projects: Project[] = [
     description: `Built a cross-platform BBQ session tracking app that lets users log prep, ingredient scans, temperatures, weather conditions, ratings, and photos for each cook.`,
     category: 'mobile',
     technologies: ['React Native', 'Node.js', 'Firebase', 'WeatherKit', 'QR Scanning'],
-    imageUrl: smokelab,
+    imageUrl: projectArtworkUrl('mobile-34', 'SmokerLab - iOS, Android, Web'),
     link: 'https://apps.apple.com/us/app/smokelab/id1662751718',
     duration: '4 months',
     role: 'Mobile Developer',
@@ -1079,7 +1023,7 @@ export const projects: Project[] = [
     description: `Built a large-scale lifestyle service marketplace connecting users with service providers across hundreds of categories, including home services, beauty, and consulting.`,
     category: 'mobile',
     technologies: ['React Native', 'Node.js', 'Firebase', 'Stripe', 'Maps API'],
-    imageUrl: toby,
+    imageUrl: projectArtworkUrl('mobile-35', 'Toby - Service Marketplace - iOS, Android'),
     link: 'https://apps.apple.com/us/app/toby-hire-local-service/id1168549802',
     featured: true,
     duration: '6 months',
@@ -1103,7 +1047,7 @@ export const projects: Project[] = [
     description: `Built a ride-hailing application connecting users with licensed taxi drivers across major U.S. cities, supporting real-time ride requests, scheduling, and seamless in-app payments.`,
     category: 'mobile',
     technologies: ['React Native', 'Node.js', 'Maps API', 'Stripe', 'WebSocket'],
-    imageUrl: curb, 
+    imageUrl: projectArtworkUrl('mobile-36', 'Curb - Taxi & Ride Hailing - iOS, Android'), 
     link: 'https://apps.apple.com/us/app/curb-request-pay-for-taxis/id299226386',
     featured: true,
     duration: '5 months',
@@ -1127,7 +1071,7 @@ export const projects: Project[] = [
     description: `Built a privacy-focused dating application with anonymous onboarding, secure messaging, and advanced visibility controls to give users more control over their presence and interactions.`,
     category: 'mobile',
     technologies: ['Swift', 'Firebase', 'WebSocket', 'StoreKit'],
-    imageUrl: flava,
+    imageUrl: projectArtworkUrl('mobile-37', 'Flava - Dating App - iOS'),
     link: 'https://apps.apple.com/us/app/flava-casual-dating-chat/id1540274389',
     featured: true,
     duration: '4 months',
@@ -1151,7 +1095,7 @@ export const projects: Project[] = [
     description: `Built features for a global live streaming platform with 50M+ downloads, enabling real-time video broadcasting, live chat, virtual gifting, and creator monetization.`,
     category: 'mobile',
     technologies: ['React Native', 'Swift', 'Kotlin', 'WebSocket', 'Agora / Streaming SDK', 'Firebase', 'Node.js', 'Stripe'],
-    imageUrl: live17,
+    imageUrl: projectArtworkUrl('mobile-38', '17LIVE - Live Streaming Platform - iOS, Android'),
     link: 'https://play.google.com/store/apps/details?id=com.machipopo.media17',
     featured: true,
     duration: '6 months',
@@ -1170,14 +1114,13 @@ export const projects: Project[] = [
     ],
   },
 
-  // AI Development Projects
   {
     id: 'ai-1',
     title: 'MyMood AI - 9k+ Reviews, 50k+ Monthly Revenue - iOS, Android',
     description: `Built an AI-powered photo generation app for iOS and Android using on-device inference, mood-based styling, and transformation pipelines optimized for mobile performance.`,
     category: 'ai',
     technologies: ['Kotlin', 'Stable Diffusion', 'Core ML', 'Swift', 'Image Processing'],
-    imageUrl: myMoodAI,
+    imageUrl: projectArtworkUrl('ai-1', 'MyMood AI - 9k+ Reviews, 50k+ Monthly Revenue - iOS, Android'),
     link: 'https://apps.apple.com/us/app/mymood-ai-ai-photo-generator/id1669952628',
     featured: true,
     duration: '5 months',
@@ -1201,7 +1144,7 @@ export const projects: Project[] = [
     description: `Built an AI chatbot platform with contextual conversations, human handoff flows, and production-ready backend services for business use cases.`,
     category: 'ai',
     technologies: ['Next.js', 'Python', 'OpenAI GPT', 'LangChain', 'FastAPI'],
-    imageUrl: primeAi,
+    imageUrl: projectArtworkUrl('ai-2', 'PrimeAI'),
     link: 'https://www.prime.ai/',
     featured: false,
     duration: '5 months',
@@ -1225,9 +1168,9 @@ export const projects: Project[] = [
     description: `Built a computer vision platform for object detection, classification, and visual search using multiple AI providers across a unified product experience.`,
     category: 'ai',
     technologies: ['React', 'Next.js', 'Python', 'FastAPI', 'OpenAI API', 'Gemini', 'Claude', 'Computer Vision'],
-    imageUrl: athenaAi,
+    imageUrl: projectArtworkUrl('ai-3', 'DevolvedAI'),
     link: 'https://www.devolvedai.com/',
-    featured: false,
+    featured: true,
     duration: '6 months',
     role: 'Full Stack Developer',
     challenge: `The platform needed to support accurate and fast visual understanding across multiple AI model providers, while giving users a consistent workflow for search, classification, and comparison.`,
@@ -1245,39 +1188,55 @@ export const projects: Project[] = [
   },
 ];
 
-/**
- * Curated grid order: lead with scale, outcomes, and trust (26M+ users, acquisitions,
- * healthcare, marketplaces, live streaming), then breadth (collaboration, social, AI).
- * Lower index = shown first in "All" and within each tier after featured sort.
- */
 export const PORTFOLIO_DISPLAY_ORDER: string[] = [
+  'mobile-2',
   'web-1',
   'mobile-1',
   'mobile-38',
-  'web-2',
-  'mobile-35',
-  'mobile-36',
-  'web-3',
-  'mobile-2',
   'mobile-6',
   'ai-1',
+  'web-3',
   'ai-3',
-  'web-4',
-  'mobile-3',
-  'mobile-4',
+  'mobile-26',
+  'mobile-36',
+  'mobile-35',
+  'mobile-24',
   'mobile-5',
-  'mobile-37',
-  'mobile-7',
-  'mobile-10',
-  'mobile-8',
+  'web-2',
   'mobile-9',
-  'mobile-11',
   'mobile-12',
   'web-5',
+  'mobile-34',
+  'mobile-3',
+  'mobile-4',
+  'mobile-37',
+  'mobile-7',
+  'mobile-19',
+  'mobile-33',
+  'mobile-17',
+  'web-4',
+  'ai-2',
+  'mobile-16',
+  'mobile-13',
+  'mobile-14',
+  'mobile-10',
+  'mobile-8',
+  'mobile-11',
+  'mobile-15',
+  'mobile-18',
+  'mobile-27',
+  'mobile-28',
+  'mobile-29',
+  'mobile-31',
+  'mobile-30',
+  'mobile-32',
+  'mobile-25',
+  'mobile-21',
+  'mobile-22',
+  'mobile-23',
+  'mobile-20',
   'web-6',
   'web-7',
-  ...Array.from({ length: 22 }, (_, i) => `mobile-${13 + i}`),
-  'ai-2',
 ];
 
 export function getPortfolioDisplayIndex(id: string): number {

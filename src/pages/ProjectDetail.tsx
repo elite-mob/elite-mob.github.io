@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { RouterNavButton } from '@/components/RouterNavButton';
-import { projects, type Project } from '@/data/portfolioData';
+import { ProjectImageSlider } from '@/components/ProjectImageSlider';
+import { projects, type Project, getPortfolioDisplayIndex } from '@/data/portfolioData';
+import { getProjectSliderImages } from '@/lib/portfolioGallery';
 import { logProjectDetailView, logProjectCardClick } from '@/integrations/firebase/analytics';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ChevronRight, ExternalLink, Code2, Smartphone, Brain, Calendar, User, Layers, Target, Lightbulb, CheckCircle2, Sparkles, Zap } from 'lucide-react';
@@ -11,7 +13,10 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { navigateToPortfolio } from '@/lib/navigation';
 import { Seo } from '@/components/Seo';
 import { JsonLdProject, JsonLdBreadcrumbList } from '@/components/JsonLd';
+import { AppStoreRating } from '@/components/AppStoreRating';
+import { isStoreLink } from '@/lib/appStoreRating';
 import { absoluteUrl, SITE_URL } from '@/lib/site';
+import { cn } from '@/lib/utils';
 
 const categoryIcons = {
   web: Code2,
@@ -113,6 +118,11 @@ const ProjectDetail = () => {
     });
   }, [project]);
 
+  const sliderImages = useMemo(() => {
+    if (!project) return [];
+    return getProjectSliderImages(project.id, project.imageUrl);
+  }, [project]);
+
   if (!project) {
     return (
       <div className="min-h-screen bg-background relative overflow-hidden">
@@ -148,6 +158,7 @@ const ProjectDetail = () => {
   const Icon = categoryIcons[project.category];
   const relatedProjects = projects
     .filter((p) => p.category === project.category && p.id !== project.id)
+    .sort((a, b) => getPortfolioDisplayIndex(a.id) - getPortfolioDisplayIndex(b.id))
     .slice(0, 3);
 
   const pagePath = `/project/${project.id}`;
@@ -156,6 +167,8 @@ const ProjectDetail = () => {
     project.description.length > 165 ? `${project.description.slice(0, 162)}…` : project.description;
   const ogImageSrc =
     typeof project.imageUrl === 'string' ? project.imageUrl : String(project.imageUrl);
+
+  const hasVisual = sliderImages.length > 0 && sliderImages[0] !== '/placeholder.svg';
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden perspective-4d">
@@ -233,33 +246,30 @@ const ProjectDetail = () => {
         {/* Hero Section */}
         <section className="container mx-auto px-4 sm:px-6 mb-10 sm:mb-12 md:mb-20">
           <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
-            {/* Project Image - show full image (no cropping) */}
+            {/* Project gallery — artwork + live link previews */}
             <div className={`relative group ${isHeroImageVisible ? 'animate-slide-in-left' : 'opacity-0'}`} ref={heroImageRef}>
-              <div className="rounded-3xl overflow-hidden glass-card shadow-4d ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-500 min-h-[200px] max-h-[min(70vh,720px)] flex items-center justify-center bg-secondary/30">
-                {project.imageUrl && project.imageUrl !== '/placeholder.svg' ? (
-                  <img 
-                    src={project.imageUrl} 
-                    alt={project.title}
-                    sizes="(max-width: 1023px) 100vw, min(50vw, 720px)"
-                    loading="eager"
-                    decoding="async"
-                    fetchPriority="high"
-                    draggable="false"
-                    className="w-full h-auto max-h-[min(70vh,720px)] object-contain group-hover:scale-[1.02] transition-transform duration-700 select-none"
-                    onContextMenu={(e) => e.preventDefault()}
-                    onDragStart={(e) => e.preventDefault()}
-                  />
-                ) : (
-                  <>
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Icon className="w-32 h-32 text-muted-foreground/20" />
-                    </div>
-                  </>
-                )}
+              <div className="rounded-3xl overflow-hidden glass-card shadow-4d ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-500 bg-secondary/30">
+                <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] min-h-[220px] max-h-[min(70vh,720px)]">
+                  {hasVisual ? (
+                    <ProjectImageSlider
+                      images={sliderImages}
+                      alt={`${project.title} preview`}
+                      priority
+                      variant="hero"
+                      objectFit="cover"
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Icon className="w-32 h-32 text-muted-foreground/20" aria-hidden />
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
               {project.featured && (
-                <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-semibold animate-glow-pulse">
+                <div className="absolute top-4 right-4 z-[4] px-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-semibold animate-glow-pulse">
                   Featured
                 </div>
               )}
@@ -278,6 +288,17 @@ const ProjectDetail = () => {
               }`}>
                 <span className="gradient-text-transparent drop-shadow-lg">{project.title}</span>
               </h1>
+
+              {isStoreLink(project.link) && (
+                <div
+                  className={cn(
+                    'w-full',
+                    isHeroInfoVisible ? 'animate-fade-in-up stagger-delay-2' : 'opacity-0',
+                  )}
+                >
+                  <AppStoreRating storeLink={project.link} variant="detail" className="w-full" />
+                </div>
+              )}
               
               {/* Enhanced Description */}
               <div className={`glass-card rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border-l-4 border-primary transform-3d shadow-4d hover:shadow-4d-hover hover:translate-y-[-5px] hover:translate-z-20 transition-all duration-300 ${
@@ -466,6 +487,9 @@ const ProjectDetail = () => {
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
               {relatedProjects.map((relatedProject, index) => {
                 const RelatedIcon = categoryIcons[relatedProject.category];
+                const relatedImages = getProjectSliderImages(relatedProject.id, relatedProject.imageUrl);
+                const relatedHasVisual =
+                  relatedImages.length > 0 && relatedImages[0] !== '/placeholder.svg';
                 const delayClass = index === 0 ? 'stagger-delay-1' : index === 1 ? 'stagger-delay-2' : 'stagger-delay-3';
                 return (
                   <div
@@ -497,23 +521,16 @@ const ProjectDetail = () => {
                     aria-label={`View related project: ${relatedProject.title}`}
                   >
                     <div className="relative h-40 bg-secondary overflow-hidden">
-                      {relatedProject.imageUrl && relatedProject.imageUrl !== '/placeholder.svg' ? (
-                        <img 
-                          src={relatedProject.imageUrl} 
-                          alt={relatedProject.title}
-                          sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 280px"
-                          loading="lazy"
-                          decoding="async"
-                          draggable="false"
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 select-none"
-                          onContextMenu={(e) => e.preventDefault()}
-                          onDragStart={(e) => e.preventDefault()}
+                      {relatedHasVisual ? (
+                        <ProjectImageSlider
+                          images={relatedImages}
+                          alt={`${relatedProject.title} preview`}
                         />
                       ) : (
                         <>
                           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20" />
                           <div className="absolute inset-0 flex items-center justify-center">
-                            <RelatedIcon className="w-12 h-12 text-muted-foreground/30" />
+                            <RelatedIcon className="w-12 h-12 text-muted-foreground/30" aria-hidden />
                           </div>
                         </>
                       )}
@@ -522,6 +539,15 @@ const ProjectDetail = () => {
                       <h3 className="font-display text-lg font-bold text-foreground/85 group-hover:text-primary transition-colors drop-shadow-md">
                         {relatedProject.title}
                       </h3>
+                      {isStoreLink(relatedProject.link) && (
+                        <div className="mt-1.5">
+                          <AppStoreRating
+                            storeLink={relatedProject.link}
+                            variant="compact"
+                            enabled={isRelatedVisible}
+                          />
+                        </div>
+                      )}
                       <p className="text-sm text-foreground/75 mt-1 line-clamp-2 drop-shadow-sm">
                         {relatedProject.description}
                       </p>
