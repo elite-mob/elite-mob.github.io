@@ -6,8 +6,14 @@ import defaultOgImage from '@/assets/avatar.png';
  */
 export const SITE_URL = (import.meta.env.VITE_SITE_URL ?? 'https://elite-mob.github.io').replace(/\/$/, '');
 
-export const SITE_NAME = 'Hans Chan';
-export const DEFAULT_TITLE = `${SITE_NAME} | Full-Stack Developer | Web, Mobile & AI`;
+/** Legal / structured-data name (not repeated in UI as a brand). */
+export const PERSON_NAME = 'Hans Chan';
+
+/** Short label for nav, page titles, and og:site_name. */
+export const SITE_BRAND = 'Portfolio';
+
+export const DEFAULT_TITLE = 'Full-Stack Developer | Web, Mobile & AI';
+export const PAGE_TITLE_SUFFIX = SITE_BRAND;
 export const DEFAULT_DESCRIPTION =
   'Full-stack developer portfolio: web, mobile, and AI, trusted by startups and enterprises. 40+ shipped projects. Clear communication, on-time delivery, outcomes you can count on.';
 
@@ -33,4 +39,8 @@ export function ogImageUrl(imageUrl: string | undefined): string {
   if (imageUrl.startsWith('/')) return absoluteUrl(imageUrl);
   if (imageUrl.startsWith('data:')) return absoluteUrl(DEFAULT_OG_IMAGE_PATH);
   return absoluteUrl(imageUrl);
+}
+
+export function pageTitle(pageLabel: string): string {
+  return `${pageLabel} | ${PAGE_TITLE_SUFFIX}`;
 }

@@ -79,7 +79,7 @@ export const footerTagline = 'Full-stack engineer · Web, Mobile & AI';
  */
 export const trustStripContent = {
   eyebrow: 'SELECTED COLLABORATIONS',
-  supporting: 'A sample of teams and products behind shipped work.',
+  supporting: 'Teams and products behind shipped work.',
   collaborationNames: [
     'OnX',
     'TroutRoutes',
@@ -96,18 +96,18 @@ export const trustStripContent = {
 export const chatbotCopy = {
   launcherLabel: 'Ask about my work',
   title: 'Portfolio assistant',
-  subtitle: 'Questions about Hans’s projects, skills, and booking a call.',
+  subtitle: 'Questions about my projects, skills, and booking a call.',
   welcome:
-    'Hi — I can answer questions about Hans’s portfolio and experience, or help you book a call via Calendly. What would you like to know?',
+    'Hi — I can answer questions about my portfolio and experience, or help you book a call via Calendly. What would you like to know?',
   quickActions: [
     { label: 'Book a call', message: 'I want to schedule a meeting' },
     { label: 'Skills & stack', message: 'What technologies do you work with?' },
     { label: 'AI projects', message: 'Tell me about your AI projects' },
   ] as const,
   offTopic:
-    'I’m Hans’s portfolio assistant — I only cover his work and booking a call. Try “What mobile apps has Hans built?” or “Book a meeting”.',
+    'I’m a portfolio assistant — I only cover this site’s work and booking a call. Try “What mobile apps are in the portfolio?” or “Book a meeting”.',
   unclear:
-    'I can answer questions about Hans’s projects and experience, or help you book a call. Which do you need?',
+    'I can answer questions about projects and experience on this site, or help you book a call. Which do you need?',
   apiUnavailable:
     'Project Q&A is temporarily unavailable. Use the contact form or book a call link on the site.',
   scheduleUnavailable:

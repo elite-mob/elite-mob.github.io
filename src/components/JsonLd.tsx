@@ -1,4 +1,4 @@
-import { SITE_NAME, SITE_URL, SAME_AS_LINKS, ogImageUrl, DEFAULT_OG_IMAGE_PATH } from '@/lib/site';
+import { PERSON_NAME, SITE_URL, SAME_AS_LINKS, ogImageUrl, DEFAULT_OG_IMAGE_PATH } from '@/lib/site';
 
 export type BreadcrumbJsonItem = {
   name: string;
@@ -15,7 +15,7 @@ export function JsonLdHome() {
       {
         '@type': 'Person',
         '@id': `${SITE_URL}/#person`,
-        name: SITE_NAME,
+        name: PERSON_NAME,
         url: SITE_URL,
         image: ogImageUrl(DEFAULT_OG_IMAGE_PATH),
         jobTitle: 'Full-Stack Developer',
@@ -35,7 +35,7 @@ export function JsonLdHome() {
       {
         '@type': 'Service',
         '@id': `${SITE_URL}/#service`,
-        name: `${SITE_NAME}: Software Development`,
+        name: 'Full-Stack Software Development',
         url: SITE_URL,
         image: ogImageUrl(DEFAULT_OG_IMAGE_PATH),
         provider: { '@id': `${SITE_URL}/#person` },
@@ -94,7 +94,7 @@ export function JsonLdProject({ project, pageUrl }: JsonLdProjectProps) {
     applicationCategory: 'DeveloperApplication',
     author: {
       '@type': 'Person',
-      name: SITE_NAME,
+      name: PERSON_NAME,
       url: SITE_URL,
     },
     offers: {

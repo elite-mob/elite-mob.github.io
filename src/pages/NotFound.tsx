@@ -6,6 +6,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { navigateToPortfolio } from "@/lib/navigation";
 import { Seo } from "@/components/Seo";
+import { pageTitle } from "@/lib/site";
 import { logPageView } from "@/integrations/firebase/analytics";
 
 const NotFound = () => {
@@ -24,7 +25,7 @@ const NotFound = () => {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden perspective-4d">
       <Seo
-        title="Page not found | Hans Chan"
+        title={pageTitle('Page not found')}
         description="This page does not exist. Return to the portfolio home."
         noindex
       />

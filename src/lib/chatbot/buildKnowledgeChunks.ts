@@ -34,7 +34,7 @@ export function buildKnowledgeChunks(projects: readonly Project[]): KnowledgeChu
   const chunks: KnowledgeChunk[] = [
     chunk(
       'site-hero',
-      'About Hans Chan',
+      'About',
       [
         heroContent.eyebrow,
         heroContent.headline,
@@ -47,7 +47,7 @@ export function buildKnowledgeChunks(projects: readonly Project[]): KnowledgeChu
     ),
     chunk(
       'site-about',
-      'How Hans works',
+      'How I work',
       [
         aboutContent.intro,
         ...aboutContent.highlights.map((h) => `${h.title}: ${h.body}`),

@@ -15,7 +15,7 @@ import { Seo } from '@/components/Seo';
 import { JsonLdProject, JsonLdBreadcrumbList } from '@/components/JsonLd';
 import { AppStoreRating } from '@/components/AppStoreRating';
 import { getStoreLinksForProject, projectHasStoreRating } from '@/lib/appStoreRating';
-import { absoluteUrl, SITE_URL } from '@/lib/site';
+import { absoluteUrl, pageTitle, SITE_URL } from '@/lib/site';
 import { cn } from '@/lib/utils';
 
 const categoryIcons = {
@@ -132,7 +132,7 @@ const ProjectDetail = () => {
     return (
       <div className="min-h-screen bg-background relative overflow-hidden">
         <Seo
-          title="Project not found | Hans Chan"
+          title={pageTitle('Project not found')}
           description="The project you are looking for is not in this portfolio."
           noindex
         />
@@ -178,7 +178,7 @@ const ProjectDetail = () => {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden perspective-4d">
       <Seo
-        title={`${project.title} | Hans Chan`}
+        title={pageTitle(project.title)}
         description={metaDescription}
         image={ogImageSrc}
         imageAlt={`${project.title}: project preview`}

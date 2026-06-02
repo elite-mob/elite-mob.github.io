@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import {
   SITE_URL,
+  SITE_BRAND,
   DEFAULT_TITLE,
   DEFAULT_DESCRIPTION,
   DEFAULT_OG_IMAGE_PATH,
@@ -25,7 +26,7 @@ export function Seo({
   title = DEFAULT_TITLE,
   description = DEFAULT_DESCRIPTION,
   image,
-  imageAlt = 'Hans Chan: full-stack developer portfolio',
+  imageAlt = 'Full-stack developer portfolio preview',
   canonicalPath,
   noindex = false,
 }: SeoProps) {
@@ -43,7 +44,7 @@ export function Seo({
       <link rel="canonical" href={canonical} />
 
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="Hans Chan" />
+      <meta property="og:site_name" content={SITE_BRAND} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description.slice(0, 300)} />
       <meta property="og:url" content={canonical} />

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { Seo } from '@/components/Seo';
-import { absoluteUrl } from '@/lib/site';
+import { absoluteUrl, pageTitle } from '@/lib/site';
 import { RouterNavButton } from '@/components/RouterNavButton';
 
 const Privacy = () => {
@@ -15,8 +15,8 @@ const Privacy = () => {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden perspective-4d">
       <Seo
-        title="Privacy Policy | Hans Chan"
-        description="How this portfolio site handles contact form data and visitor privacy. Hans Chan, freelance developer, based in China."
+        title={pageTitle('Privacy Policy')}
+        description="How this portfolio site handles contact form data and visitor privacy."
         canonicalPath="/privacy"
       />
       <div className="fixed inset-0 bg-section-calm pointer-events-none" aria-hidden />
@@ -67,7 +67,7 @@ const Privacy = () => {
 
               <h2>Portfolio chat assistant</h2>
               <p>
-                The site may offer a chat assistant that answers questions about Hans Chan&apos;s portfolio and helps you
+                The site may offer a chat assistant that answers questions about this portfolio and helps you
                 book a call. It is not a general-purpose AI chatbot: unrelated questions are answered with a short
                 on-site message and are not sent to external AI services.
               </p>

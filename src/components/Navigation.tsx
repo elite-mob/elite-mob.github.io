@@ -3,6 +3,7 @@ import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { navigateToSection, navigateToPortfolio } from '@/lib/navigation';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { SITE_BRAND } from '@/lib/site';
 
 const navLinks = [
   { href: '#home', label: 'Home', path: '/' },
@@ -76,7 +77,7 @@ export const Navigation = () => {
             className="font-display text-2xl font-bold gradient-text text-left focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background rounded"
             aria-label="Scroll to top"
           >
-            Hans Chan
+            {SITE_BRAND}
           </button>
         ) : (
           <button
@@ -85,7 +86,7 @@ export const Navigation = () => {
             className="font-display text-2xl font-bold gradient-text text-left focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background rounded"
             aria-label="Go to home"
           >
-            Hans Chan
+            {SITE_BRAND}
           </button>
         )}
 
