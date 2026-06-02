@@ -30,7 +30,7 @@ const App = () => {
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          enableSystem
+          enableSystem={false}
           storageKey="elite-mob-theme"
           disableTransitionOnChange
         >
