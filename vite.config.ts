@@ -108,9 +108,23 @@ export default defineConfig(({ mode }) => ({
     sourcemap: mode === 'development',
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-toast'],
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('firebase')) return 'firebase-vendor';
+            if (id.includes('framer-motion')) return 'motion-vendor';
+            if (id.includes('@emailjs')) return 'emailjs-vendor';
+            if (
+              id.includes('react-dom') ||
+              id.includes('react-router') ||
+              id.includes('/react/')
+            ) {
+              return 'react-vendor';
+            }
+            if (id.includes('@radix-ui')) return 'ui-vendor';
+          }
+          if (id.includes('/src/data/chatKnowledge.json')) return 'chat-knowledge';
+          if (id.includes('/src/pages/ProjectDetail')) return 'page-project-detail';
+          if (id.includes('/src/components/chatbot/')) return 'chatbot';
         },
       },
     },

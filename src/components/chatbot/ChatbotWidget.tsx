@@ -15,7 +15,7 @@ import {
 import { chatbotCopy } from '@/data/siteContent';
 import { sendChatMessage } from '@/lib/chatbot/chatApi';
 import { classifyIntent } from '@/lib/chatbot/intentRouter';
-import { getKnowledgeChunks } from '@/lib/chatbot/knowledgeChunks';
+import { loadKnowledgeChunks } from '@/lib/chatbot/knowledgeChunks';
 import { retrieveContextChunks } from '@/lib/chatbot/retrieveContext';
 import {
   advanceScheduleFlow,
@@ -24,7 +24,7 @@ import {
   startScheduleFlow,
 } from '@/lib/chatbot/scheduleFlow';
 import { sendMeetingIntentEmail } from '@/lib/chatbot/sendMeetingIntent';
-import type { ChatMessage, ScheduleFlowState } from '@/lib/chatbot/types';
+import type { ChatMessage, KnowledgeChunk, ScheduleFlowState } from '@/lib/chatbot/types';
 import { getScheduleMeetingUrl } from '@/lib/scheduleMeeting';
 import {
   logChatApiCall,
@@ -50,7 +50,7 @@ export const ChatbotWidget = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const conversationIdRef = useRef(`chat-${Date.now()}`);
   const scheduleUrl = useMemo(() => getScheduleMeetingUrl(), []);
-  const knowledgeChunks = useMemo(() => getKnowledgeChunks(), []);
+  const [knowledgeChunks, setKnowledgeChunks] = useState<KnowledgeChunk[]>([]);
 
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
@@ -71,7 +71,18 @@ export const ChatbotWidget = () => {
   useEffect(() => {
     if (!open) return;
     void logChatOpen();
+    void loadKnowledgeChunks().then(setKnowledgeChunks);
   }, [open]);
+
+  useEffect(() => {
+    const prefetch = () => void loadKnowledgeChunks().then(setKnowledgeChunks);
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(prefetch, { timeout: 5000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const timer = window.setTimeout(prefetch, 2500);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -161,9 +172,11 @@ export const ChatbotWidget = () => {
       setIsLoading(true);
       appendMessages(createAssistantMessage(chatbotCopy.thinking));
       try {
-        let chunks = retrieveContextChunks(knowledgeChunks, text);
+        const source = knowledgeChunks.length > 0 ? knowledgeChunks : await loadKnowledgeChunks();
+        if (source !== knowledgeChunks) setKnowledgeChunks(source);
+        let chunks = retrieveContextChunks(source, text);
         if (matchedProjectId) {
-          const matched = knowledgeChunks.find((c) => c.id === `project-${matchedProjectId}`);
+          const matched = source.find((c) => c.id === `project-${matchedProjectId}`);
           if (matched && !chunks.some((c) => c.id === matched.id)) {
             chunks = [matched, ...chunks].slice(0, 5);
           }

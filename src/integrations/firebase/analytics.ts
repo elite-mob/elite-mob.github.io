@@ -154,6 +154,22 @@ export const logChatApiCall = async (): Promise<void> => {
   logEvent(analytics, 'chat_api_call');
 };
 
+/** Uncaught React error surfaced by the root error boundary. */
+export const logClientError = async (params: {
+  message: string;
+  component_stack?: string;
+}): Promise<void> => {
+  const analytics = await getAnalyticsInstance();
+  if (!analytics) return;
+
+  logEvent(analytics, 'client_error', {
+    message: params.message.slice(0, 200),
+    ...(params.component_stack && {
+      component_stack: params.component_stack.slice(0, 500),
+    }),
+  });
+};
+
 /** Primary clicks on `<button>`, `[role="button"]`, and tracked links (`data-analytics-button`). Sent to GA4 via Firebase. */
 export const logButtonClick = async (params: {
   button_label: string;

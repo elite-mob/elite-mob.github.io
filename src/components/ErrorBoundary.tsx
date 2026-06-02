@@ -1,6 +1,7 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, Home } from 'lucide-react';
+import { logClientError } from '@/integrations/firebase/analytics';
 
 interface Props {
   children: ReactNode;
@@ -22,9 +23,11 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Log error to error reporting service in production
     if (import.meta.env.PROD) {
-      // Error reporting service would go here
+      void logClientError({
+        message: error.message,
+        component_stack: errorInfo.componentStack ?? undefined,
+      });
     } else {
       console.error('Uncaught error:', error, errorInfo);
     }

@@ -1,5 +1,3 @@
-import { recordVisitToFirestore } from '@/integrations/firebase/visitStatsFirestore';
-
 const VISIT_RECORDED_KEY = 'site_visit_recorded';
 
 export function shouldRecordVisit(): boolean {
@@ -22,7 +20,9 @@ export function markVisitRecorded(): void {
 export function recordVisit(): void {
   if (!shouldRecordVisit()) return;
 
-  void recordVisitToFirestore().finally(() => {
-    markVisitRecorded();
-  });
+  void import('@/integrations/firebase/visitStatsFirestore')
+    .then(({ recordVisitToFirestore }) => recordVisitToFirestore())
+    .finally(() => {
+      markVisitRecorded();
+    });
 }
