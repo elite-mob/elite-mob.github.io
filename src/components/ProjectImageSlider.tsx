@@ -31,7 +31,13 @@ export function ProjectImageSlider({
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [failedSrc, setFailedSrc] = useState<Set<string>>(() => new Set());
   const [containerRef, inView] = useIntersectionObserver({ threshold: 0.25, rootMargin: '40px' });
+
+  useEffect(() => {
+    setFailedSrc(new Set());
+    setIndex(0);
+  }, [images]);
 
   useEffect(() => {
     setReduceMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -61,7 +67,8 @@ export function ProjectImageSlider({
   if (slides.length === 0) return null;
 
   const single = slides.length === 1;
-  const motionReady = inView && !reduceMotion;
+  /** Ken Burns only on detail hero — 3D transforms on cards caused blank/grey previews in some browsers. */
+  const motionReady = variant === 'hero' && inView && !reduceMotion;
 
   return (
     <div
@@ -73,6 +80,7 @@ export function ProjectImageSlider({
       onBlur={() => setPaused(false)}
     >
       {slides.map((src, i) => {
+        if (failedSrc.has(src)) return null;
         const active = i === index;
         return (
           <div
@@ -88,7 +96,7 @@ export function ProjectImageSlider({
               src={src}
               alt={active ? alt : ''}
               sizes={IMAGE_SIZES[variant]}
-              loading={priority && i === 0 ? 'eager' : 'lazy'}
+              loading="eager"
               decoding="async"
               fetchPriority={priority && i === 0 ? 'high' : undefined}
               draggable={false}
@@ -100,6 +108,22 @@ export function ProjectImageSlider({
               )}
               onContextMenu={(e) => e.preventDefault()}
               onDragStart={(e) => e.preventDefault()}
+              onError={() => {
+                setFailedSrc((prev) => {
+                  const next = new Set(prev);
+                  next.add(src);
+                  if (active) {
+                    setIndex((current) => {
+                      for (let step = 1; step <= slides.length; step++) {
+                        const candidate = (current + step) % slides.length;
+                        if (!next.has(slides[candidate])) return candidate;
+                      }
+                      return current;
+                    });
+                  }
+                  return next;
+                });
+              }}
             />
           </div>
         );

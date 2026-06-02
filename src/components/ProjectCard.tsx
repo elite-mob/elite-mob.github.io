@@ -16,6 +16,8 @@ import { cn } from '@/lib/utils';
 interface ProjectCardProps {
   project: Project;
   index: number;
+  /** Portfolio grid is visible — avoids hiding card previews behind opacity-0 entrance state. */
+  revealed?: boolean;
 }
 
 const categoryIcons = {
@@ -30,11 +32,15 @@ const categoryLabels = {
   ai: 'AI',
 };
 
-export const ProjectCard = ({ project, index }: ProjectCardProps) => {
+export const ProjectCard = ({ project, index, revealed = true }: ProjectCardProps) => {
   const navigatePath = `/project/${project.id}`;
   const Icon = categoryIcons[project.category];
   const tiltRef = use3DTilt({ maxTilt: 5, scale: 1.02 });
-  const [observerRef, isVisible] = useIntersectionObserver({ threshold: 0.1, rootMargin: '50px' });
+  const [observerRef, isInView] = useIntersectionObserver({
+    threshold: 0.05,
+    rootMargin: '120px 0px 280px 0px',
+  });
+  const isVisible = revealed && isInView;
 
   const combinedRef = useCallback(
     (node: HTMLDivElement | null) => {
@@ -45,14 +51,16 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
   );
 
   const getAnimationClass = () => {
-    if (!isVisible) return 'opacity-0';
+    if (!revealed) return 'opacity-0 pointer-events-none';
+    // Show previews as soon as the grid is revealed; animate only when scrolled into view.
+    if (!isInView) return 'opacity-100';
     const animationType = index % 3;
     if (animationType === 0) return 'animate-portfolio-card';
     if (animationType === 1) return 'animate-portfolio-card-stagger';
     return 'animate-portfolio-card-cascade';
   };
 
-  const animationDelay = isVisible ? (index % 6) * 0.1 : 0;
+  const animationDelay = isInView ? (index % 6) * 0.1 : 0;
 
   const logNavigate = () => {
     void logProjectCardClick({
@@ -75,31 +83,30 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
       className={`group relative glass-card rounded-2xl overflow-hidden perspective-4d transform-3d shadow-4d hover:shadow-4d-hover ${getAnimationClass()} flex flex-col`}
       style={{ animationDelay: `${animationDelay}s`, animationFillMode: 'forwards' }}
     >
-      <div className="relative h-48 sm:h-52 overflow-hidden bg-secondary shrink-0">
+      <div className="relative h-48 sm:h-52 overflow-hidden bg-secondary shrink-0 isolate [transform:translateZ(0)]">
+        {hasVisual ? (
+          <ProjectImageSlider
+            images={sliderImages}
+            alt={`${project.title} preview`}
+            priority
+          />
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/12 to-primary/6 group-hover:opacity-90 transition-opacity duration-500" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Icon className="w-16 h-16 text-muted-foreground/30 group-hover:scale-110 transition-transform duration-500" aria-hidden />
+            </div>
+          </>
+        )}
         <RouterNavButton
           to={navigatePath}
           onClick={logNavigate}
-          className="absolute inset-0 z-[1] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+          className="absolute inset-0 z-[5] bg-transparent cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
           aria-label={`Open case study: ${project.title}`}
-        >
-          {hasVisual ? (
-            <ProjectImageSlider
-              images={sliderImages}
-              alt={`${project.title} preview`}
-              priority={index < 6}
-            />
-          ) : (
-            <>
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/12 to-primary/6 group-hover:opacity-90 transition-opacity duration-500" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Icon className="w-16 h-16 text-muted-foreground/30 group-hover:scale-110 transition-transform duration-500" aria-hidden />
-              </div>
-            </>
-          )}
-        </RouterNavButton>
+        />
 
         {project.featured && (
-          <div className="absolute top-3 right-3 z-[2] px-2.5 py-1 rounded-lg bg-primary text-primary-foreground text-[11px] font-semibold uppercase tracking-wide shadow-sm ring-1 ring-primary/30">
+          <div className="pointer-events-none absolute top-3 right-3 z-[6] px-2.5 py-1 rounded-lg bg-primary text-primary-foreground text-[11px] font-semibold uppercase tracking-wide shadow-sm ring-1 ring-primary/30">
             Featured
           </div>
         )}

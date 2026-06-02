@@ -256,10 +256,11 @@ export const PortfolioSection = () => {
         }`} aria-label="Portfolio projects">
           {filteredProjects.length > 0 ? (
             filteredProjects.map((project, index) => (
-              <ProjectCard 
-                key={project.id} 
-                project={project} 
+              <ProjectCard
+                key={project.id}
+                project={project}
                 index={index}
+                revealed={showPortfolioItems}
               />
             ))
           ) : (

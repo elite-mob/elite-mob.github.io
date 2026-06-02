@@ -14,7 +14,7 @@ export function portfolioGalleryFolderName(projectId: string, title: string): st
 }
 
 export function portfolioGalleryPublicPath(folder: string, fileName: string): string {
-  return `/portfolio-gallery/${encodeURIComponent(folder)}/${encodeURIComponent(fileName)}`;
+  return `/portfolio-gallery/${folder}/${fileName}`;
 }
 
 /** Primary project artwork path inside that project's gallery folder. */

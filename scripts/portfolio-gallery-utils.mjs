@@ -25,12 +25,12 @@ export const GALLERY_IMAGE_EXT = new Set([
 
 const SKIP_FILES = new Set(['.ds_store', 'thumbs.db', 'desktop.ini']);
 
-/** Preferred slide order by basename (any extension). */
+/** Preferred slide order by basename (screenshots before logo artwork). */
 const BASENAME_ORDER = {
-  artwork: -1,
-  desktop: 0,
-  mobile: 1,
-  preview: 2,
+  preview: -2,
+  desktop: -1,
+  mobile: 0,
+  artwork: 10,
 };
 
 export function getImageExtension(fileName) {
@@ -62,7 +62,7 @@ export function galleryFolderName(projectId, title) {
 }
 
 export function publicGalleryPath(folder, fileName) {
-  return `/portfolio-gallery/${encodeURIComponent(folder)}/${encodeURIComponent(fileName)}`;
+  return `/portfolio-gallery/${folder}/${fileName}`;
 }
 
 export function parseProjects(source) {
