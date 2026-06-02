@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
-import { Quote } from 'lucide-react';
+import { Linkedin, Quote } from 'lucide-react';
 import { testimonials, type Testimonial } from '@/data/testimonials';
 import { testimonialAvatarSrc } from '@/lib/linkedinProfile';
 import { cn } from '@/lib/utils';
@@ -9,6 +9,28 @@ import { SectionHeader } from '@/components/SectionHeader';
 
 function testimonialDisplayName(attribution: string): string {
   return attribution.split(' · ')[0]?.trim() || attribution;
+}
+
+function TestimonialLinkedIn({ url, name }: { url: string; name: string }) {
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        'inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-[#0A66C2]/30',
+        'bg-[#0A66C2]/[0.07] px-2.5 py-1.5 text-[11px] sm:text-xs font-semibold text-[#0A66C2]',
+        'shadow-sm transition-all duration-200',
+        'hover:bg-[#0A66C2]/14 hover:border-[#0A66C2]/45 hover:shadow-md hover:shadow-[#0A66C2]/10',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2]/45',
+        'focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+      )}
+      aria-label={`View ${name} on LinkedIn (opens in a new tab)`}
+    >
+      <Linkedin className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={2} aria-hidden />
+      <span>LinkedIn</span>
+    </a>
+  );
 }
 
 function TestimonialAvatar({ t, name }: { t: Testimonial; name: string }) {
@@ -82,9 +104,12 @@ function ReviewCard({ t, index, visible }: { t: Testimonial; index: number; visi
 
             <footer className="flex items-center gap-3 pt-3 border-t border-border/65">
               <TestimonialAvatar t={t} name={displayName} />
-              <cite className="not-italic min-w-0 flex-1 text-sm sm:text-[0.95rem] font-semibold leading-[1.35] text-foreground [text-wrap:balance]">
-                {t.attribution}
-              </cite>
+              <div className="min-w-0 flex-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
+                <cite className="not-italic text-sm sm:text-[0.95rem] font-semibold leading-[1.35] text-foreground [text-wrap:balance]">
+                  {t.attribution}
+                </cite>
+                {t.linkedinUrl && <TestimonialLinkedIn url={t.linkedinUrl} name={displayName} />}
+              </div>
             </footer>
           </div>
         </div>
