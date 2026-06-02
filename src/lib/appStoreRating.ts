@@ -151,7 +151,16 @@ export async function fetchAppRatings(storeLinks: string[]): Promise<AppRating[]
   const results = await Promise.all(
     unique.map((link) => fetchAppRating(link).catch(() => null)),
   );
-  return results.filter((r): r is AppRating => r != null && hasDisplayableRating(r.rating, r.ratingCount));
+  const ratings = results.filter(
+    (r): r is AppRating => r != null && hasDisplayableRating(r.rating, r.ratingCount),
+  );
+  return sortRatingsByPlatform(ratings);
+}
+
+/** iOS first, then Android — stable order when both stores are linked. */
+export function sortRatingsByPlatform(ratings: AppRating[]): AppRating[] {
+  const order: Record<StorePlatform, number> = { ios: 0, android: 1 };
+  return [...ratings].sort((a, b) => order[a.platform] - order[b.platform]);
 }
 
 export function formatRatingCount(count: number): string {

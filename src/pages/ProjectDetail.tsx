@@ -126,7 +126,7 @@ const ProjectDetail = () => {
   const storeLinks = useMemo(() => {
     if (!project) return [];
     return getStoreLinksForProject(project);
-  }, [project?.link, project?.androidLink]);
+  }, [project]);
 
   if (!project) {
     return (

@@ -1,23 +1,72 @@
 {
+  "com.troutinsights.troutroutes": {
+    "rating": 3.6,
+    "ratingCount": 593,
+    "appName": "TroutRoutes: Trout Fishing App",
+    "storeUrl": "https://play.google.com/store/apps/details?id=com.troutinsights.troutroutes&hl=en&gl=us",
+    "fetchedAt": "2026-06-02T17:01:07.636Z"
+  },
+  "com.reco.app": {
+    "rating": 4.6995754,
+    "ratingCount": 8506,
+    "appName": "Reco Social",
+    "storeUrl": "https://play.google.com/store/apps/details?id=com.reco.app&hl=en&gl=us",
+    "fetchedAt": "2026-06-02T17:01:08.304Z"
+  },
   "com.timgostony.rainrain": {
     "rating": 4.706195,
     "ratingCount": 11226,
     "appName": "Rain Rain Sleep Sounds",
     "storeUrl": "https://play.google.com/store/apps/details?id=com.timgostony.rainrain&hl=en&gl=us",
-    "fetchedAt": "2026-06-02T13:30:36.620Z"
+    "fetchedAt": "2026-06-02T17:01:09.460Z"
+  },
+  "com.checksammy.mobile": {
+    "rating": 4.3333335,
+    "ratingCount": 6,
+    "appName": "CheckSammy Professional",
+    "storeUrl": "https://play.google.com/store/apps/details?id=com.checksammy.mobile&hl=en&gl=us",
+    "fetchedAt": "2026-06-02T17:01:09.905Z"
+  },
+  "com.mi.AthleanX": {
+    "rating": 4.6211267,
+    "ratingCount": 35395,
+    "appName": "6 Pack Promise - Ultimate Abs",
+    "storeUrl": "https://play.google.com/store/apps/details?id=com.mi.AthleanX&hl=en&gl=us",
+    "fetchedAt": "2026-06-02T17:01:10.370Z"
+  },
+  "com.social_cludder.conquer_kotlin": {
+    "rating": 3.8095238,
+    "ratingCount": 21,
+    "appName": "Conquer- Find Pickleball Games",
+    "storeUrl": "https://play.google.com/store/apps/details?id=com.social_cludder.conquer_kotlin&hl=en&gl=us",
+    "fetchedAt": "2026-06-02T17:01:11.300Z"
+  },
+  "mobile.oneneighbor.android": {
+    "rating": 2.3692307,
+    "ratingCount": 65,
+    "appName": "OneNeighbor",
+    "storeUrl": "https://play.google.com/store/apps/details?id=mobile.oneneighbor.android&hl=en&gl=us",
+    "fetchedAt": "2026-06-02T17:01:12.198Z"
+  },
+  "com.krackwins.app": {
+    "rating": 3.576087,
+    "ratingCount": 96,
+    "appName": "KrackWins",
+    "storeUrl": "https://play.google.com/store/apps/details?id=com.krackwins.app&hl=en&gl=us",
+    "fetchedAt": "2026-06-02T17:01:12.685Z"
   },
   "com.machipopo.media17": {
     "rating": 3.911043,
     "ratingCount": 139536,
     "appName": "17LIVE - Live streaming",
     "storeUrl": "https://play.google.com/store/apps/details?id=com.machipopo.media17&hl=en&gl=us",
-    "fetchedAt": "2026-06-02T13:30:37.824Z"
+    "fetchedAt": "2026-06-02T17:01:13.169Z"
   },
   "app.mymoodai": {
     "rating": 4.5,
     "ratingCount": 16711,
     "appName": "MyMood AI: AI Photo Generator",
     "storeUrl": "https://play.google.com/store/apps/details?id=app.mymoodai&hl=en&gl=us",
-    "fetchedAt": "2026-06-02T13:30:38.351Z"
+    "fetchedAt": "2026-06-02T17:01:13.677Z"
   }
 }

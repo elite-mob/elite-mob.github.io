@@ -65,10 +65,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
     () => getProjectSliderImages(project.id, project.imageUrl),
     [project.id, project.imageUrl],
   );
-  const storeLinks = useMemo(
-    () => getStoreLinksForProject(project),
-    [project.link, project.androidLink],
-  );
+  const storeLinks = useMemo(() => getStoreLinksForProject(project), [project]);
   const hasVisual = sliderImages.length > 0 && sliderImages[0] !== '/placeholder.svg';
 
   return (
@@ -122,7 +119,9 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
             </RouterNavButton>
           </h3>
           {storeLinks.length > 0 && (
-            <AppStoreRating storeLinks={storeLinks} variant="compact" enabled={isVisible} />
+            <div className="pt-0.5 w-full min-w-0">
+              <AppStoreRating storeLinks={storeLinks} variant="compact" enabled={isVisible} />
+            </div>
           )}
           <p className="text-foreground/65 text-sm leading-relaxed line-clamp-3">{project.description}</p>
         </div>
