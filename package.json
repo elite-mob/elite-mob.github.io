@@ -13,6 +13,7 @@
     "optimize-images": "node scripts/optimize-images.js",
     "build:chat-knowledge": "node scripts/build-chat-knowledge.mjs",
     "fetch-portfolio-screenshots": "node scripts/fetch-portfolio-screenshots.mjs",
+    "sync-portfolio-gallery": "node scripts/sync-portfolio-gallery-manifest.mjs",
     "prebuild": "npm run optimize-images && npm run build:chat-knowledge"
   },
   "dependencies": {
