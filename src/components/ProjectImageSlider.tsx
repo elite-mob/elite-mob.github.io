@@ -2,25 +2,33 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 
-const SLIDE_MS = 4200;
-const FADE_MS = 900;
+const SLIDE_MS = 5000;
+const CROSSFADE_MS = 1400;
 
 type ProjectImageSliderProps = {
   images: string[];
   alt: string;
   priority?: boolean;
   className?: string;
+  variant?: 'card' | 'hero';
+  objectFit?: 'cover' | 'contain';
 };
+
+const IMAGE_SIZES = {
+  card: '(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw',
+  hero: '(max-width: 1023px) 100vw, min(50vw, 720px)',
+} as const;
 
 export function ProjectImageSlider({
   images,
   alt,
   priority = false,
   className,
+  variant = 'card',
+  objectFit = 'cover',
 }: ProjectImageSliderProps) {
   const slides = useMemo(() => images.filter(Boolean), [images]);
   const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(false);
   const [paused, setPaused] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
   const [containerRef, inView] = useIntersectionObserver({ threshold: 0.25, rootMargin: '40px' });
@@ -36,18 +44,10 @@ export function ProjectImageSlider({
   useEffect(() => {
     if (!inView || paused || reduceMotion || slides.length <= 1) return;
     const timer = window.setInterval(() => {
-      setVisible(false);
-      window.setTimeout(() => {
-        setIndex((prev) => (prev + 1) % slides.length);
-        setVisible(true);
-      }, FADE_MS);
+      setIndex((prev) => (prev + 1) % slides.length);
     }, SLIDE_MS);
     return () => window.clearInterval(timer);
   }, [inView, paused, reduceMotion, slides.length]);
-
-  useEffect(() => {
-    setVisible(true);
-  }, [index]);
 
   const kenBurnsVariant = useCallback((i: number) => {
     const variants = [
@@ -61,6 +61,7 @@ export function ProjectImageSlider({
   if (slides.length === 0) return null;
 
   const single = slides.length === 1;
+  const motionReady = inView && !reduceMotion;
 
   return (
     <div
@@ -77,24 +78,25 @@ export function ProjectImageSlider({
           <div
             key={`${src}-${i}`}
             className={cn(
-              'absolute inset-0 transition-opacity ease-in-out',
-              active && visible ? 'opacity-100 z-[1]' : 'opacity-0 z-0',
+              'absolute inset-0 portfolio-slide-layer',
+              active ? 'opacity-100 z-[2]' : 'opacity-0 z-[1]',
             )}
-            style={{ transitionDuration: `${FADE_MS}ms` }}
+            style={{ transitionDuration: `${CROSSFADE_MS}ms` }}
             aria-hidden={!active}
           >
             <img
               src={src}
               alt={active ? alt : ''}
-              sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+              sizes={IMAGE_SIZES[variant]}
               loading={priority && i === 0 ? 'eager' : 'lazy'}
               decoding="async"
               fetchPriority={priority && i === 0 ? 'high' : undefined}
               draggable={false}
               className={cn(
-                'h-full w-full object-cover select-none',
-                active && inView && !reduceMotion && !single && kenBurnsVariant(i),
-                active && inView && !reduceMotion && single && 'animate-portfolio-ken-burns-a',
+                'h-full w-full select-none',
+                objectFit === 'contain' ? 'object-contain' : 'object-cover',
+                motionReady && !single && active && kenBurnsVariant(i),
+                motionReady && single && active && 'animate-portfolio-ken-burns-a',
               )}
               onContextMenu={(e) => e.preventDefault()}
               onDragStart={(e) => e.preventDefault()}
@@ -103,37 +105,53 @@ export function ProjectImageSlider({
         );
       })}
 
-      {/* Living light sweep */}
-      {!reduceMotion && inView && (
+      {motionReady && (
         <div
-          className="pointer-events-none absolute inset-0 z-[2] overflow-hidden opacity-25"
+          className="pointer-events-none absolute inset-0 z-[3] overflow-hidden opacity-20"
           aria-hidden
         >
-          <div className="absolute inset-y-0 -left-1/2 w-1/2 animate-portfolio-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
+          <div className="absolute inset-y-0 -left-1/2 w-1/2 animate-portfolio-shimmer bg-gradient-to-r from-transparent via-white/25 to-transparent skew-x-12" />
         </div>
       )}
 
       <div
-        className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black/35 via-transparent to-black/10"
+        className="pointer-events-none absolute inset-0 z-[3] bg-gradient-to-t from-black/40 via-transparent to-black/10"
         aria-hidden
       />
 
       {slides.length > 1 && (
         <div
-          className="absolute bottom-2.5 left-0 right-0 z-[3] flex justify-center gap-1.5 px-3"
+          className={cn(
+            'absolute left-0 right-0 z-[4] flex items-center justify-center gap-1.5 px-3',
+            variant === 'hero' ? 'bottom-4' : 'bottom-2.5',
+          )}
           aria-hidden
         >
           {slides.map((_, i) => (
             <span
               key={i}
               className={cn(
-                'h-1 rounded-full transition-all duration-500',
+                'rounded-full transition-all duration-700 ease-out',
+                variant === 'hero' ? 'h-1.5' : 'h-1',
                 i === index
-                  ? 'w-5 bg-white/90 shadow-sm'
-                  : 'w-1.5 bg-white/45',
+                  ? variant === 'hero'
+                    ? 'w-7 bg-white/95 shadow-sm'
+                    : 'w-5 bg-white/95 shadow-sm'
+                  : variant === 'hero'
+                    ? 'w-2 bg-white/40'
+                    : 'w-1.5 bg-white/40',
               )}
             />
           ))}
+        </div>
+      )}
+
+      {variant === 'hero' && slides.length > 1 && (
+        <div
+          className="pointer-events-none absolute top-3 left-3 z-[4] rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-medium text-white/90 backdrop-blur-sm"
+          aria-hidden
+        >
+          {index + 1} / {slides.length}
         </div>
       )}
     </div>

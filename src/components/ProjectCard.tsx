@@ -1,7 +1,9 @@
 import { Project } from '@/data/portfolioData';
 import { RouterNavButton } from '@/components/RouterNavButton';
 import { ProjectImageSlider } from '@/components/ProjectImageSlider';
+import { AppStoreRating } from '@/components/AppStoreRating';
 import { getProjectSliderImages } from '@/lib/portfolioGallery';
+import { isStoreLink } from '@/lib/appStoreRating';
 import { logProjectCardClick } from '@/integrations/firebase/analytics';
 import { Code2, Smartphone, Brain } from 'lucide-react';
 import { use3DTilt } from '@/hooks/use-3d-tilt';
@@ -115,6 +117,13 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
               {project.title}
             </RouterNavButton>
           </h3>
+          {isStoreLink(project.link) && (
+            <AppStoreRating
+              storeLink={project.link}
+              variant="compact"
+              enabled={isVisible}
+            />
+          )}
           <p className="text-foreground/65 text-sm leading-relaxed line-clamp-3">{project.description}</p>
         </div>
       </div>
