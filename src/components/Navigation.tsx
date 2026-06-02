@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useMatch, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { navigateToSection, navigateToPortfolio } from '@/lib/navigation';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SITE_BRAND } from '@/lib/site';
 import { useActiveSection } from '@/hooks/use-active-section';
+import { useDeferredAction } from '@/hooks/use-deferred-action';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
@@ -23,7 +24,7 @@ function sectionIdFromHash(hash: string): string {
 
 function navLinkClass(isActive: boolean) {
   return cn(
-    'relative font-medium transition-colors duration-200 rounded-lg px-2 py-1 min-h-[44px] inline-flex items-center',
+    'relative font-medium transition-colors duration-200 rounded-lg px-2 py-1 min-h-[44px] inline-flex items-center w-full md:w-auto justify-start md:justify-center',
     'focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background',
     isActive ? 'text-primary' : 'text-foreground/75 hover:text-foreground',
   );
@@ -36,6 +37,12 @@ export const Navigation = () => {
   const homeMatch = useMatch({ path: '/', end: true });
   const isHomePage = homeMatch !== null;
   const activeSection = useActiveSection(isHomePage);
+
+  const runOrDeferNav = useDeferredAction(isMobileMenuOpen);
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -50,6 +57,7 @@ export const Navigation = () => {
       document.body.style.top = `-${scrollY}px`;
       document.body.style.left = '0';
       document.body.style.right = '0';
+      document.body.style.width = '100%';
     } else {
       const top = document.body.style.top;
       const scrollY = top ? Math.abs(parseInt(top, 10) || 0) : 0;
@@ -57,6 +65,7 @@ export const Navigation = () => {
       document.body.style.top = '';
       document.body.style.left = '';
       document.body.style.right = '';
+      document.body.style.width = '';
       if (scrollY > 0) window.scrollTo(0, scrollY);
     }
     return () => {
@@ -64,25 +73,43 @@ export const Navigation = () => {
       document.body.style.top = '';
       document.body.style.left = '';
       document.body.style.right = '';
+      document.body.style.width = '';
     };
   }, [isMobileMenuOpen]);
 
-  const renderNavButton = (link: (typeof navLinks)[number], onNavigate?: () => void) => {
+  const handleNavAction = useCallback(
+    (action: () => void) => {
+      if (isMobileMenuOpen) {
+        runOrDeferNav(action);
+        closeMobileMenu();
+      } else {
+        action();
+      }
+    },
+    [isMobileMenuOpen, runOrDeferNav, closeMobileMenu],
+  );
+
+  const renderNavButton = (link: (typeof navLinks)[number]) => {
     const id = sectionIdFromHash(link.href);
     const isActive = isHomePage && activeSection === id;
 
-    const className = cn(navLinkClass(isActive), 'after:absolute after:bottom-1 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:bg-primary after:transition-opacity', isActive ? 'after:opacity-100' : 'after:opacity-0');
+    const className = cn(
+      navLinkClass(isActive),
+      'after:absolute after:bottom-1 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:bg-primary after:transition-opacity',
+      isActive ? 'after:opacity-100' : 'after:opacity-0',
+    );
 
     if (link.href === '#portfolio') {
       return (
         <button
           key={link.href}
           type="button"
-          onClick={() => {
-            const category = localStorage.getItem('portfolioCategory') || 'featured';
-            navigateToPortfolio(category, navigate);
-            onNavigate?.();
-          }}
+          onClick={() =>
+            handleNavAction(() => {
+              const category = localStorage.getItem('portfolioCategory') || 'featured';
+              navigateToPortfolio(category, navigate);
+            })
+          }
           className={className}
           aria-current={isActive ? 'true' : undefined}
         >
@@ -95,10 +122,7 @@ export const Navigation = () => {
       <button
         key={link.href}
         type="button"
-        onClick={() => {
-          navigateToSection(link.href, navigate);
-          onNavigate?.();
-        }}
+        onClick={() => handleNavAction(() => navigateToSection(link.href, navigate))}
         className={className}
         aria-current={isActive ? 'true' : undefined}
       >
@@ -121,7 +145,7 @@ export const Navigation = () => {
       <div className="container mx-auto px-6 flex items-center justify-between">
         <button
           type="button"
-          onClick={() => navigateToSection('#home', navigate)}
+          onClick={() => handleNavAction(() => navigateToSection('#home', navigate))}
           className="font-display text-2xl font-bold gradient-text text-left focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background rounded"
           aria-label={isHomePage ? 'Scroll to top' : 'Go to home'}
         >
@@ -151,7 +175,7 @@ export const Navigation = () => {
         <>
           <div
             className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden animate-fade-in"
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={closeMobileMenu}
             aria-hidden
           />
           <div
@@ -162,7 +186,7 @@ export const Navigation = () => {
             }}
           >
             <div className="flex flex-col gap-0.5">
-              {navLinks.map((link) => renderNavButton(link, () => setIsMobileMenuOpen(false)))}
+              {navLinks.map((link) => renderNavButton(link))}
             </div>
           </div>
         </>

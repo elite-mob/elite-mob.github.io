@@ -18,33 +18,22 @@ const Index = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Always handle hash navigation when location changes (including when navigating from other pages)
-    // Check both location.hash and window.location.hash to catch all cases
     const hash = location.hash || window.location.hash;
-    
+
     if (hash) {
       handleHashNavigation();
-      // If navigating to portfolio, trigger content show
-      if (hash === '#portfolio') {
-        // Multiple attempts to ensure content shows
-        setTimeout(() => {
-          window.dispatchEvent(new CustomEvent('portfolioShowContent'));
-        }, 50);
-        setTimeout(() => {
-          window.dispatchEvent(new CustomEvent('portfolioShowContent'));
-        }, 200);
-        setTimeout(() => {
-          window.dispatchEvent(new CustomEvent('portfolioShowContent'));
-        }, 500);
-      }
-    } else {
-      // If no hash, scroll to top to show hero section
-      // Small delay to ensure page is rendered
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 100);
+      return;
     }
-  }, [location]);
+
+    // Home without a hash: show hero (skip if user is mid cross-page hash navigation)
+    const scrollHomeTop = window.setTimeout(() => {
+      if (!window.location.hash) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 100);
+
+    return () => window.clearTimeout(scrollHomeTop);
+  }, [location.pathname, location.hash, location.search]);
 
   // Also listen for hash changes directly (in case React Router doesn't update location.hash)
   useEffect(() => {
