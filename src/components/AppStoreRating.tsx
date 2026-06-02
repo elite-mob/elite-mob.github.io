@@ -108,12 +108,12 @@ function RatingSkeleton({
     if (dual) {
       return (
         <div
-          className="w-full rounded-xl border border-border/50 bg-muted/30 p-3 space-y-3"
+          className="w-full rounded-xl border border-border/50 bg-muted/30 p-3 flex flex-col gap-3 md:flex-row md:gap-4"
           aria-hidden
         >
-          <div className="h-9 w-full animate-pulse rounded-lg bg-muted/60" />
-          <div className="h-px bg-border/40" />
-          <div className="h-9 w-full animate-pulse rounded-lg bg-muted/60" />
+          <div className="h-9 flex-1 animate-pulse rounded-lg bg-muted/60" />
+          <div className="h-px md:h-auto md:w-px bg-border/40 md:self-stretch" />
+          <div className="h-9 flex-1 animate-pulse rounded-lg bg-muted/60" />
         </div>
       );
     }
@@ -144,7 +144,13 @@ function RatingSkeleton({
 }
 
 /** One store row inside the compact panel (home / related cards). */
-function CompactRatingRow({ data }: { data: AppRating }) {
+function CompactRatingRow({
+  data,
+  layout = 'stack',
+}: {
+  data: AppRating;
+  layout?: 'stack' | 'inline';
+}) {
   const score = data.rating.toFixed(1);
   const label = storePlatformLabel(data.platform);
   const countLabel =
@@ -152,6 +158,24 @@ function CompactRatingRow({ data }: { data: AppRating }) {
       ? '1 rating'
       : `${formatRatingCount(data.ratingCount)} ratings`;
   const ariaLabel = `${score} out of 5 stars, ${formatRatingCountFull(data.ratingCount)} ratings on ${label}`;
+
+  if (layout === 'inline') {
+    return (
+      <div
+        className="flex items-center gap-2 min-w-0 flex-1"
+        aria-label={ariaLabel}
+      >
+        <StoreBadge platform={data.platform} compact className="shrink-0" />
+        <StarRating rating={data.rating} size="sm" className="shrink-0" />
+        <span className="text-sm font-semibold tabular-nums text-foreground leading-none shrink-0">
+          {score}
+        </span>
+        <span className="min-w-0 text-[11px] text-muted-foreground tabular-nums leading-snug truncate">
+          {countLabel}
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-start gap-2.5 min-w-0" aria-label={ariaLabel}>
@@ -183,20 +207,32 @@ function CompactRatingSingle({ data }: { data: AppRating }) {
   );
 }
 
-/** Dual-store compact: one panel, stacked rows — fits narrow portfolio columns. */
+/** Dual-store compact: stacked on mobile, one row on md+ desktop. */
 function CompactRatingPanel({ ratings }: { ratings: AppRating[] }) {
   return (
     <div
       className={cn(
         'w-full rounded-xl border border-border/70',
         'bg-background/75 px-3 py-3 shadow-sm backdrop-blur-sm',
-        'space-y-3',
+        'flex flex-col gap-3',
+        'md:flex-row md:items-center md:gap-4 md:py-2.5',
       )}
     >
       {ratings.map((data, index) => (
-        <div key={`${data.platform}-${data.storeUrl}`}>
-          {index > 0 ? <div className="mb-3 border-t border-border/60" aria-hidden /> : null}
-          <CompactRatingRow data={data} />
+        <div
+          key={`${data.platform}-${data.storeUrl}`}
+          className={cn(
+            'min-w-0 md:flex-1',
+            index > 0 &&
+              'pt-3 border-t border-border/60 md:pt-0 md:border-t-0 md:border-l md:pl-4',
+          )}
+        >
+          <div className="md:hidden">
+            <CompactRatingRow data={data} layout="stack" />
+          </div>
+          <div className="hidden md:block min-w-0">
+            <CompactRatingRow data={data} layout="inline" />
+          </div>
         </div>
       ))}
     </div>
