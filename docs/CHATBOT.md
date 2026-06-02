@@ -19,7 +19,7 @@ Scoped assistant on the portfolio site: project Q&A (OpenAI gpt-4.1-mini via Fir
    `https://us-central1-YOUR_PROJECT.cloudfunctions.net/chat`
 4. `npm run dev` — chat launcher appears bottom-right.
 
-Knowledge chunks are generated on build: `npm run build:chat-knowledge` (runs in `prebuild`).
+Chat knowledge is loaded from `src/data/chatKnowledge.json` (regenerate when portfolio copy changes; the app can also rebuild chunks from `portfolioData` at runtime if that file is empty).
 
 ## Firebase function setup
 

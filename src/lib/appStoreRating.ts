@@ -123,7 +123,7 @@ function fetchIosRatingJsonp(appId: string): Promise<AppRating> {
   });
 }
 
-/** Android ratings from google-play-scraper (synced at build time). */
+/** Android ratings from build-time manifest (src/data/androidStoreRatings.json). */
 function fetchAndroidRating(packageId: string): AppRating {
   const entry = androidRatingsByPackage[packageId];
   if (!entry || !hasDisplayableRating(entry.rating, entry.ratingCount)) {

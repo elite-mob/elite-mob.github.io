@@ -9,7 +9,7 @@ export function parseLinkedInProfileSlug(url: string): string | null {
   }
 }
 
-/** Static avatar saved by scripts/sync-linkedin-avatars.mjs */
+/** Static avatar under public/testimonials/avatars/{slug}.webp */
 export function linkedInSyncedAvatarPath(slug: string): string {
   return `/testimonials/avatars/${slug}.webp`;
 }
