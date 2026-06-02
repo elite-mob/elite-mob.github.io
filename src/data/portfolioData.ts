@@ -10,6 +10,8 @@ export interface Project {
   technologies: string[];
   imageUrl: string;
   link?: string;
+  /** Play Store URL when the primary `link` is App Store (or vice versa). */
+  androidLink?: string;
   featured?: boolean;
   duration?: string;
   role?: string;
@@ -1122,6 +1124,7 @@ export const projects: Project[] = [
     technologies: ['Kotlin', 'Stable Diffusion', 'Core ML', 'Swift', 'Image Processing'],
     imageUrl: projectArtworkUrl('ai-1', 'MyMood AI - 9k+ Reviews, 50k+ Monthly Revenue - iOS, Android'),
     link: 'https://apps.apple.com/us/app/mymood-ai-ai-photo-generator/id1669952628',
+    androidLink: 'https://play.google.com/store/apps/details?id=app.mymoodai',
     featured: true,
     duration: '5 months',
     role: 'AI Mobile Developer',

@@ -1,3 +1,5 @@
+import androidStoreRatings from '@/data/androidStoreRatings.json';
+
 export type StorePlatform = 'ios' | 'android';
 
 export type AppRating = {
@@ -8,6 +10,10 @@ export type AppRating = {
   storeUrl: string;
   fetchedAt: string;
 };
+
+type AndroidRatingEntry = Omit<AppRating, 'platform'>;
+
+const androidRatingsByPackage = androidStoreRatings as Record<string, AndroidRatingEntry>;
 
 export function parseStoreLink(url: string): { platform: StorePlatform; storeId: string } | null {
   try {
@@ -37,14 +43,49 @@ export function canFetchStoreRating(storeLink: string | undefined): boolean {
   return isStoreLink(storeLink);
 }
 
+/** All App Store / Play Store URLs for a portfolio project. */
+export function getStoreLinksForProject(project: {
+  link?: string;
+  androidLink?: string;
+}): string[] {
+  const links: string[] = [];
+  if (project.link && isStoreLink(project.link)) links.push(project.link.trim());
+  const android = project.androidLink?.trim();
+  if (android && isStoreLink(android) && !links.includes(android)) links.push(android);
+  return links;
+}
+
+export function projectHasStoreRating(project: { link?: string; androidLink?: string }): boolean {
+  return getStoreLinksForProject(project).length > 0;
+}
+
 type ItunesLookup = {
   results?: {
     trackName?: string;
     averageUserRating?: number;
+    averageUserRatingForCurrentVersion?: number;
     userRatingCount?: number;
+    userRatingCountForCurrentVersion?: number;
     trackViewUrl?: string;
   }[];
 };
+
+function parseItunesLookupJson(data: ItunesLookup, appId: string): AppRating {
+  const app = data.results?.[0];
+  const rating = app?.averageUserRating ?? app?.averageUserRatingForCurrentVersion;
+  const ratingCount = app?.userRatingCount ?? app?.userRatingCountForCurrentVersion;
+  if (rating == null || ratingCount == null || ratingCount <= 0) {
+    throw new Error('App Store rating unavailable');
+  }
+  return {
+    platform: 'ios',
+    rating,
+    ratingCount,
+    appName: app.trackName ?? 'App Store app',
+    storeUrl: app.trackViewUrl ?? `https://apps.apple.com/app/id${appId}`,
+    fetchedAt: new Date().toISOString(),
+  };
+}
 
 function fetchIosRatingJsonp(appId: string): Promise<AppRating> {
   return new Promise((resolve, reject) => {
@@ -65,19 +106,11 @@ function fetchIosRatingJsonp(appId: string): Promise<AppRating> {
 
     (window as Record<string, unknown>)[callback] = (data: ItunesLookup) => {
       cleanup();
-      const app = data.results?.[0];
-      if (app?.averageUserRating == null || app.userRatingCount == null) {
-        reject(new Error('App Store rating unavailable'));
-        return;
+      try {
+        resolve(parseItunesLookupJson(data, appId));
+      } catch (err) {
+        reject(err instanceof Error ? err : new Error('App Store rating unavailable'));
       }
-      resolve({
-        platform: 'ios',
-        rating: app.averageUserRating,
-        ratingCount: app.userRatingCount,
-        appName: app.trackName ?? 'App Store app',
-        storeUrl: app.trackViewUrl ?? `https://apps.apple.com/app/id${appId}`,
-        fetchedAt: new Date().toISOString(),
-      });
     };
 
     script = document.createElement('script');
@@ -90,57 +123,16 @@ function fetchIosRatingJsonp(appId: string): Promise<AppRating> {
   });
 }
 
-function playStorePageUrl(packageId: string): string {
-  return `https://play.google.com/store/apps/details?id=${encodeURIComponent(packageId)}&hl=en&gl=us`;
-}
-
-function getPlayStoreFetchUrl(pageUrl: string): string {
-  const proxyTemplate =
-    import.meta.env.VITE_PLAY_STORE_CORS_PROXY?.trim() ||
-    'https://api.allorigins.win/raw?url=';
-  if (proxyTemplate.includes('{url}')) {
-    return proxyTemplate.replace('{url}', encodeURIComponent(pageUrl));
+/** Android ratings from google-play-scraper (synced at build time). */
+function fetchAndroidRating(packageId: string): AppRating {
+  const entry = androidRatingsByPackage[packageId];
+  if (!entry || !hasDisplayableRating(entry.rating, entry.ratingCount)) {
+    throw new Error(`Google Play rating not available for ${packageId}`);
   }
-  const sep = proxyTemplate.includes('?') ? '&' : '?';
-  return `${proxyTemplate}${sep}url=${encodeURIComponent(pageUrl)}&_=${Date.now()}`;
+  return { platform: 'android', ...entry };
 }
 
-function parsePlayStoreHtml(html: string, packageId: string, storeUrl: string): AppRating {
-  const aggregate = html.match(
-    /"aggregateRating"\s*:\s*\{[^}]*"ratingValue"\s*:\s*"([\d.]+)"[^}]*"ratingCount"\s*:\s*"?([\d]+)"?/,
-  );
-  const rating = aggregate ? parseFloat(aggregate[1]) : NaN;
-  const ratingCount = aggregate ? parseInt(aggregate[2], 10) : NaN;
-
-  if (!Number.isFinite(rating) || !Number.isFinite(ratingCount)) {
-    throw new Error('Play Store rating not found in page');
-  }
-
-  const nameMatch =
-    html.match(/"name"\s*:\s*"([^"]+)"/) ??
-    html.match(/itemprop="name"\s+content="([^"]+)"/) ??
-    html.match(/<title>([^<]+)<\/title>/);
-  const appName = nameMatch?.[1]?.replace(/\s*-\s*Apps on Google Play$/i, '').trim() ?? packageId;
-
-  return {
-    platform: 'android',
-    rating,
-    ratingCount,
-    appName,
-    storeUrl,
-    fetchedAt: new Date().toISOString(),
-  };
-}
-
-async function fetchAndroidRatingClient(packageId: string): Promise<AppRating> {
-  const storeUrl = playStorePageUrl(packageId);
-  const res = await fetch(getPlayStoreFetchUrl(storeUrl), { cache: 'no-store' });
-  if (!res.ok) throw new Error(`Play Store fetch failed (${res.status})`);
-  const html = await res.text();
-  return parsePlayStoreHtml(html, packageId, storeUrl);
-}
-
-/** Fresh rating from the store on every call — static-site friendly, no backend required. */
+/** App Store: live JSONP. Google Play: build-time manifest from google-play-scraper. */
 export async function fetchAppRating(storeLink: string): Promise<AppRating> {
   const parsed = parseStoreLink(storeLink.trim());
   if (!parsed) throw new Error('Not an App Store or Play Store URL');
@@ -148,7 +140,18 @@ export async function fetchAppRating(storeLink: string): Promise<AppRating> {
   if (parsed.platform === 'ios') {
     return fetchIosRatingJsonp(parsed.storeId);
   }
-  return fetchAndroidRatingClient(parsed.storeId);
+  return fetchAndroidRating(parsed.storeId);
+}
+
+/** Fetch ratings for every store link; skips failures (e.g. one platform blocked). */
+export async function fetchAppRatings(storeLinks: string[]): Promise<AppRating[]> {
+  const unique = [...new Set(storeLinks.map((l) => l.trim()).filter(isStoreLink))];
+  if (unique.length === 0) return [];
+
+  const results = await Promise.all(
+    unique.map((link) => fetchAppRating(link).catch(() => null)),
+  );
+  return results.filter((r): r is AppRating => r != null && hasDisplayableRating(r.rating, r.ratingCount));
 }
 
 export function formatRatingCount(count: number): string {

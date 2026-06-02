@@ -25,8 +25,6 @@ interface ImportMetaEnv {
   readonly VITE_SCHEDULE_MEETING_URL?: string;
   /** Optional OpenAI chat via Firebase Function; omit for built-in local Q&A */
   readonly VITE_CHAT_API_URL?: string;
-  /** Optional CORS proxy for Play Store ratings on static GitHub Pages */
-  readonly VITE_PLAY_STORE_CORS_PROXY?: string;
 }
 
 interface ImportMeta {

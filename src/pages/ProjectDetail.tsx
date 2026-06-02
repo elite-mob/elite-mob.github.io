@@ -14,7 +14,7 @@ import { navigateToPortfolio } from '@/lib/navigation';
 import { Seo } from '@/components/Seo';
 import { JsonLdProject, JsonLdBreadcrumbList } from '@/components/JsonLd';
 import { AppStoreRating } from '@/components/AppStoreRating';
-import { isStoreLink } from '@/lib/appStoreRating';
+import { getStoreLinksForProject, projectHasStoreRating } from '@/lib/appStoreRating';
 import { absoluteUrl, SITE_URL } from '@/lib/site';
 import { cn } from '@/lib/utils';
 
@@ -122,6 +122,11 @@ const ProjectDetail = () => {
     if (!project) return [];
     return getProjectSliderImages(project.id, project.imageUrl);
   }, [project]);
+
+  const storeLinks = useMemo(() => {
+    if (!project) return [];
+    return getStoreLinksForProject(project);
+  }, [project?.link, project?.androidLink]);
 
   if (!project) {
     return (
@@ -289,14 +294,14 @@ const ProjectDetail = () => {
                 <span className="gradient-text-transparent drop-shadow-lg">{project.title}</span>
               </h1>
 
-              {isStoreLink(project.link) && (
+              {storeLinks.length > 0 && (
                 <div
                   className={cn(
                     'w-full',
                     isHeroInfoVisible ? 'animate-fade-in-up stagger-delay-2' : 'opacity-0',
                   )}
                 >
-                  <AppStoreRating storeLink={project.link} variant="detail" className="w-full" />
+                  <AppStoreRating storeLinks={storeLinks} variant="detail" className="w-full" />
                 </div>
               )}
               
@@ -539,10 +544,10 @@ const ProjectDetail = () => {
                       <h3 className="font-display text-lg font-bold text-foreground/85 group-hover:text-primary transition-colors drop-shadow-md">
                         {relatedProject.title}
                       </h3>
-                      {isStoreLink(relatedProject.link) && (
+                      {projectHasStoreRating(relatedProject) && (
                         <div className="mt-1.5">
                           <AppStoreRating
-                            storeLink={relatedProject.link}
+                            storeLinks={getStoreLinksForProject(relatedProject)}
                             variant="compact"
                             enabled={isRelatedVisible}
                           />

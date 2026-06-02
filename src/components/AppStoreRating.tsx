@@ -3,15 +3,15 @@ import { useAppRating } from '@/hooks/use-app-rating';
 import {
   formatRatingCount,
   formatRatingCountFull,
-  canFetchStoreRating,
   hasDisplayableRating,
   storePlatformLabel,
+  type AppRating,
   type StorePlatform,
 } from '@/lib/appStoreRating';
 import { cn } from '@/lib/utils';
 
 type AppStoreRatingProps = {
-  storeLink: string | undefined;
+  storeLinks: string[];
   className?: string;
   /** `compact` for portfolio cards; `detail` for case study hero */
   variant?: 'compact' | 'detail';
@@ -98,66 +98,44 @@ function RatingSkeleton({ variant }: { variant: 'compact' | 'detail' }) {
   );
 }
 
-export function AppStoreRating({
-  storeLink,
-  className,
-  variant = 'detail',
-  enabled = true,
-}: AppStoreRatingProps) {
-  const canFetch = canFetchStoreRating(storeLink);
-  const ratingState = useAppRating(canFetch ? storeLink : undefined, enabled && canFetch);
-
-  if (!canFetch) return null;
-
-  if (ratingState.status === 'loading') {
-    return (
-      <div className={className} aria-live="polite" aria-busy="true">
-        <RatingSkeleton variant={variant} />
-      </div>
-    );
-  }
-
-  if (ratingState.status !== 'success') return null;
-
-  const { data } = ratingState;
-  if (!hasDisplayableRating(data.rating, data.ratingCount)) return null;
-
+function CompactRatingRow({ data }: { data: AppRating }) {
   const score = data.rating.toFixed(1);
   const label = storePlatformLabel(data.platform);
   const ariaLabel = `${score} out of 5 stars, ${formatRatingCountFull(data.ratingCount)} ratings on ${label}`;
 
-  if (variant === 'compact') {
-    return (
-      <div
-        className={cn(
-          'inline-flex max-w-full items-center gap-2.5 rounded-full border border-border/70',
-          'bg-background/70 px-3 py-1.5 shadow-sm backdrop-blur-sm',
-          className,
-        )}
-        aria-label={ariaLabel}
-      >
-        <StarRating rating={data.rating} size="sm" />
-        <span className="text-sm font-semibold tabular-nums text-foreground leading-none">
-          {score}
-        </span>
-        <span className="h-3 w-px bg-border/80 shrink-0" aria-hidden />
-        <span className="text-xs text-muted-foreground tabular-nums leading-none">
-          {formatRatingCount(data.ratingCount)}
-        </span>
-        <StoreBadge platform={data.platform} className="hidden sm:inline-flex shrink-0" />
-      </div>
-    );
-  }
+  return (
+    <div
+      className={cn(
+        'inline-flex max-w-full items-center gap-2.5 rounded-full border border-border/70',
+        'bg-background/70 px-3 py-1.5 shadow-sm backdrop-blur-sm',
+      )}
+      aria-label={ariaLabel}
+    >
+      <StarRating rating={data.rating} size="sm" />
+      <span className="text-sm font-semibold tabular-nums text-foreground leading-none">
+        {score}
+      </span>
+      <span className="h-3 w-px bg-border/80 shrink-0" aria-hidden />
+      <span className="text-xs text-muted-foreground tabular-nums leading-none">
+        {formatRatingCount(data.ratingCount)}
+      </span>
+      <StoreBadge platform={data.platform} className="hidden sm:inline-flex shrink-0" />
+    </div>
+  );
+}
+
+function DetailRatingCard({ data }: { data: AppRating }) {
+  const score = data.rating.toFixed(1);
+  const label = storePlatformLabel(data.platform);
+  const ariaLabel = `${score} out of 5 stars, ${formatRatingCountFull(data.ratingCount)} ratings on ${label}`;
 
   return (
     <div
       className={cn(
         'w-full rounded-2xl border border-border/70 bg-card/80 p-4 sm:p-5',
         'shadow-sm backdrop-blur-sm',
-        className,
       )}
       aria-label={ariaLabel}
-      aria-live="polite"
     >
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3 min-w-0">
@@ -203,6 +181,49 @@ export function AppStoreRating({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+export function AppStoreRating({
+  storeLinks,
+  className,
+  variant = 'detail',
+  enabled = true,
+}: AppStoreRatingProps) {
+  const links = storeLinks.filter(Boolean);
+  const ratingState = useAppRating(links.length > 0 ? links : undefined, enabled);
+
+  if (links.length === 0) return null;
+
+  if (ratingState.status === 'loading') {
+    return (
+      <div className={className} aria-live="polite" aria-busy="true">
+        <RatingSkeleton variant={variant} />
+      </div>
+    );
+  }
+
+  if (ratingState.status !== 'success') return null;
+
+  const ratings = ratingState.data.filter((d) => hasDisplayableRating(d.rating, d.ratingCount));
+  if (ratings.length === 0) return null;
+
+  if (variant === 'compact') {
+    return (
+      <div className={cn('flex flex-col gap-2', className)} aria-live="polite">
+        {ratings.map((data) => (
+          <CompactRatingRow key={data.platform + data.storeUrl} data={data} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className={cn('flex flex-col gap-3 w-full', className)} aria-live="polite">
+      {ratings.map((data) => (
+        <DetailRatingCard key={data.platform + data.storeUrl} data={data} />
+      ))}
     </div>
   );
 }
