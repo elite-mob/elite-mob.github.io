@@ -2,7 +2,7 @@
  * Testimonials for the homepage Reviews section (`ReviewsSection`).
  *
  * Attributions use first name + last initial (e.g. Derek S.) plus role only; no company names.
- * Edit quotes/initials when clients sign off or NDAs require changes.
+ * Quotes use he/him or they/them instead of the developer's name.
  */
 export type Testimonial = {
   quote: string;
@@ -20,7 +20,7 @@ export type Testimonial = {
 export const testimonials: Testimonial[] = [
   {
     quote:
-      'Excellent work on a long-term, highly complex project. Hans is a very strong mobile developer and we highly recommend him. Thanks for a great project!',
+      'Excellent work on a long-term, highly complex project. He is a very strong mobile developer and we highly recommend him. Thanks for a great project!',
     attribution: 'Derek S. · CTO',
     initials: 'DS',
     context: 'iOS & Android',
@@ -28,7 +28,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'Working with Hans was a great experience. He helped us launch our app on time with all the features we needed, and his expertise made a real impact. Since launch, we’ve seen a 30% increase in user engagement, which speaks for itself. We couldn’t be happier with the final product!',
+      'Working with him was a great experience. He helped us launch our app on time with all the features we needed, and his expertise made a real impact. Since launch, we’ve seen a 30% increase in user engagement, which speaks for itself. We couldn’t be happier with the final product!',
     attribution: 'Louis L. · Co-Founder/CEO',
     initials: 'LL',
     context: 'Android',
@@ -36,7 +36,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'I’ve hired Hans a few times for various mobile-related projects. He is wonderful and I enjoy working with him. I would highly recommend him and will almost certainly be hiring him again.',
+      'I’ve hired him a few times for various mobile-related projects. He is wonderful and I enjoy working with him. I would highly recommend him and will almost certainly be hiring him again.',
     attribution: 'Kevin L. · Project Lead',
     initials: 'KL',
     context: 'iOS & Android',
@@ -44,7 +44,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'Hans was wonderful and we hope to keep working with him for future development of our app!',
+      'He was wonderful and we hope to keep working with him for future development of our app!',
     attribution: 'Scott L. · Director',
     initials: 'SL',
     context: 'iOS & Android',
@@ -52,7 +52,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'Working with Hans has been a game changer. He made our life incredibly easy! Every project was completed on time and worked perfectly the first time with surprising accuracy. His attention to detail and commitment to quality were evident throughout the entire process. He consistently met every deadline and even went above and beyond to ensure everything ran smoothly post-launch. Highly recommended!',
+      'Working with him has been a game changer. He made our life incredibly easy! Every project was completed on time and worked perfectly the first time with surprising accuracy. His attention to detail and commitment to quality were evident throughout the entire process. He consistently met every deadline and even went above and beyond to ensure everything ran smoothly post-launch. Highly recommended!',
     attribution: 'Mike B. · President',
     initials: 'MB',
     context: 'iOS & Android',
@@ -60,7 +60,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'Hans has been maintaining my app on both Google Play and Apple Store and has been very responsive and quick to address any and all issues, including user feedback, in...',
+      'They have been maintaining my app on both Google Play and Apple Store and have been very responsive and quick to address any and all issues, including user feedback, in...',
     attribution: 'William K. · Founder',
     initials: 'WK',
     context: 'iOS & Android',
@@ -68,7 +68,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'I couldn’t have asked for a better partner to bring our app to life. Hans took the time to really understand our needs and delivered something even better than we imagined. He was easy to communicate with, always responsive, and his expertise added value at every stage. I’d gladly work with him again.',
+      'I couldn’t have asked for a better partner to bring our app to life. He took the time to really understand our needs and delivered something even better than we imagined. He was easy to communicate with, always responsive, and his expertise added value at every stage. I’d gladly work with him again.',
     attribution: 'Zachary P · Founder',
     initials: 'ZP',
     context: 'Web & iOS & Android',
@@ -76,7 +76,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'Working with Hans was a very fluid and easy process - he responded quickly and clearly to my ideas and questions and worked collaboratively to help me develop a custom app...',
+      'Working with them was a very fluid and easy process—they responded quickly and clearly to my ideas and questions and worked collaboratively to help me develop a custom app...',
     attribution: 'Lindsay · Founder',
     initials: 'LI',
     context: 'iOS & Android',
@@ -84,7 +84,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      'Professional, reliable, and incredibly talented, Hans exceeded all expectations. He delivered an app our users genuinely love, and the entire process felt smooth and well-managed from start to finish.',
+      'Professional, reliable, and incredibly talented—he exceeded all expectations. He delivered an app our users genuinely love, and the entire process felt smooth and well-managed from start to finish.',
     attribution: 'Jeremy Freund. · CTO',
     initials: 'JF',
     context: 'Web',
