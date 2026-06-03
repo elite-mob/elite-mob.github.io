@@ -22,32 +22,25 @@ export const HeroSection = () => {
       aria-labelledby="hero-heading"
       className="min-h-screen flex items-center justify-center relative overflow-hidden pt-[calc(5rem+env(safe-area-inset-top,0px))]"
     >
-      {/* Soft green wash: home screen base tint */}
+      {/* Hero canvas */}
       <div
-        className="absolute inset-0 bg-gradient-to-b from-[hsl(154_26%_94.5%)] via-[hsl(172_22%_96%)] to-[hsl(198_20%_97%)] dark:from-[hsl(220_18%_14%)] dark:via-[hsl(188_14%_16%)] dark:to-[hsl(200_12%_17%)]"
+        className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background/88 dark:from-[hsl(222_22%_8%)] dark:via-[hsl(222_20%_9%)] dark:to-[hsl(222_18%_10%)]"
         aria-hidden
       />
-      {/* Hero BG: LCP candidate; slight darkening reduces washout behind overlays. */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-[1.03] sm:scale-100 brightness-[0.86] sm:brightness-[0.88] dark:brightness-[0.64] dark:sm:brightness-[0.66]"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-[1.02] opacity-[0.42] dark:opacity-[0.28] saturate-[0.85] dark:saturate-[0.7]"
         style={{ backgroundImage: `url(${heroBg})` }}
         aria-hidden
       />
-      {/* Readability stack: higher-opacity base + teal tint + edge darkening */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[hsl(200_25%_98%_/_0.94)] via-[hsl(188_22%_97%_/_0.82)] to-[hsl(165_18%_97%_/_0.96)] dark:from-[hsl(220_16%_17%_/_0.88)] dark:via-[hsl(200_12%_19%_/_0.78)] dark:to-[hsl(188_12%_19%_/_0.9)]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-background/62 via-background/32 to-background/62" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(187_50%_32%_/_0.09)_0%,hsl(187_85%_42%_/_0.04)_45%,transparent_62%)] dark:bg-[radial-gradient(ellipse_at_center,hsl(187_55%_42%_/_0.1)_0%,hsl(187_60%_48%_/_0.05)_45%,transparent_62%)]" />
       <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,hsl(220_25%_18%_/_0.12)_100%)] dark:bg-[radial-gradient(ellipse_at_center,transparent_0%,hsl(220_30%_8%_/_0.32)_100%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,hsl(187_55%_42%/0.12),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_50%_18%,hsl(187_50%_48%/0.14),transparent_58%)]"
         aria-hidden
       />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent dark:from-[hsl(222_22%_8%)] dark:via-[hsl(222_20%_9%/0.55)]" aria-hidden />
+      <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80 dark:from-[hsl(222_22%_8%/0.92)] dark:to-[hsl(222_22%_8%/0.92)]" aria-hidden />
 
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl" aria-hidden />
-      <div
-        className="absolute bottom-1/4 -right-32 w-96 h-96 bg-primary/4 rounded-full blur-3xl"
-        aria-hidden
-        style={{ animationDelay: '1.5s' }}
-      />
+      <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-primary/8 blur-[100px]" aria-hidden />
+      <div className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full bg-primary/6 blur-[100px]" aria-hidden />
 
       <div
         className="absolute inset-0 opacity-[0.018] sm:opacity-[0.022]"

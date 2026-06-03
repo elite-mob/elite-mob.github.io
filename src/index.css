@@ -8,8 +8,8 @@
   :root {
     color-scheme: light;
     /* Light mode - bright & cool */
-    --background: 200 25% 98%;
-    --foreground: 220 25% 18%;
+    --background: 210 22% 97%;
+    --foreground: 222 28% 14%;
 
     --card: 0 0% 100%;
     --card-foreground: 220 25% 18%;
@@ -78,49 +78,54 @@
     */
     --section-bg-elevated: linear-gradient(
       180deg,
-      hsl(200 14% 98.5%) 0%,
-      hsl(188 12% 98.15%) 44%,
-      hsl(200 13% 98.45%) 100%
+      hsl(210 18% 98% / 0.92) 0%,
+      hsl(188 14% 97.5% / 0.88) 50%,
+      hsl(210 16% 98% / 0.9) 100%
     );
     --section-bg-calm: linear-gradient(
       180deg,
-      hsl(var(--background)) 0%,
-      hsl(200 20% 98.7%) 100%
+      hsl(210 20% 97% / 0.55) 0%,
+      hsl(210 18% 96.5% / 0.35) 100%
     );
+    --page-mesh-1: hsl(187 70% 42% / 0.14);
+    --page-mesh-2: hsl(210 65% 48% / 0.1);
+    --page-mesh-3: hsl(165 45% 38% / 0.08);
+    --page-grid: hsl(220 20% 18% / 0.06);
+    --page-vignette: hsl(222 25% 12% / 0.04);
   }
 
   .dark {
     color-scheme: dark;
-    /* Softer “dim” dark: lifted surfaces (~16-22% L) so it reads less like pure black */
-    --background: 220 16% 17%;
-    --foreground: 200 14% 94%;
-    --card: 220 14% 21%;
-    --card-foreground: 200 14% 94%;
-    --popover: 220 14% 21%;
-    --popover-foreground: 200 14% 94%;
+    /* Deep slate canvas with lifted surfaces */
+    --background: 222 22% 8%;
+    --foreground: 210 18% 94%;
+    --card: 222 18% 12%;
+    --card-foreground: 210 18% 94%;
+    --popover: 222 18% 12%;
+    --popover-foreground: 210 18% 94%;
     --primary: 187 60% 50%;
     --primary-foreground: 220 22% 8%;
-    --secondary: 220 12% 25%;
-    --secondary-foreground: 200 12% 92%;
-    --muted: 220 11% 27%;
-    --muted-foreground: 200 10% 58%;
+    --secondary: 222 14% 16%;
+    --secondary-foreground: 210 14% 90%;
+    --muted: 222 12% 18%;
+    --muted-foreground: 215 10% 58%;
     --accent: 187 35% 24%;
     --accent-foreground: 187 55% 78%;
     --destructive: 0 58% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 10% 30%;
-    --input: 220 10% 30%;
+    --border: 222 12% 22%;
+    --input: 222 12% 22%;
     --ring: 187 60% 50%;
     --gradient-primary: linear-gradient(135deg, hsl(187 58% 48%) 0%, hsl(200 52% 54%) 100%);
     --gradient-accent: linear-gradient(135deg, hsl(187 58% 48%) 0%, hsl(200 52% 54%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(220 16% 17%) 0%, hsl(220 14% 20%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(220 14% 23% / 0.92) 0%, hsl(220 12% 20% / 0.88) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(222 22% 8%) 0%, hsl(222 20% 10%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(222 16% 14% / 0.95) 0%, hsl(222 18% 11% / 0.9) 100%);
     --shadow-card: 0 4px 24px hsl(220 30% 4% / 0.22);
     --shadow-card-hover: 0 12px 40px hsl(220 30% 4% / 0.28);
     --shadow-4d: 0 2px 4px hsl(220 25% 6% / 0.18), 0 8px 24px hsl(220 22% 5% / 0.22), 0 24px 48px hsl(220 20% 5% / 0.2), inset 0 1px 0 hsl(0 0% 100% / 0.08);
     --shadow-4d-hover: 0 4px 8px hsl(220 25% 6% / 0.2), 0 16px 40px hsl(220 22% 5% / 0.26), 0 40px 80px hsl(220 20% 5% / 0.24), 0 0 0 1px hsl(0 0% 100% / 0.08), inset 0 1px 0 hsl(0 0% 100% / 0.1), 0 0 80px hsl(187 58% 48% / 0.1);
-    --glass-bg: hsl(220 14% 22% / 0.68);
-    --glass-border: hsl(200 12% 52% / 0.28);
+    --glass-bg: hsl(222 16% 12% / 0.72);
+    --glass-border: hsl(210 12% 52% / 0.22);
     --glass-blur: 32px;
     --glass-saturate: 1.55;
     --sidebar-background: 220 16% 16%;
@@ -133,15 +138,20 @@
     --sidebar-ring: 187 60% 50%;
     --section-bg-elevated: linear-gradient(
       180deg,
-      hsl(220 14% 18%) 0%,
-      hsl(188 12% 19%) 44%,
-      hsl(200 12% 18%) 100%
+      hsl(222 18% 11% / 0.85) 0%,
+      hsl(188 14% 12% / 0.75) 50%,
+      hsl(222 16% 10% / 0.8) 100%
     );
     --section-bg-calm: linear-gradient(
       180deg,
-      hsl(var(--background)) 0%,
-      hsl(220 12% 19%) 100%
+      hsl(222 20% 9% / 0.45) 0%,
+      hsl(222 18% 8% / 0.25) 100%
     );
+    --page-mesh-1: hsl(187 55% 48% / 0.16);
+    --page-mesh-2: hsl(210 50% 42% / 0.12);
+    --page-mesh-3: hsl(165 40% 32% / 0.1);
+    --page-grid: hsl(210 20% 88% / 0.035);
+    --page-vignette: hsl(222 30% 4% / 0.55);
   }
 }
 
@@ -192,7 +202,7 @@
   }
 
   .dark body::after {
-    opacity: 0.028;
+    opacity: 0.022;
   }
 
   /* Prevent iOS zoom on input focus - 16px minimum */
@@ -296,6 +306,59 @@
   }
   .bg-section-calm {
     background-image: var(--section-bg-calm);
+  }
+
+  /* Global fixed canvas (see SiteBackground.tsx) */
+  .site-background__base {
+    position: absolute;
+    inset: 0;
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(ellipse 130% 90% at 50% -25%, var(--page-mesh-1), transparent 52%),
+      radial-gradient(ellipse 70% 55% at 100% 35%, var(--page-mesh-2), transparent 48%),
+      radial-gradient(ellipse 65% 50% at 0% 85%, var(--page-mesh-3), transparent 45%);
+  }
+
+  .site-background__mesh {
+    position: absolute;
+    inset: 0;
+    opacity: 0.9;
+    background:
+      radial-gradient(circle at 18% 22%, var(--page-mesh-1) 0%, transparent 28%),
+      radial-gradient(circle at 82% 12%, var(--page-mesh-2) 0%, transparent 24%),
+      radial-gradient(circle at 72% 78%, var(--page-mesh-3) 0%, transparent 30%);
+    filter: blur(60px);
+    transform: scale(1.05);
+  }
+
+  .site-background__grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.55;
+    background-image: radial-gradient(circle at center, var(--page-grid) 0.75px, transparent 0.75px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse 95% 85% at 50% 40%, black 15%, transparent 78%);
+  }
+
+  .site-background__vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 120% 90% at 50% 45%, transparent 35%, var(--page-vignette) 100%);
+  }
+
+  .section-surface {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .section-surface::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border-top: 1px solid hsl(var(--border) / 0.35);
+    border-bottom: 1px solid hsl(var(--border) / 0.2);
   }
 
   /**

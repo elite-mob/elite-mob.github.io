@@ -19,7 +19,7 @@ export const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="print:hidden py-10 sm:py-12 border-t border-border/40 relative overflow-hidden perspective-4d bg-section-calm">
+    <footer className="print:hidden py-10 sm:py-12 border-t border-border/35 relative overflow-hidden bg-section-calm/80 backdrop-blur-sm">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">

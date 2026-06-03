@@ -55,7 +55,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen perspective-4d relative bg-gradient-to-b from-[hsl(156_26%_96.5%)] via-[hsl(200_24%_98%)] to-background dark:from-[hsl(220_18%_15%)] dark:via-[hsl(200_14%_17%)] dark:to-background">
+    <div className="min-h-screen relative">
       <Seo />
       <JsonLdHome />
       <Navigation />

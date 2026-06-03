@@ -23,13 +23,12 @@ const NotFound = () => {
   }, [location.pathname, location.search]);
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden perspective-4d">
+    <div className="min-h-screen relative overflow-hidden">
       <Seo
         title={pageTitle('Page not found')}
         description="This page does not exist. Return to the portfolio home."
         noindex
       />
-      <div className="fixed inset-0 bg-section-calm pointer-events-none" aria-hidden />
 
       <Navigation />
       

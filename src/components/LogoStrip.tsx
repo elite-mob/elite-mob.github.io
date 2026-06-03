@@ -17,9 +17,9 @@ export const LogoStrip = () => {
   return (
     <section
       aria-labelledby="trust-strip-eyebrow"
-      className="relative border-y border-border/40 overflow-hidden"
+      className="relative border-y border-border/30 overflow-hidden bg-section-calm/70 backdrop-blur-sm"
     >
-      <div className="absolute inset-0 bg-section-calm" aria-hidden />
+      <div className="absolute inset-0 bg-section-calm/50" aria-hidden />
 
       {/* Mobile: marquee (unchanged) */}
       <div className="relative z-10 md:hidden py-12 sm:py-14">

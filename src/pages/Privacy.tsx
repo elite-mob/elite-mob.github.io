@@ -13,13 +13,12 @@ const Privacy = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden perspective-4d">
+    <div className="min-h-screen relative overflow-hidden">
       <Seo
         title={pageTitle('Privacy Policy')}
         description="How this portfolio site handles contact form data and visitor privacy."
         canonicalPath="/privacy"
       />
-      <div className="fixed inset-0 bg-section-calm pointer-events-none" aria-hidden />
 
       <Navigation />
 

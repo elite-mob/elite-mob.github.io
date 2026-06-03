@@ -12,6 +12,7 @@ import { AnalyticsRouteTracker } from '@/components/AnalyticsRouteTracker';
 import { AnalyticsButtonClickTracker } from '@/components/AnalyticsButtonClickTracker';
 import { PageRouteFallback } from '@/components/PageRouteFallback';
 import { DeferredChatbot } from '@/components/chatbot/DeferredChatbot';
+import { SiteBackground } from '@/components/SiteBackground';
 import { recordVisit } from '@/lib/visitTracking';
 import Index from './pages/Index';
 
@@ -44,6 +45,7 @@ const App = () => {
                   : import.meta.env.BASE_URL.replace(/\/$/, '')
               }
             >
+              <SiteBackground />
               <SkipToMain />
               <RouteAnnouncer />
               <AnalyticsRouteTracker />

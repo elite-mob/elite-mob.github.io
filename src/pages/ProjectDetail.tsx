@@ -130,7 +130,7 @@ const ProjectDetail = () => {
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-background relative overflow-hidden">
+      <div className="min-h-screen relative overflow-hidden">
         <Seo
           title={pageTitle('Project not found')}
           description="The project you are looking for is not in this portfolio."
@@ -176,7 +176,7 @@ const ProjectDetail = () => {
   const hasVisual = sliderImages.length > 0 && sliderImages[0] !== '/placeholder.svg';
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden perspective-4d">
+    <div className="min-h-screen relative overflow-hidden">
       <Seo
         title={pageTitle(project.title)}
         description={metaDescription}
@@ -192,7 +192,6 @@ const ProjectDetail = () => {
           { name: project.title, url: canonicalUrl },
         ]}
       />
-      <div className="fixed inset-0 bg-section-elevated pointer-events-none" aria-hidden />
 
       <Navigation />
       
