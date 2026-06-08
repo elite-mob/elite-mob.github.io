@@ -26,18 +26,6 @@ export const workExperiences: WorkExperience[] = [
     ],
   },
   {
-    id: 'khdev',
-    title: 'Lead Software Developer',
-    company: 'KHDev',
-    period: 'MAY 2022 - PRESENT',
-    summary: 'Leading a small team shipping web, mobile, and AI products for SMBs.',
-    achievements: [
-      'Built tons of applications for small/mid-sized companies and individual customers.',
-      'Led a team of software developers.',
-      'Delivered qualified web, mobile, and AI products.',
-    ],
-  },
-  {
     id: 'sesh',
     title: 'Senior Mobile Developer',
     company: 'Sesh Women Fitness / Contract',
