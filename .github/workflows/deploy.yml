@@ -19,6 +19,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      index_bundle: ${{ steps.bundle.outputs.name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -63,6 +65,22 @@ jobs:
           ! grep -q '/src/main.tsx' dist/index.html
           ! grep -q '__OG_IMAGE_URL__' dist/index.html
 
+      - name: Verify vendor chunks have no circular imports
+        run: |
+          react_vendor=$(ls dist/assets/react-vendor-*.js | head -1)
+          if grep -q 'ui-vendor' "$react_vendor"; then
+            echo "::error::react-vendor chunk imports ui-vendor (breaks React.forwardRef at runtime)."
+            exit 1
+          fi
+          if ls dist/assets/ui-vendor-*.js >/dev/null 2>&1; then
+            echo "::error::ui-vendor chunk should not be emitted; bundle Radix with react-vendor."
+            exit 1
+          fi
+
+      - name: Record index bundle name
+        id: bundle
+        run: echo "name=$(grep -oE 'index-[^"]+\.js' dist/index.html | head -1)" >> "$GITHUB_OUTPUT"
+
       - name: Copy index.html to 404.html for SPA routing
         run: cp dist/index.html dist/404.html
 
@@ -88,19 +106,28 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Verify live site serves built assets
+      - name: Verify live site serves this deployment
         run: |
+          expected="${{ needs.build.outputs.index_bundle }}"
           for attempt in 1 2 3 4 5; do
             sleep 15
             html=$(curl -fsSL "https://elite-mob.github.io/" || true)
-            if echo "$html" | grep -qE '/assets/index-[^"]+\.js'; then
-              echo "Live site serves production bundle (attempt $attempt)."
+            if echo "$html" | grep -q '/src/main.tsx'; then
+              echo "Attempt $attempt: still serving source index.html from main..."
+              continue
+            fi
+            live=$(echo "$html" | grep -oE 'index-[^"]+\.js' | head -1)
+            if [ "$live" = "$expected" ]; then
+              react=$(echo "$html" | grep -oE 'react-vendor-[^"]+\.js' | head -1)
+              if curl -fsSL "https://elite-mob.github.io/assets/$react" | grep -q 'ui-vendor'; then
+                echo "::error::Live react-vendor still imports ui-vendor (stale or broken deploy)."
+                exit 1
+              fi
+              echo "Live site serves deployed bundle $live (attempt $attempt)."
               exit 0
             fi
-            echo "Attempt $attempt: still waiting for production bundle..."
+            echo "Attempt $attempt: expected $expected, live has ${live:-none}..."
           done
-          echo "::error::Live site still serves source files from main, not the built dist/."
-          echo "Fix once: https://github.com/${{ github.repository }}/settings/pages"
-          echo "  Source → GitHub Actions (not Deploy from a branch → main)"
-          echo "Then re-run this workflow. View Page Source should show /assets/index-*.js."
+          echo "::error::Live site did not pick up bundle $expected."
+          echo "Check Settings → Pages → Source is GitHub Actions, then re-run this workflow."
           exit 1

@@ -113,14 +113,16 @@ export default defineConfig(({ mode }) => ({
             if (id.includes('firebase')) return 'firebase-vendor';
             if (id.includes('framer-motion')) return 'motion-vendor';
             if (id.includes('@emailjs')) return 'emailjs-vendor';
+            // Keep React and Radix in one chunk to avoid circular react-vendor <-> ui-vendor imports.
             if (
               id.includes('react-dom') ||
               id.includes('react-router') ||
-              id.includes('/react/')
+              id.includes('/react/') ||
+              id.includes('@radix-ui') ||
+              id.includes('class-variance-authority')
             ) {
               return 'react-vendor';
             }
-            if (id.includes('@radix-ui')) return 'ui-vendor';
           }
           if (id.includes('/src/data/chatKnowledge.json')) return 'chat-knowledge';
           if (id.includes('/src/pages/ProjectDetail')) return 'page-project-detail';
