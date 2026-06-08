@@ -5,6 +5,10 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { fetchIosStoreRatings } from './fetch-ios-store-ratings.mjs';
+import { generateHeroAssets } from './generate-hero-assets.mjs';
+import { generateOgAssets } from './generate-og-assets.mjs';
+import { generatePortfolioGrid } from './generate-portfolio-grid.mjs';
 import { generatePortfolioThumbs } from './generate-portfolio-thumbs.mjs';
 import { buildGalleryManifest, parseProjects } from './portfolio-gallery-utils.mjs';
 
@@ -65,7 +69,17 @@ export default function portfolioGalleryPlugin() {
       return `export default ${JSON.stringify(manifestCache)}`;
     },
     async buildStart() {
+      await generateHeroAssets({ log: true });
+      await generateOgAssets({ log: true });
       await generatePortfolioThumbs({ log: true });
+      await generatePortfolioGrid({ log: true });
+      try {
+        await fetchIosStoreRatings({ log: true });
+      } catch (err) {
+        console.warn(
+          `[portfolio-gallery] iOS ratings fetch failed: ${err instanceof Error ? err.message : err}`,
+        );
+      }
       await refreshManifest({ writeJson: true });
     },
     configureServer(server) {

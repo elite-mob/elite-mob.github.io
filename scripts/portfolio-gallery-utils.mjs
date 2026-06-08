@@ -77,6 +77,60 @@ export function parseProjectsWithLinks(source) {
   return projects;
 }
 
+function extractQuotedField(block, field) {
+  const re = new RegExp(`${field}:\\s*'((?:\\\\'|[^'])*)'`);
+  const match = block.match(re);
+  return match ? match[1].replace(/\\'/g, "'") : undefined;
+}
+
+function extractBacktickField(block, field) {
+  const marker = `${field}:`;
+  const start = block.indexOf(marker);
+  if (start === -1) return undefined;
+  const tick = block.indexOf('`', start + marker.length);
+  if (tick === -1) return undefined;
+  let end = tick + 1;
+  while (end < block.length) {
+    const next = block.indexOf('`', end);
+    if (next === -1) break;
+    if (block[next - 1] !== '\\') {
+      return block.slice(tick + 1, next).replace(/\\`/g, '`').trim();
+    }
+    end = next + 1;
+  }
+  return undefined;
+}
+
+/** Fields needed for the home portfolio grid (no Vite import). */
+export function parseProjectsForGrid(source) {
+  const projects = [];
+  const blockRegex = /\{\s*\n\s*id:\s*'([^']+)'([\s\S]*?)\n\s*\}(?:,|\s*\])/g;
+  let match;
+  while ((match = blockRegex.exec(source)) !== null) {
+    const id = match[1];
+    const block = match[2];
+    const title = extractQuotedField(block, 'title');
+    const description = extractBacktickField(block, 'description');
+    const category = extractQuotedField(block, 'category');
+    if (!title || !description || !category) continue;
+
+    const link = extractQuotedField(block, 'link');
+    const androidLink = extractQuotedField(block, 'androidLink');
+    const featured = /featured:\s*true/.test(block);
+
+    projects.push({
+      id,
+      title,
+      description,
+      category,
+      ...(link ? { link } : {}),
+      ...(androidLink ? { androidLink } : {}),
+      featured,
+    });
+  }
+  return projects;
+}
+
 /** A-Z by file name (case-insensitive, numeric segments ordered naturally). */
 export function sortGalleryFileNames(names) {
   return [...names].sort((a, b) =>

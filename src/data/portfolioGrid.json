@@ -1,0 +1,398 @@
+[
+  {
+    "id": "web-1",
+    "title": "TroutRoutes - 26M+ Users",
+    "description": "Built and scaled a fly fishing marketplace serving 26M+ users, with booking, payments, guide discovery, gear listings, and location-based experiences.",
+    "category": "web",
+    "imageUrl": "/portfolio-gallery/web-1-troutroutes-26m-users/artwork.webp",
+    "link": "https://troutroutes.com/",
+    "featured": true
+  },
+  {
+    "id": "web-2",
+    "title": "ServeOnline, Clinics & Doctors Booking",
+    "description": "Developed a medical booking platform for clinics and doctors with real-time availability, appointment scheduling, authentication, and multilingual support.",
+    "category": "web",
+    "imageUrl": "/portfolio-gallery/web-2-serveonline-clinics-doctors-booking/artwork.webp",
+    "link": "https://serveonline.lt/",
+    "featured": true
+  },
+  {
+    "id": "web-3",
+    "title": "PrimeAI",
+    "description": "Built an AI platform for businesses and developers focused on workflow automation, API integrations, cost visibility, and low-latency AI interactions.",
+    "category": "web",
+    "imageUrl": "/portfolio-gallery/web-3-primeai/artwork.webp",
+    "link": "https://www.prime.ai/",
+    "featured": true
+  },
+  {
+    "id": "web-4",
+    "title": "Pod",
+    "description": "Delivered a collaborative workspace platform with real-time team communication, file sharing, and project management across web and mobile experiences.",
+    "category": "web",
+    "imageUrl": "/portfolio-gallery/web-4-pod/artwork.webp",
+    "link": "https://www.pod.io/",
+    "featured": false
+  },
+  {
+    "id": "web-5",
+    "title": "GreenWolf Cannabis",
+    "description": "Built a cannabis e-commerce platform with strong SEO foundations, compliance-minded product presentation, and an education-first customer experience.",
+    "category": "web",
+    "imageUrl": "/portfolio-gallery/web-5-greenwolf-cannabis/artwork.webp",
+    "link": "https://greenwolfcannabis.com/",
+    "featured": false
+  },
+  {
+    "id": "web-6",
+    "title": "Equitable Earth",
+    "description": "Developed a sustainability platform centered around document access, educational resources, and community engagement, including in-browser PDF viewing.",
+    "category": "web",
+    "imageUrl": "/portfolio-gallery/web-6-equitable-earth/artwork.webp",
+    "link": "https://www.eq-earth.com/",
+    "featured": false
+  },
+  {
+    "id": "web-7",
+    "title": "Finders Fee",
+    "description": "Built a real estate referral platform that connects seekers with agents, tracks referral relationships, and manages finder fee payments securely.",
+    "category": "web",
+    "imageUrl": "/portfolio-gallery/web-7-finders-fee/artwork.webp",
+    "link": "https://www.findersfee.com",
+    "featured": false
+  },
+  {
+    "id": "mobile-1",
+    "title": "TroutRoutes - iOS, Android",
+    "description": "Built a large-scale native mobile mapping product for fly fishing, covering 50,000+ streams and 280,000+ access points with GPS navigation, regulations, real-time conditions, and offline maps. The platform served 26M+ users.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-1-troutroutes-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/troutroutes-fly-fishing-app/id1423989574",
+    "androidLink": "https://play.google.com/store/apps/details?id=com.troutinsights.troutroutes",
+    "featured": true
+  },
+  {
+    "id": "mobile-2",
+    "title": "Sesh Fitness App - iOS, Android",
+    "description": "Built and scaled a subscription-based fitness and nutrition platform for women, supporting a 400k+ community with workout programs, coaching, recipes, progress tracking, and Apple Health integration.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-2-sesh-fitness-app-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/sesh-women-fitness-workouts/id1330316439",
+    "featured": true
+  },
+  {
+    "id": "mobile-3",
+    "title": "Reco Social - iOS, Android",
+    "description": "Built a social recommendation platform designed to prioritize authentic, people-driven recommendations over traditional ads and algorithm-heavy discovery.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-3-reco-social-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/reco-social/id6742024490",
+    "androidLink": "https://play.google.com/store/apps/details?id=com.reco.app",
+    "featured": false
+  },
+  {
+    "id": "mobile-4",
+    "title": "Dimple, Date. Make Friends. LiveMatch. (iOS)",
+    "description": "Built a real-time dating app for iOS that combined swipe discovery, video-based LiveMatch sessions, stories, conversation prompts, and preference-based matching.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-4-dimple-date-make-friends-livematch-ios/artwork.webp",
+    "link": "https://apps.apple.com/us/app/dimple-dating-app/id1526816163",
+    "featured": false
+  },
+  {
+    "id": "mobile-5",
+    "title": "Rain Rain Sleep Sounds - 500k+ Downloads, 11k+ Reviews - Android",
+    "description": "Built Android features for a high-usage sleep sound app offering long-form audio playback, multi-sound mixing, timers, reminders, and freemium subscription flows.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-5-rain-rain-sleep-sounds-500k-downloads-11k-review/artwork.webp",
+    "link": "https://play.google.com/store/apps/details?id=com.timgostony.rainrain",
+    "featured": true
+  },
+  {
+    "id": "mobile-6",
+    "title": "Hive - 2M+ Users - iOS",
+    "description": "Built and maintained iOS functionality for a fast-growing social platform with 2M+ users, including music integration, themed profiles, community discovery, reposting, and chronological feeds.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-6-hive-2m-users-ios/artwork.webp",
+    "link": "https://apps.apple.com/us/app/hive-social/id1480835284",
+    "featured": true
+  },
+  {
+    "id": "mobile-7",
+    "title": "CheckSammy (provider app), iOS, Android",
+    "description": "Built a mobile platform for field service providers to manage jobs, routes, scheduling, earnings, and real-time work updates within the sustainability and recycling space.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-7-checksammy-provider-app-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/checksammy-professional/id6505013198",
+    "androidLink": "https://play.google.com/store/apps/details?id=com.checksammy.mobile",
+    "featured": false
+  },
+  {
+    "id": "mobile-8",
+    "title": "SoulPod - iOS",
+    "description": "Built an iOS wellness app for guided rituals, breathwork, journaling, oracle cards, community engagement, and subscription-based spiritual content.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-8-soulpod-ios/artwork.webp",
+    "link": "https://apps.apple.com/us/app/soulpod-breathwork-meditation/id1640481481",
+    "featured": false
+  },
+  {
+    "id": "mobile-9",
+    "title": "6 Pack Promise Plus by ATHLEAN-X - 30k+ Reviews - iOS, Android",
+    "description": "Built and modernized a popular ab training app with workout programs, offline videos, progress tracking, Health integration, in-app purchases, and a React Native migration strategy.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-9-6-pack-promise-plus-by-athlean-x-30k-reviews-ios/artwork.webp",
+    "link": "https://apps.apple.com/us/app/6-pack-promise-ultimate-abs/id633815621",
+    "androidLink": "https://play.google.com/store/apps/details?id=com.mi.AthleanX",
+    "featured": true
+  },
+  {
+    "id": "mobile-10",
+    "title": "ElkConnect - iOS, Android",
+    "description": "Built a mobile control and configuration experience for the ELK E27 Alarm Engine, supporting both certified installers and end users across security and home automation workflows.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-10-elkconnect-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/elkconnect/id1565150595",
+    "androidLink": "https://play.google.com/store/apps/details?id=com.elkproducts.eco.android.dealerapp",
+    "featured": false
+  },
+  {
+    "id": "mobile-11",
+    "title": "PoppyNotes - iOS",
+    "description": "Built an iOS greeting card app that let users customize, save, and send digital cards across birthdays, invites, holidays, and everyday occasions.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-11-poppynotes-ios/artwork.webp",
+    "link": "https://apps.apple.com/us/app/poppynotes-ecards-fun-notes/id1636563750",
+    "featured": false
+  },
+  {
+    "id": "mobile-12",
+    "title": "Conquer - Pickleball - iOS, Android",
+    "description": "Built a location-aware mobile app for discovering local pickleball games, meeting players by skill level, and finding indoor or outdoor courts to join or rent.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-12-conquer-pickleball-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/conquer-play-local-pickleball/id1571307040",
+    "androidLink": "https://play.google.com/store/apps/details?id=com.social_cludder.conquer_kotlin",
+    "featured": false
+  },
+  {
+    "id": "mobile-13",
+    "title": "heart+land - iOS, Android",
+    "description": "Built an educational mobile experience that tells the story of central Minnesota through native plants, interactive maps, and park-based trail games.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-13-heart-land-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/heart-land/id6749213689",
+    "featured": false
+  },
+  {
+    "id": "mobile-15",
+    "title": "Sketch Edge - iOS",
+    "description": "Built an iOS app for capturing floorplans, measurements, and project documentation, with 3D visualization and centralized property-related records.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-15-sketch-edge-ios/artwork.webp",
+    "link": "https://apps.apple.com/us/app/sketchedge/id6550914736",
+    "featured": false
+  },
+  {
+    "id": "mobile-16",
+    "title": "Rebound Dynamics - iOS, Android",
+    "description": "Built and modernized a warehouse management mobile platform covering inventory, orders, shipments, barcode scanning, and operational analytics across iOS and Android.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-16-rebound-dynamics-ios-android/artwork.webp",
+    "link": "https://www.reboundynamics.com/",
+    "featured": false
+  },
+  {
+    "id": "mobile-18",
+    "title": "PRO WRLD FIT - iOS, Android",
+    "description": "Built a cross-platform fitness app with workout planning, health data integration, progress tracking, and background activity support.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-18-pro-wrld-fit-ios-android/artwork.webp",
+    "link": "https://www.instagram.com/pro.wrld.fit/",
+    "featured": false
+  },
+  {
+    "id": "mobile-22",
+    "title": "Foot Reflexology Chart - iOS, Android",
+    "description": "Built a mobile educational app that combines 3D body exploration with wellness-focused product education across iOS and Android.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-22-foot-reflexology-chart-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/foot-reflexology-chart/id929033534",
+    "featured": false
+  },
+  {
+    "id": "mobile-23",
+    "title": "Yodel - iOS",
+    "description": "Built an iOS app for reservations, real-time park availability, and pass activation, helping users plan visits and reduce wait times.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-23-yodel-ios/artwork.webp",
+    "link": "https://apps.apple.com/us/app/yodel-app/id1515936878",
+    "featured": false
+  },
+  {
+    "id": "mobile-24",
+    "title": "OneNeighbor - iOS, Android",
+    "description": "Built a neighborhood services app that lets homeowners discover, purchase, and manage yard care and home services together for better pricing and simpler billing.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-24-oneneighbor-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/oneneighbor/id1551432157",
+    "androidLink": "https://play.google.com/store/apps/details?id=mobile.oneneighbor.android",
+    "featured": false
+  },
+  {
+    "id": "mobile-25",
+    "title": "DeadShowZ - iOS, Android",
+    "description": "Built a dedicated Grateful Dead concert search app with powerful filtering, set list exploration, statistics, favorites, playlists, and optional streaming across iOS and Android.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-25-deadshowz-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/deadshowz/id1254621329",
+    "featured": false
+  },
+  {
+    "id": "mobile-26",
+    "title": "Krackwins - 30k+ Monthly Revenue - Web, iOS, Android",
+    "description": "Built a real-time sports insights platform delivering betting picks, live odds context, subscription packages, and push notifications across web and mobile.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-26-krackwins-30k-monthly-revenue-web-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/krackwins/id1454877056",
+    "androidLink": "https://play.google.com/store/apps/details?id=com.krackwins.app",
+    "featured": true
+  },
+  {
+    "id": "mobile-27",
+    "title": "Gowivo - iOS, Android, Web",
+    "description": "Built an on-demand laundry platform that lets customers request bags, schedule pickup, complete payment, and track delivery updates across web and mobile.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-27-gowivo-ios-android-web/artwork.webp",
+    "link": "https://apps.apple.com/us/app/gowivo-app/id1510231902",
+    "featured": false
+  },
+  {
+    "id": "mobile-28",
+    "title": "Yobuddy - iOS",
+    "description": "Built an iOS social app focused on helping users discover friends, form new connections, and engage through profiles and feed-based interactions.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-28-yobuddy-ios/artwork.webp",
+    "link": "https://yobuddyapp.com/",
+    "featured": false
+  },
+  {
+    "id": "mobile-29",
+    "title": "TellyCollege - iOS, Android, Web",
+    "description": "Built a multi-platform education platform for college learners with course delivery, study tools, progress tracking, and admin-facing content management.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-29-tellycollege-ios-android-web/artwork.webp",
+    "link": "https://apps.apple.com/us/app/tellycollege/id1669570772",
+    "featured": false
+  },
+  {
+    "id": "mobile-30",
+    "title": "Moon Rabbit Acupuncture - iOS, Android",
+    "description": "Built a wellness app that combines appointment booking, retail, gift cards, and branded content into a calm mobile experience for a modern acupuncture practice.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-30-moon-rabbit-acupuncture-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/moon-rabbit-acupuncture/id6566195077",
+    "featured": false
+  },
+  {
+    "id": "mobile-31",
+    "title": "Snackable Business Insights - iOS, Android",
+    "description": "Built a short-form business learning app that delivers curated founder insights, interviews, and educational clips through a mobile-first video experience.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-31-snackable-business-insights-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/snackable-business-insights/id1555271270",
+    "featured": false
+  },
+  {
+    "id": "mobile-32",
+    "title": "Glitch Life Deals - iOS, Android, Web",
+    "description": "Built a shopping and savings platform that surfaces curated deals, coupons, promotions, and occasional freebies across mobile and web.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-32-glitch-life-deals-ios-android-web/artwork.webp",
+    "link": "https://apps.apple.com/us/app/glitch-life-deals/id1661142121",
+    "featured": false
+  },
+  {
+    "id": "mobile-33",
+    "title": "Sierra International Machinery - iOS",
+    "description": "Built an iOS content hub for Sierra International Machinery featuring video streaming, equipment browsing, podcast access, and company updates.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-33-sierra-international-machinery-ios/artwork.webp",
+    "link": "https://apps.apple.com/us/app/sierra-international-machinery/id6448870769",
+    "featured": false
+  },
+  {
+    "id": "mobile-34",
+    "title": "SmokerLab - iOS, Android, Web",
+    "description": "Built a cross-platform BBQ session tracking app that lets users log prep, ingredient scans, temperatures, weather conditions, ratings, and photos for each cook.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-34-smokerlab-ios-android-web/artwork.webp",
+    "link": "https://apps.apple.com/us/app/smokelab/id1662751718",
+    "featured": false
+  },
+  {
+    "id": "mobile-35",
+    "title": "Toby - Service Marketplace - iOS, Android",
+    "description": "Built a large-scale lifestyle service marketplace connecting users with service providers across hundreds of categories, including home services, beauty, and consulting.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-35-toby-service-marketplace-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/toby-hire-local-service/id1168549802",
+    "featured": true
+  },
+  {
+    "id": "mobile-36",
+    "title": "Curb - Taxi & Ride Hailing - iOS, Android",
+    "description": "Built a ride-hailing application connecting users with licensed taxi drivers across major U.S. cities, supporting real-time ride requests, scheduling, and seamless in-app payments.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-36-curb-taxi-ride-hailing-ios-android/artwork.webp",
+    "link": "https://apps.apple.com/us/app/curb-request-pay-for-taxis/id299226386",
+    "featured": true
+  },
+  {
+    "id": "mobile-37",
+    "title": "Flava - Dating App - iOS",
+    "description": "Built a privacy-focused dating application with anonymous onboarding, secure messaging, and advanced visibility controls to give users more control over their presence and interactions.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-37-flava-dating-app-ios/artwork.webp",
+    "link": "https://apps.apple.com/us/app/flava-casual-dating-chat/id1540274389",
+    "featured": true
+  },
+  {
+    "id": "mobile-38",
+    "title": "17LIVE - Live Streaming Platform - iOS, Android",
+    "description": "Built features for a global live streaming platform with 50M+ downloads, enabling real-time video broadcasting, live chat, virtual gifting, and creator monetization.",
+    "category": "mobile",
+    "imageUrl": "/portfolio-gallery/mobile-38-17live-live-streaming-platform-ios-android/artwork.webp",
+    "link": "https://play.google.com/store/apps/details?id=com.machipopo.media17",
+    "featured": true
+  },
+  {
+    "id": "ai-1",
+    "title": "MyMood AI - 9k+ Reviews, 50k+ Monthly Revenue - iOS, Android",
+    "description": "Built an AI-powered photo generation app for iOS and Android using on-device inference, mood-based styling, and transformation pipelines optimized for mobile performance.",
+    "category": "ai",
+    "imageUrl": "/portfolio-gallery/ai-1-mymood-ai-9k-reviews-50k-monthly-revenue-ios-and/artwork.webp",
+    "link": "https://apps.apple.com/us/app/mymood-ai-ai-photo-generator/id1669952628",
+    "androidLink": "https://play.google.com/store/apps/details?id=app.mymoodai",
+    "featured": true
+  },
+  {
+    "id": "ai-2",
+    "title": "PrimeAI",
+    "description": "Built an AI chatbot platform with contextual conversations, human handoff flows, and production-ready backend services for business use cases.",
+    "category": "ai",
+    "imageUrl": "/portfolio-gallery/ai-2-primeai/artwork.webp",
+    "link": "https://www.prime.ai/",
+    "featured": false
+  },
+  {
+    "id": "ai-3",
+    "title": "DevolvedAI",
+    "description": "Built a computer vision platform for object detection, classification, and visual search using multiple AI providers across a unified product experience.",
+    "category": "ai",
+    "imageUrl": "/portfolio-gallery/ai-3-devolvedai/artwork.webp",
+    "link": "https://www.devolvedai.com/",
+    "featured": true
+  }
+]

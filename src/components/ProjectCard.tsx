@@ -1,4 +1,4 @@
-import { Project } from '@/data/portfolioData';
+import type { PortfolioGridProject } from '@/data/portfolioGrid';
 import { RouterNavButton } from '@/components/RouterNavButton';
 import { ProjectImageSlider } from '@/components/ProjectImageSlider';
 import { AppStoreRating } from '@/components/AppStoreRating';
@@ -18,7 +18,7 @@ import { cn } from '@/lib/utils';
 /** Home grid card: teaser only; outcome, role, stack, and CTAs live on the project detail page. */
 
 interface ProjectCardProps {
-  project: Project;
+  project: PortfolioGridProject;
   index: number;
   /** Portfolio grid is visible, avoids hiding card previews behind opacity-0 entrance state. */
   revealed?: boolean;
@@ -106,7 +106,7 @@ export const ProjectCard = ({ project, index, revealed = true }: ProjectCardProp
     <article
       ref={combinedRef}
       className={cn(
-        'group relative glass-card rounded-2xl overflow-hidden shadow-4d flex flex-col',
+        'portfolio-grid-card group relative glass-card rounded-2xl overflow-hidden shadow-4d flex flex-col',
         !isMobile && 'perspective-4d transform-3d hover:shadow-4d-hover',
         animationClass,
       )}

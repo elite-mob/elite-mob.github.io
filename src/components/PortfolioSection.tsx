@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { projects, ProjectCategory, getPortfolioDisplayIndex } from '@/data/portfolioData';
+import type { ProjectCategory } from '@/data/portfolioData';
+import { getPortfolioDisplayIndex } from '@/data/portfolioDisplayOrder';
+import { portfolioGridProjects } from '@/data/portfolioGrid';
 import { getProjectSliderSources } from '@/lib/portfolioGallery';
 import { getHighResSrc, getLowResSrc } from '@/lib/portfolioImageVariants';
 import { getStoreLinksForProject } from '@/lib/appStoreRating';
@@ -83,7 +85,7 @@ export const PortfolioSection = () => {
   }, [revealPortfolioContent]);
 
   // Featured first, then curated display order (scale → trust → breadth)
-  const allProjects = [...projects].sort((a, b) => {
+  const allProjects = [...portfolioGridProjects].sort((a, b) => {
     if (a.featured && !b.featured) return -1;
     if (!a.featured && b.featured) return 1;
     const ia = getPortfolioDisplayIndex(a.id);

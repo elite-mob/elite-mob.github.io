@@ -1,4 +1,5 @@
 import androidStoreRatings from '@/data/androidStoreRatings.json';
+import iosStoreRatings from '@/data/iosStoreRatings.json';
 
 export type StorePlatform = 'ios' | 'android';
 
@@ -14,6 +15,7 @@ export type AppRating = {
 type AndroidRatingEntry = Omit<AppRating, 'platform'>;
 
 const androidRatingsByPackage = androidStoreRatings as Record<string, AndroidRatingEntry>;
+const iosRatingsByAppId = iosStoreRatings as Record<string, AndroidRatingEntry>;
 
 export function parseStoreLink(url: string): { platform: StorePlatform; storeId: string } | null {
   try {
@@ -132,13 +134,28 @@ function fetchAndroidRating(packageId: string): AppRating {
   return { platform: 'android', ...entry };
 }
 
-/** App Store: live JSONP. Google Play: build-time manifest from google-play-scraper. */
+/** iOS ratings from build-time manifest (src/data/iosStoreRatings.json). */
+function fetchIosRatingFromManifest(appId: string): AppRating {
+  const entry = iosRatingsByAppId[appId];
+  if (!entry || !hasDisplayableRating(entry.rating, entry.ratingCount)) {
+    throw new Error(`App Store rating not available for ${appId}`);
+  }
+  return { platform: 'ios', ...entry };
+}
+
+/** App Store + Play Store: build-time manifests; JSONP only as dev fallback. */
 export async function fetchAppRating(storeLink: string): Promise<AppRating> {
   const parsed = parseStoreLink(storeLink.trim());
   if (!parsed) throw new Error('Not an App Store or Play Store URL');
 
   if (parsed.platform === 'ios') {
-    return fetchIosRatingJsonp(parsed.storeId);
+    if (iosRatingsByAppId[parsed.storeId]) {
+      return fetchIosRatingFromManifest(parsed.storeId);
+    }
+    if (import.meta.env.DEV) {
+      return fetchIosRatingJsonp(parsed.storeId);
+    }
+    throw new Error(`App Store rating not available for ${parsed.storeId}`);
   }
   return fetchAndroidRating(parsed.storeId);
 }
