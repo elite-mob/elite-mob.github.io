@@ -40,6 +40,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate portfolio grid manifest
+        run: pnpm assets:grid
+
       - name: Lint and typecheck
         run: pnpm run check
 
@@ -59,6 +62,9 @@ jobs:
         run: |
           count=$(find dist/portfolio-gallery/_generated/thumbs -type f 2>/dev/null | wc -l)
           test "$count" -gt 50
+          test -f dist/hero/background-mobile.webp
+          test -f dist/og/avatar.webp
+          test -f dist/sw.js
 
       - name: Verify production index.html
         run: |
