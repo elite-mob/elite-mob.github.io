@@ -8,7 +8,7 @@
 
 ## Before deploying
 
-1. **GitHub Pages source**, Settings → Pages → **GitHub Actions** (not “Deploy from a branch”). If the site shows a blank page, open View Source: a broken deploy still has `<script src="/src/main.tsx">` instead of `/assets/index-*.js`.
+1. **GitHub Pages source**, Settings → Pages → **Deploy from a branch** → **`gh-pages`** / **/(root)**. If the site shows a blank page, open View Source: a broken deploy still has `<script src="/src/main.tsx">` instead of `/assets/index-*.js`.
 
 2. **Environment variables** (see `.env.example`)
    - EmailJS: `VITE_EMAILJS_*` for the contact form

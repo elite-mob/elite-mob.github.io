@@ -37,6 +37,9 @@ This site is deployed to GitHub Pages via GitHub Actions. Pushing to the `main` 
 
 **GitHub Pages setup:**
 1. Go to Repository → Settings → Pages
-2. Under "Build and deployment", set Source to **GitHub Actions** (not “Deploy from a branch”)
+2. Under "Build and deployment", set Source to **Deploy from a branch**
+3. Branch: **`gh-pages`** / **/(root)**
 
-**Blank white screen?** The live `index.html` must load hashed files under `/assets/`, not `/src/main.tsx`. That happens when Pages serves the repo root instead of the built `dist/` from Actions. Fix: set Source to **GitHub Actions**, push to `main`, and confirm the [Deploy workflow](.github/workflows/deploy.yml) succeeds.
+CI pushes the built `dist/` folder to `gh-pages` on every push to `main`.
+
+**Blank white screen?** View Page Source: if you see `<script src="/src/main.tsx">`, Pages is serving source files from `main` instead of the built site on `gh-pages`. Set the branch to **`gh-pages`** as above.
