@@ -1,19 +1,14 @@
 import { ArrowDown, Code2, Smartphone, Brain, CheckCircle2, CalendarClock } from 'lucide-react';
-import heroBg from '@/assets/background1.png';
 import { navigateToPortfolio, navigateToSection } from '@/lib/navigation';
 import { heroContent, scheduleMeetingContent } from '@/data/siteContent';
-import { motion, useReducedMotion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { getScheduleMeetingUrl } from '@/lib/scheduleMeeting';
+import { publicAssetUrl } from '@/lib/publicAssetUrl';
 
-const heroMotion = {
-  initial: { opacity: 0, y: 14 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
-};
+const heroMobileBg = publicAssetUrl('/hero/background-mobile.webp');
+const heroDesktopBg = publicAssetUrl('/hero/background-desktop.webp');
 
 export const HeroSection = () => {
-  const prefersReducedMotion = useReducedMotion();
   const scheduleMeetingUrl = getScheduleMeetingUrl();
 
   return (
@@ -22,16 +17,24 @@ export const HeroSection = () => {
       aria-labelledby="hero-heading"
       className="min-h-screen flex items-center justify-center relative overflow-hidden pt-[calc(5rem+env(safe-area-inset-top,0px))]"
     >
-      {/* Hero canvas */}
       <div
         className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background/88 dark:from-[hsl(222_22%_8%)] dark:via-[hsl(222_20%_9%)] dark:to-[hsl(222_18%_10%)]"
         aria-hidden
       />
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-[1.02] opacity-[0.42] dark:opacity-[0.28] saturate-[0.85] dark:saturate-[0.7]"
-        style={{ backgroundImage: `url(${heroBg})` }}
-        aria-hidden
-      />
+
+      <picture className="absolute inset-0 block scale-[1.02] opacity-[0.42] dark:opacity-[0.28] saturate-[0.85] dark:saturate-[0.7]" aria-hidden>
+        <source media="(min-width: 768px)" srcSet={heroDesktopBg} type="image/webp" />
+        <img
+          src={heroMobileBg}
+          alt=""
+          width={768}
+          height={432}
+          decoding="async"
+          fetchPriority="high"
+          className="h-full w-full object-cover object-center"
+        />
+      </picture>
+
       <div
         className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,hsl(187_55%_42%/0.12),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_50%_18%,hsl(187_50%_48%/0.14),transparent_58%)]"
         aria-hidden
@@ -39,8 +42,8 @@ export const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent dark:from-[hsl(222_22%_8%)] dark:via-[hsl(222_20%_9%/0.55)]" aria-hidden />
       <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80 dark:from-[hsl(222_22%_8%/0.92)] dark:to-[hsl(222_22%_8%/0.92)]" aria-hidden />
 
-      <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-primary/8 blur-[100px]" aria-hidden />
-      <div className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full bg-primary/6 blur-[100px]" aria-hidden />
+      <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-primary/8 blur-[100px] max-md:blur-[60px]" aria-hidden />
+      <div className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full bg-primary/6 blur-[100px] max-md:blur-[60px]" aria-hidden />
 
       <div
         className="absolute inset-0 opacity-[0.018] sm:opacity-[0.022]"
@@ -52,10 +55,7 @@ export const HeroSection = () => {
       />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-16 sm:pt-20 md:pt-24 lg:pt-28">
-        <motion.div
-          className="max-w-3xl mx-auto text-center"
-          {...(prefersReducedMotion ? {} : { initial: heroMotion.initial, animate: heroMotion.animate, transition: heroMotion.transition })}
-        >
+        <div className="hero-content-reveal max-w-3xl mx-auto text-center">
           <div className="glass-card rounded-2xl sm:rounded-3xl border-primary/22 px-5 py-9 sm:px-9 sm:py-11 md:px-12 md:py-12 shadow-4d">
             <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-primary mb-4">
               {heroContent.eyebrow}
@@ -141,41 +141,21 @@ export const HeroSection = () => {
               ))}
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        {!prefersReducedMotion && (
-          <motion.div
-            className="flex justify-center mt-12 sm:mt-16 md:mt-20"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.35, duration: 0.4 }}
+        <div className="hero-scroll-hint flex justify-center mt-12 sm:mt-16 md:mt-20">
+          <button
+            type="button"
+            onClick={() => navigateToPortfolio()}
+            className="group flex flex-col items-center gap-2 text-foreground/75 hover:text-primary transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-full p-3 min-h-[44px] min-w-[44px] active:scale-95"
+            aria-label="Scroll to case studies"
           >
-            <button
-              type="button"
-              onClick={() => navigateToPortfolio()}
-              className="group flex flex-col items-center gap-2 text-foreground/75 hover:text-primary transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-full p-3 min-h-[44px] min-w-[44px] active:scale-95"
-              aria-label="Scroll to case studies"
-            >
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                View work
-              </span>
-              <ArrowDown className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden />
-            </button>
-          </motion.div>
-        )}
-        {prefersReducedMotion && (
-          <div className="flex justify-center mt-12 sm:mt-16 md:mt-20">
-            <button
-              type="button"
-              onClick={() => navigateToPortfolio()}
-              className="group flex flex-col items-center gap-2 text-foreground/75 hover:text-primary transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-full p-3 min-h-[44px] min-w-[44px]"
-              aria-label="Scroll to case studies"
-            >
-              <span className="text-xs font-medium">View work</span>
-              <ArrowDown className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden />
-            </button>
-          </div>
-        )}
+            <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity max-md:opacity-70">
+              View work
+            </span>
+            <ArrowDown className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden />
+          </button>
+        </div>
       </div>
     </section>
   );
