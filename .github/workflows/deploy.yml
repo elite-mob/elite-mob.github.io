@@ -55,6 +55,11 @@ jobs:
           VITE_SCHEDULE_MEETING_URL: ${{ secrets.VITE_SCHEDULE_MEETING_URL }}
           VITE_CHAT_API_URL: ${{ secrets.VITE_CHAT_API_URL }}
 
+      - name: Verify portfolio gallery variants
+        run: |
+          count=$(find dist/portfolio-gallery/_generated/thumbs -type f 2>/dev/null | wc -l)
+          test "$count" -gt 50
+
       - name: Verify production index.html
         run: |
           grep -qE '/assets/index-[^"]+\.js' dist/index.html

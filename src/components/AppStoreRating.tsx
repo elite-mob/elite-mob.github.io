@@ -16,8 +16,10 @@ type AppStoreRatingProps = {
   className?: string;
   /** `compact` for portfolio cards; `detail` for case study hero */
   variant?: 'compact' | 'detail';
-  /** Defer fetch until true (e.g. card in viewport) */
+  /** Show rating UI (reserves space while loading). */
   enabled?: boolean;
+  /** Fetch ratings before `enabled` as the user scrolls near the card. */
+  prefetch?: boolean;
 };
 
 function StarRating({
@@ -95,7 +97,7 @@ function StoreBadge({
   );
 }
 
-function RatingSkeleton({
+function RatingPlaceholder({
   variant,
   slotCount,
 }: {
@@ -108,18 +110,18 @@ function RatingSkeleton({
     if (dual) {
       return (
         <div
-          className="w-full rounded-xl border border-border/50 bg-muted/30 p-3 flex flex-col gap-3 md:flex-row md:gap-4"
+          className="w-full rounded-xl border border-border/50 bg-muted/25 p-3 flex flex-col gap-3 md:flex-row md:items-center md:gap-4 md:py-2.5"
           aria-hidden
         >
-          <div className="h-9 flex-1 animate-pulse rounded-lg bg-muted/60" />
-          <div className="h-px md:h-auto md:w-px bg-border/40 md:self-stretch" />
-          <div className="h-9 flex-1 animate-pulse rounded-lg bg-muted/60" />
+          <div className="h-9 flex-1 rounded-lg bg-muted/45 md:max-w-none" />
+          <div className="h-px md:h-9 md:w-px bg-border/35 md:self-auto" />
+          <div className="h-9 flex-1 rounded-lg bg-muted/45 md:max-w-none" />
         </div>
       );
     }
     return (
       <div
-        className="h-[52px] w-full animate-pulse rounded-xl bg-muted/60 border border-border/40"
+        className="h-[52px] w-full rounded-xl bg-muted/40 border border-border/40"
         aria-hidden
       />
     );
@@ -136,7 +138,7 @@ function RatingSkeleton({
       {Array.from({ length: dual ? 2 : 1 }, (_, i) => (
         <div
           key={i}
-          className="h-[72px] w-full animate-pulse rounded-2xl bg-muted/50 border border-border/50"
+          className="h-[72px] w-full rounded-2xl bg-muted/40 border border-border/50"
         />
       ))}
     </div>
@@ -314,33 +316,55 @@ export function AppStoreRating({
   className,
   variant = 'detail',
   enabled = true,
+  prefetch = enabled,
 }: AppStoreRatingProps) {
   const links = storeLinks.filter(Boolean);
-  const ratingState = useAppRating(links.length > 0 ? links : undefined, enabled);
+  const ratingState = useAppRating(links.length > 0 ? links : undefined, { enabled, prefetch });
 
   if (links.length === 0) return null;
 
-  if (ratingState.status === 'loading') {
-    return (
-      <div className={className} aria-live="polite" aria-busy="true">
-        <RatingSkeleton variant={variant} slotCount={links.length} />
-      </div>
-    );
-  }
+  const ratings =
+    ratingState.status === 'success'
+      ? sortRatingsByPlatform(
+          ratingState.data.filter((d) => hasDisplayableRating(d.rating, d.ratingCount)),
+        )
+      : [];
 
-  if (ratingState.status !== 'success') return null;
+  const showPlaceholder =
+    enabled && (ratingState.status === 'idle' || ratingState.status === 'loading');
+  const showRatings = ratings.length > 0;
 
-  const ratings = sortRatingsByPlatform(
-    ratingState.data.filter((d) => hasDisplayableRating(d.rating, d.ratingCount)),
-  );
-  if (ratings.length === 0) return null;
+  if (!showPlaceholder && !showRatings) return null;
 
   return (
-    <div className={cn('w-full min-w-0', className)} aria-live="polite">
-      {variant === 'compact' ? (
-        <CompactRatings ratings={ratings} />
-      ) : (
-        <DetailRatings ratings={ratings} />
+    <div
+      className={cn('relative w-full min-w-0', className)}
+      aria-live="polite"
+      aria-busy={showPlaceholder}
+    >
+      {showPlaceholder && (
+        <div
+          className={cn(
+            'transition-opacity duration-300',
+            showRatings ? 'pointer-events-none absolute inset-0 opacity-0' : 'opacity-100',
+          )}
+        >
+          <RatingPlaceholder variant={variant} slotCount={links.length} />
+        </div>
+      )}
+      {showRatings && (
+        <div
+          className={cn(
+            'rating-content-reveal',
+            showPlaceholder && 'absolute inset-0',
+          )}
+        >
+          {variant === 'compact' ? (
+            <CompactRatings ratings={ratings} />
+          ) : (
+            <DetailRatings ratings={ratings} />
+          )}
+        </div>
       )}
     </div>
   );

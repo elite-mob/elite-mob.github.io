@@ -1,5 +1,9 @@
 import galleryManifest from 'virtual:portfolio-gallery';
 import { publicAssetUrl } from '@/lib/publicAssetUrl';
+import {
+  resolvePortfolioSlideSources,
+  type PortfolioSlideSources,
+} from '@/lib/portfolioImageVariants';
 
 type GalleryManifest = Record<string, string[]>;
 
@@ -38,4 +42,12 @@ export function getProjectSliderImages(projectId: string, fallbackArtwork?: stri
     return [publicAssetUrl(fallbackArtwork)];
   }
   return [];
+}
+
+/** Full + generated thumb/display paths for progressive loading. */
+export function getProjectSliderSources(
+  projectId: string,
+  fallbackArtwork?: string,
+): PortfolioSlideSources[] {
+  return resolvePortfolioSlideSources(getProjectSliderImages(projectId, fallbackArtwork));
 }

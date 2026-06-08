@@ -507,6 +507,12 @@ const ProjectDetail = () => {
                         <ProjectImageSlider
                           images={relatedImages}
                           alt={`${relatedProject.title} preview`}
+                          interactive={relatedImages.length > 1}
+                          onOpenRequest={
+                            relatedImages.length > 1
+                              ? () => navigate(`/project/${relatedProject.id}`)
+                              : undefined
+                          }
                         />
                       ) : (
                         <>

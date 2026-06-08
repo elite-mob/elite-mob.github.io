@@ -5,6 +5,7 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { generatePortfolioThumbs } from './generate-portfolio-thumbs.mjs';
 import { buildGalleryManifest, parseProjects } from './portfolio-gallery-utils.mjs';
 
 const VIRTUAL_ID = 'virtual:portfolio-gallery';
@@ -64,6 +65,7 @@ export default function portfolioGalleryPlugin() {
       return `export default ${JSON.stringify(manifestCache)}`;
     },
     async buildStart() {
+      await generatePortfolioThumbs({ log: true });
       await refreshManifest({ writeJson: true });
     },
     configureServer(server) {
@@ -71,10 +73,20 @@ export default function portfolioGalleryPlugin() {
       const galleryRoot = join(root, 'public/portfolio-gallery');
       server.watcher.add(galleryRoot);
 
-      const onGalleryChange = async (file) => {
+      let regenTimer = null;
+      const onGalleryChange = (file) => {
+        const normalized = file.replace(/\\/g, '/');
         if (!isGalleryPath(file)) return;
-        await refreshManifest({ writeJson: false });
-        invalidateDevModule();
+        if (normalized.includes('/_generated/')) return;
+
+        if (regenTimer) clearTimeout(regenTimer);
+        regenTimer = setTimeout(() => {
+          void (async () => {
+            await generatePortfolioThumbs({ log: false });
+            await refreshManifest({ writeJson: false });
+            invalidateDevModule();
+          })();
+        }, 600);
       };
 
       server.watcher.on('add', onGalleryChange);

@@ -11,6 +11,7 @@ node_modules
 package-lock.json
 dist
 dist-ssr
+public/portfolio-gallery/_generated
 *.local
 .env
 .env.local

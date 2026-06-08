@@ -2,12 +2,17 @@ import { Project } from '@/data/portfolioData';
 import { RouterNavButton } from '@/components/RouterNavButton';
 import { ProjectImageSlider } from '@/components/ProjectImageSlider';
 import { AppStoreRating } from '@/components/AppStoreRating';
-import { getProjectSliderImages } from '@/lib/portfolioGallery';
+import { getProjectSliderImages, getProjectSliderSources } from '@/lib/portfolioGallery';
+import { getHighResSrc, getLowResSrc } from '@/lib/portfolioImageVariants';
 import { getStoreLinksForProject } from '@/lib/appStoreRating';
 import { Code2, Smartphone, Brain } from 'lucide-react';
 import { use3DTilt } from '@/hooks/use-3d-tilt';
-import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
-import { useCallback, useMemo } from 'react';
+import { useNearViewport } from '@/hooks/use-near-viewport';
+import { useIsMobile } from '@/hooks/use-is-mobile';
+import { prefetchSlideProgressive } from '@/lib/prefetchImage';
+import { prefetchAppRatings } from '@/lib/ratingCache';
+import { useCallback, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 /** Home grid card: teaser only; outcome, role, stack, and CTAs live on the project detail page. */
@@ -32,46 +37,79 @@ const categoryLabels = {
 };
 
 export const ProjectCard = ({ project, index, revealed = true }: ProjectCardProps) => {
+  const navigate = useNavigate();
   const navigatePath = `/project/${project.id}`;
   const Icon = categoryIcons[project.category];
-  const tiltRef = use3DTilt({ maxTilt: 5, scale: 1.02 });
-  const [observerRef, isInView] = useIntersectionObserver({
-    threshold: 0.05,
-    rootMargin: '120px 0px 280px 0px',
+  const isMobile = useIsMobile();
+  const tiltRef = use3DTilt({ maxTilt: isMobile ? 0 : 5, scale: isMobile ? 1 : 1.02 });
+  const [viewportRef, isNear, isInView] = useNearViewport({
+    nearMargin: isMobile ? '280px 0px 360px 0px' : '360px 0px 480px 0px',
+    visibleMargin: isMobile ? '40px 0px 80px 0px' : '100px 0px 240px 0px',
+    visibleThreshold: 0.05,
   });
-  const isVisible = revealed && isInView;
+  const shouldPreload = revealed && isNear;
 
   const combinedRef = useCallback(
     (node: HTMLDivElement | null) => {
-      tiltRef.current = node;
-      observerRef.current = node;
+      if (!isMobile) tiltRef.current = node;
+      viewportRef.current = node;
     },
-    [tiltRef, observerRef],
+    [isMobile, tiltRef, viewportRef],
   );
-
-  const getAnimationClass = () => {
-    if (!revealed) return 'opacity-0 pointer-events-none';
-    // Show previews as soon as the grid is revealed; animate only when scrolled into view.
-    if (!isInView) return 'opacity-100';
-    const animationType = index % 3;
-    if (animationType === 0) return 'animate-portfolio-card';
-    if (animationType === 1) return 'animate-portfolio-card-stagger';
-    return 'animate-portfolio-card-cascade';
-  };
-
-  const animationDelay = isInView ? (index % 6) * 0.1 : 0;
 
   const sliderImages = useMemo(
     () => getProjectSliderImages(project.id, project.imageUrl),
     [project.id, project.imageUrl],
   );
+  const sliderSources = useMemo(
+    () => getProjectSliderSources(project.id, project.imageUrl),
+    [project.id, project.imageUrl],
+  );
   const storeLinks = useMemo(() => getStoreLinksForProject(project), [project]);
   const hasVisual = sliderImages.length > 0 && sliderImages[0] !== '/placeholder.svg';
+  const hasMultipleImages = sliderImages.length > 1;
+
+  useEffect(() => {
+    if (!shouldPreload) return;
+    const limit = hasMultipleImages ? 2 : 1;
+    const slice = sliderSources.slice(0, limit);
+    void prefetchSlideProgressive(
+      slice.map(getLowResSrc),
+      isInView ? slice.map((s) => getHighResSrc(s, 'card')) : [],
+      limit,
+    );
+    if (storeLinks.length > 0) {
+      void prefetchAppRatings(storeLinks);
+    }
+  }, [shouldPreload, isInView, sliderSources, hasMultipleImages, storeLinks]);
+
+  const shouldAnimate = revealed && (isMobile || isInView);
+
+  const animationClass = useMemo(() => {
+    if (!revealed) return 'opacity-0 pointer-events-none';
+    if (!shouldAnimate) return 'opacity-100';
+    if (isMobile) return 'animate-portfolio-card-mobile';
+    return 'animate-portfolio-card';
+  }, [revealed, shouldAnimate, isMobile]);
+
+  const animationDelay = shouldAnimate
+    ? isMobile
+      ? Math.min(index, 10) * 0.055
+      : (index % 6) * 0.1
+    : 0;
+
+  const openProject = useCallback(() => {
+    navigate(navigatePath);
+  }, [navigate, navigatePath]);
 
   return (
     <article
       ref={combinedRef}
-      className={`group relative glass-card rounded-2xl overflow-hidden perspective-4d transform-3d shadow-4d hover:shadow-4d-hover ${getAnimationClass()} flex flex-col`}
+      className={cn(
+        'group relative glass-card rounded-2xl overflow-hidden shadow-4d flex flex-col',
+        !isMobile && 'perspective-4d transform-3d hover:shadow-4d-hover',
+        animationClass,
+      )}
       style={{ animationDelay: `${animationDelay}s`, animationFillMode: 'forwards' }}
     >
       <div className="relative h-48 sm:h-52 overflow-hidden bg-secondary shrink-0 isolate [transform:translateZ(0)]">
@@ -79,7 +117,10 @@ export const ProjectCard = ({ project, index, revealed = true }: ProjectCardProp
           <ProjectImageSlider
             images={sliderImages}
             alt={`${project.title} preview`}
-            priority
+            priority={index < (isMobile ? 2 : 3)}
+            preload={shouldPreload}
+            interactive={hasMultipleImages}
+            onOpenRequest={hasMultipleImages ? openProject : undefined}
           />
         ) : (
           <>
@@ -89,11 +130,13 @@ export const ProjectCard = ({ project, index, revealed = true }: ProjectCardProp
             </div>
           </>
         )}
-        <RouterNavButton
-          to={navigatePath}
-          className="absolute inset-0 z-[5] bg-transparent cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
-          aria-label={`Open case study: ${project.title}`}
-        />
+        {!hasMultipleImages && (
+          <RouterNavButton
+            to={navigatePath}
+            className="absolute inset-0 z-[5] bg-transparent cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+            aria-label={`Open case study: ${project.title}`}
+          />
+        )}
 
         {project.featured && (
           <div className="pointer-events-none absolute top-3 right-3 z-[6] px-2.5 py-1 rounded-lg bg-primary text-primary-foreground text-[11px] font-semibold uppercase tracking-wide shadow-sm ring-1 ring-primary/30">
@@ -119,19 +162,26 @@ export const ProjectCard = ({ project, index, revealed = true }: ProjectCardProp
             <div
               className={cn(
                 'w-full min-w-0',
-                storeLinks.length > 1 ? 'pt-2 pb-1' : 'pt-1.5 pb-0.5',
+                storeLinks.length > 1 ? 'pt-2 pb-1 min-h-[88px] md:min-h-[52px]' : 'pt-1.5 pb-0.5 min-h-[52px]',
               )}
             >
-              <AppStoreRating storeLinks={storeLinks} variant="compact" enabled={isVisible} />
+              <AppStoreRating
+                storeLinks={storeLinks}
+                variant="compact"
+                prefetch={shouldPreload}
+                enabled={shouldPreload}
+              />
             </div>
           )}
           <p className="text-foreground/65 text-sm leading-relaxed line-clamp-3">{project.description}</p>
         </div>
       </div>
 
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none transform-3d">
-        <div className="absolute inset-0 rounded-2xl ring-1 ring-primary/20" />
-      </div>
+      {!isMobile && (
+        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none transform-3d">
+          <div className="absolute inset-0 rounded-2xl ring-1 ring-primary/20" />
+        </div>
+      )}
     </article>
   );
 };

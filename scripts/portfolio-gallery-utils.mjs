@@ -84,6 +84,9 @@ export function sortGalleryFileNames(names) {
   );
 }
 
+/** Folders under gallery root that are not project galleries. */
+export const GALLERY_RESERVED_DIRS = new Set(['_generated']);
+
 export async function listGalleryImageFiles(dir) {
   try {
     const names = await readdir(dir);
@@ -115,7 +118,7 @@ export async function removeOrphanGalleryFolders(projects) {
   try {
     const entries = await readdir(GALLERY_ROOT, { withFileTypes: true });
     for (const entry of entries) {
-      if (!entry.isDirectory() || valid.has(entry.name)) continue;
+      if (!entry.isDirectory() || valid.has(entry.name) || GALLERY_RESERVED_DIRS.has(entry.name)) continue;
       await rm(join(GALLERY_ROOT, entry.name), { recursive: true, force: true });
       removed += 1;
       console.log(`  removed orphan folder: ${entry.name}`);

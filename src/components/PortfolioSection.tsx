@@ -1,5 +1,10 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { projects, ProjectCategory, getPortfolioDisplayIndex } from '@/data/portfolioData';
+import { getProjectSliderSources } from '@/lib/portfolioGallery';
+import { getHighResSrc, getLowResSrc } from '@/lib/portfolioImageVariants';
+import { getStoreLinksForProject } from '@/lib/appStoreRating';
+import { prefetchAppRatings } from '@/lib/ratingCache';
+import { prefetchSlideProgressive } from '@/lib/prefetchImage';
 import { ProjectCard } from './ProjectCard';
 import { Button } from '@/components/ui/button';
 import { Code2, Smartphone, Brain, Layers, Star } from 'lucide-react';
@@ -105,16 +110,20 @@ export const PortfolioSection = () => {
     if (hasRevealedContentRef.current) return;
 
     const isNavigatingToPortfolio = window.location.hash === '#portfolio';
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
 
     if (isSectionVisible || isNavigatingToPortfolio) {
+      const filterDelay = isNavigatingToPortfolio ? 40 : isMobile ? 50 : 120;
+      const itemsDelay = isNavigatingToPortfolio ? 80 : isMobile ? 120 : 280;
+
       const timer1 = setTimeout(() => {
         setShowFilters(true);
-      }, isNavigatingToPortfolio ? 50 : 120);
+      }, filterDelay);
 
       const timer2 = setTimeout(() => {
         hasRevealedContentRef.current = true;
         setShowPortfolioItems(true);
-      }, isNavigatingToPortfolio ? 120 : 280);
+      }, itemsDelay);
 
       return () => {
         clearTimeout(timer1);
@@ -122,6 +131,29 @@ export const PortfolioSection = () => {
       };
     }
   }, [isSectionVisible]);
+
+  // Warm the first screen of cards before staggered entrance finishes.
+  useEffect(() => {
+    if (!showPortfolioItems) return;
+
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    const warmCount = isMobile ? 6 : 9;
+
+    filteredProjects.slice(0, warmCount).forEach((project) => {
+      const sources = getProjectSliderSources(project.id, project.imageUrl);
+      const limit = sources.length > 1 ? 2 : 1;
+      const slice = sources.slice(0, limit);
+      void prefetchSlideProgressive(
+        slice.map(getLowResSrc),
+        slice.map((s) => getHighResSrc(s, 'card')),
+        limit,
+      );
+      const storeLinks = getStoreLinksForProject(project);
+      if (storeLinks.length > 0) {
+        void prefetchAppRatings(storeLinks);
+      }
+    });
+  }, [showPortfolioItems, filteredProjects]);
 
   // Fallback: Show content after a delay even if intersection observer doesn't trigger (for mobile)
   useEffect(() => {
@@ -134,18 +166,6 @@ export const PortfolioSection = () => {
     
     return () => clearTimeout(fallbackTimer);
   }, [isSectionVisible, showFilters]);
-
-  // Reset portfolio items visibility when filter changes
-  useEffect(() => {
-    if (showPortfolioItems) {
-      setShowPortfolioItems(false);
-      const timer = setTimeout(() => {
-        setShowPortfolioItems(true);
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeFilter]);
 
   return (
     <section
@@ -173,9 +193,11 @@ export const PortfolioSection = () => {
         />
 
         {/* Filter Buttons - Enhanced with better interactions */}
-        <div className={`flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-8 sm:mb-12 md:mb-16 px-4 transition-opacity duration-500 ${
-          showFilters ? 'animate-fade-in-up stagger-delay-4 opacity-100' : 'opacity-0'
-        }`}>
+        <div
+          className={`flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-8 sm:mb-12 md:mb-16 px-4 transition-opacity duration-300 md:duration-500 ${
+            showFilters ? 'opacity-100 max-md:animate-fade-in-up md:animate-fade-in-up md:stagger-delay-4' : 'opacity-0'
+          }`}
+        >
           {filters.map(({ value, label, icon: Icon }, index) => {
             const isActive = activeFilter === value;
             const count = 
@@ -227,13 +249,16 @@ export const PortfolioSection = () => {
         </div>
 
         {/* Projects Grid - Cards animate on scroll after filters */}
-        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-7 transition-opacity duration-500 ${
-          showPortfolioItems ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`} aria-label="Portfolio projects">
+        <div
+          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-7 transition-opacity duration-300 md:duration-500 ${
+            showPortfolioItems ? 'opacity-100' : 'opacity-0 max-md:pointer-events-none'
+          }`}
+          aria-label="Portfolio projects"
+        >
           {filteredProjects.length > 0 ? (
             filteredProjects.map((project, index) => (
               <ProjectCard
-                key={project.id}
+                key={`${activeFilter}-${project.id}`}
                 project={project}
                 index={index}
                 revealed={showPortfolioItems}
