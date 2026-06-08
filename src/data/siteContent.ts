@@ -4,7 +4,7 @@
  */
 
 export const heroContent = {
-  eyebrow: 'Full-Stack Engineer • Web, Mobile & AI',
+  eyebrow: 'Full-Stack Developer • Web, Mobile & AI',
   headline: 'I build scalable digital products that look sharp and perform.',
   supporting:
     'Production web and mobile, Node-backed services, and AI where it fits the product, with fast UX under load and APIs that stay maintainable as you grow.',
@@ -26,14 +26,14 @@ export const aboutContent = {
     },
     {
       title: 'Built for real users',
-      body: 'Performance, accessibility, and clarity under load: patterns that survive traffic spikes, store reviews, and the next engineer.',
+      body: 'Performance, accessibility, and clarity under load: patterns that survive traffic spikes, store reviews, and the next developer.',
     },
     {
       title: 'Trust by default',
       body: 'Written updates, scoped proposals, and confidentiality treated as seriously as the code. NDAs are normal.',
     },
   ] as const,
-  /** "How I work" (engineering principles, distinct from logistics). */
+  /** "How I work" (development principles, distinct from logistics). */
   principles: [
     {
       title: 'Clarity before code',
@@ -72,7 +72,7 @@ export const caseStudyResultPlaceholder =
   'Add a client-approved KPI on this project (users, revenue, latency, uptime, or similar).';
 
 /** Footer one-line tagline (location + role). */
-export const footerTagline = 'Full-stack engineer · Web, Mobile & AI';
+export const footerTagline = 'Full-stack developer · Web, Mobile & AI';
 
 /**
  * Homepage trust strip (below hero). Optional: swap for logo assets when approved.

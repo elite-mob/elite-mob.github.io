@@ -73,7 +73,7 @@ export const workExperiences: WorkExperience[] = [
     summary: 'Greenfield iOS and Android apps with backend coordination.',
     achievements: [
       'Built the entire CheckSammy mobile platform from scratch for iOS and Android.',
-      'Worked closely with PrimeAI, CheckSammy product teams, and backend engineers to deliver production-ready applications.',
+      'Worked closely with PrimeAI, CheckSammy product teams, and backend developers to deliver production-ready applications.',
       'Architected scalable mobile codebases and shipped fully functional apps to production.',
     ],
   },
@@ -98,7 +98,7 @@ export const workExperiences: WorkExperience[] = [
     achievements: [
       'Built full-featured iOS and Android applications for home and business automation systems.',
       'Developed software supporting security cameras, Z-Wave devices, alarms, lighting, garage doors, panels, and controllers.',
-      'Worked closely with an experienced internal team and was promoted to Lead Engineer based on technical leadership and delivery.',
+      'Worked closely with an experienced internal team and was promoted to Lead Developer based on technical leadership and delivery.',
     ],
   },
   {
@@ -106,7 +106,7 @@ export const workExperiences: WorkExperience[] = [
     title: 'Lead Mobile Developer',
     company: 'Hive Social / Contract',
     period: 'OCT 2019 - MAY 2021',
-    summary: 'Sole mobile engineer; massive scale and viral growth.',
+    summary: 'Sole mobile developer; massive scale and viral growth.',
     achievements: [
       'Built the Hive Social mobile application from the ground up as the sole mobile developer.',
       'Worked directly with CEO Kassandra Pop and the design team to shape the product vision and execution.',

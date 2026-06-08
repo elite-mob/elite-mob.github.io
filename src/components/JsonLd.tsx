@@ -20,7 +20,7 @@ export function JsonLdHome() {
         image: ogImageUrl(DEFAULT_OG_IMAGE_PATH),
         jobTitle: 'Full-Stack Developer',
         description:
-          'Freelance full-stack engineer specializing in web, mobile, and AI. Ships production software for startups and enterprises.',
+          'Freelance full-stack developer specializing in web, mobile, and AI. Ships production software for startups and enterprises.',
         sameAs: [...SAME_AS_LINKS],
         knowsAbout: [
           'Web Development',
@@ -45,7 +45,7 @@ export function JsonLdHome() {
           name: 'Worldwide',
         },
         description:
-          'Freelance and lead engineering for web, mobile, and AI products. From MVPs to scaled platforms.',
+          'Freelance and lead development for web, mobile, and AI products. From MVPs to scaled platforms.',
       },
     ],
   };

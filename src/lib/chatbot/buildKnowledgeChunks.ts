@@ -45,7 +45,7 @@ export function buildKnowledgeChunks(projects: readonly Project[]): KnowledgeChu
         footerTagline,
       ].join('\n'),
       '/#about',
-      ['hans', 'chan', 'engineer', 'full-stack'],
+      ['hans', 'chan', 'developer', 'full-stack'],
     ),
     chunk(
       'site-about',
