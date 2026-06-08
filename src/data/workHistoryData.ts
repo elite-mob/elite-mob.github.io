@@ -55,11 +55,11 @@ export const workExperiences: WorkExperience[] = [
   {
     id: 'troutroutes',
     title: 'Full-Stack Software Developer',
-    company: 'TroutRoutes / OnX / Contract',
+    company: 'TroutRoutes / Contract',
     period: 'APR 2024 - MAY 2025',
     summary: 'Mapping-heavy web and Android work with auth and payments.',
     achievements: [
-      'Worked closely with TroutRoutes and OnX engineering teams to enhance web and Android mapping applications.',
+      'Worked closely with the TroutRoutes engineering team to enhance web and Android mapping applications.',
       'Upgraded MapView functionality, including map interactions, tagging, route drawing, and custom markers.',
       'Introduced a new authentication system and integrated Stripe for payments.',
       'Resolved critical bugs and optimized map-based features for performance and stability.',

@@ -26,18 +26,18 @@ export const projects: Project[] = [
   {
     id: 'web-1',
     title: 'TroutRoutes - 26M+ Users',
-    description: `Built and scaled a fly fishing marketplace serving 26M+ users, with booking, payments, guide discovery, gear listings, and location-based experiences. The platform was later acquired by onX.`,
+    description: `Built and scaled a fly fishing marketplace serving 26M+ users, with booking, payments, guide discovery, gear listings, and location-based experiences.`,
     category: 'web',
     technologies: ['React', 'Node.js', 'Express', 'Firebase', 'Stripe', 'Mapbox', 'CSV', 'Chart.js'],
     imageUrl: projectArtworkUrl('web-1', 'TroutRoutes - 26M+ Users'),
     link: 'https://troutroutes.com/',
     featured: true,
     outcomeHighlight:
-      'Scaled marketplace for 26M+ users; acquisition by onX; multi-vendor bookings, maps, and payments in production.',
+      'Scaled marketplace for 26M+ users; multi-vendor bookings, maps, and payments in production.',
     duration: '14 months',
     role: 'Full Stack Developer',
-    challenge: `The platform needed to support a multi-vendor marketplace with real-time inventory, booking workflows, payments, and mapping data at scale. After the acquisition, the architecture also had to align cleanly with the broader onX ecosystem.`,
-    solution: `I built a React-based frontend backed by Firebase for real-time synchronization and fast operational updates. Mapbox powered stream, guide, and access discovery, while Stripe handled multi-vendor payment flows. I also delivered internal tooling for inventory, bookings, vendor operations, and analytics so the product could scale reliably and integrate smoothly into onX infrastructure.`,
+    challenge: `The platform needed to support a multi-vendor marketplace with real-time inventory, booking workflows, payments, and mapping data at scale while remaining maintainable as usage grew.`,
+    solution: `I built a React-based frontend backed by Firebase for real-time synchronization and fast operational updates. Mapbox powered stream, guide, and access discovery, while Stripe handled multi-vendor payment flows. I also delivered internal tooling for inventory, bookings, vendor operations, and analytics so the product could scale reliably in production.`,
     features: [
       'Multi-vendor marketplace',
       'Real-time booking',
@@ -206,20 +206,20 @@ export const projects: Project[] = [
 
   {
     id: 'mobile-1',
-    title: 'TroutRoutes by onX - iOS, Android',
-    description: `Built a large-scale native mobile mapping product for fly fishing, covering 50,000+ streams and 280,000+ access points with GPS navigation, regulations, real-time conditions, and offline maps. The platform served 26M+ users and was acquired by onX.`,
+    title: 'TroutRoutes - iOS, Android',
+    description: `Built a large-scale native mobile mapping product for fly fishing, covering 50,000+ streams and 280,000+ access points with GPS navigation, regulations, real-time conditions, and offline maps. The platform served 26M+ users.`,
     category: 'mobile',
     technologies: ['Swift', 'Java', 'Firebase', 'Stripe', 'Mapbox', 'Weather API'],
-    imageUrl: projectArtworkUrl('mobile-1', 'TroutRoutes by onX - iOS, Android'),
+    imageUrl: projectArtworkUrl('mobile-1', 'TroutRoutes - iOS, Android'),
     link: 'https://apps.apple.com/us/app/troutroutes-fly-fishing-app/id1423989574',
     androidLink: 'https://play.google.com/store/apps/details?id=com.troutinsights.troutroutes',
     featured: true,
     outcomeHighlight:
-      'Native maps for 50k+ streams / 280k+ access points; offline packs; integrated with onX post-acquisition.',
+      'Native maps for 50k+ streams / 280k+ access points; offline packs; production-ready iOS and Android releases.',
     duration: '14 months',
     role: 'Full Stack Developer',
     challenge: `The app had to deliver a dependable native mapping experience across iOS and Android, including offline support, location layers, trip planning, public versus private access data, stream conditions, and regulations. Performance, usability in low-signal areas, and scalability were central to the product.`,
-    solution: `I built native iOS and Android functionality in Swift and Java, supported by Firebase for user data and operational workflows. Mapbox powered the interactive GPS experience, layered access data, and offline map packs. I also integrated stream conditions, weather-related data, and trip-planning tools so the app could serve anglers reliably in real-world field conditions while fitting into the broader onX product ecosystem.`,
+    solution: `I built native iOS and Android functionality in Swift and Java, supported by Firebase for user data and operational workflows. Mapbox powered the interactive GPS experience, layered access data, and offline map packs. I also integrated stream conditions, weather-related data, and trip-planning tools so the app could serve anglers reliably in real-world field conditions.`,
     features: [
       'GPS maps for trout streams (48 states)',
       '50k+ streams, 280k+ curated access points',

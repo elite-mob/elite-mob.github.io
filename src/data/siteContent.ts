@@ -88,7 +88,6 @@ export const trustStripContent = {
   eyebrow: 'SELECTED COLLABORATIONS',
   supporting: 'Teams and products behind shipped work.',
   collaborationNames: [
-    'OnX',
     'TroutRoutes',
     'Sesh Fitness',
     'Serve',
