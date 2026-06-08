@@ -21,6 +21,8 @@ pnpm install
 pnpm run dev
 ```
 
+pnpm 11 requires native build scripts to be allowlisted in `pnpm-workspace.yaml` (`esbuild`, `@swc/core`, `sharp`). If you see `ERR_PNPM_IGNORED_BUILDS`, run `pnpm install` again after pulling — or `pnpm approve-builds`.
+
 On Windows, if `pnpm install` fails with `EPERM` on `@esbuild` or `@swc` (often after mixing npm and pnpm), remove `node_modules` and reinstall with one package manager only:
 
 ```sh

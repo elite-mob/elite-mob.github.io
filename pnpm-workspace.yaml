@@ -1,4 +1,5 @@
 # pnpm 11+ reads project settings here (not package.json "pnpm" or .npmrc).
-# Versions are pinned in package.json + pnpm-lock.yaml (no overrides block needed).
 allowBuilds:
+  '@swc/core': true
+  esbuild: true
   sharp: true
