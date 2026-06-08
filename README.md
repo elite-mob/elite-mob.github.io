@@ -21,6 +21,14 @@ pnpm install
 pnpm run dev
 ```
 
+On Windows, if `pnpm install` fails with `EPERM` on `@esbuild` or `@swc` (often after mixing npm and pnpm), remove `node_modules` and reinstall with one package manager only:
+
+```sh
+Remove-Item -Recurse -Force node_modules
+pnpm install
+# or: npm install --legacy-peer-deps && npm run dev
+```
+
 The dev server runs at [http://localhost:8080](http://localhost:8080).
 
 ## Build

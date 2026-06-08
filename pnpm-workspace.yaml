@@ -1,8 +1,4 @@
 # pnpm 11+ reads project settings here (not package.json "pnpm" or .npmrc).
-# Pin mature dependency versions so frozen-lockfile installs pass minimumReleaseAge (24h).
-overrides:
-  '@emnapi/runtime': '1.10.0'
-  '@tailwindcss/typography': '0.5.19'
-
+# Versions are pinned in package.json + pnpm-lock.yaml (no overrides block needed).
 allowBuilds:
   sharp: true
