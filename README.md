@@ -37,8 +37,10 @@ This site is deployed to GitHub Pages via GitHub Actions. Pushing to the `main` 
 
 **GitHub Pages setup (required once):**
 1. Repository → [Settings → Pages](https://github.com/elite-mob/elite-mob.github.io/settings/pages)
-2. **Build and deployment** → **Source**: **GitHub Actions** (not “Deploy from a branch → main”)
+2. **Build and deployment** → **Source**: pick **one** of these (not `main` branch):
+   - **GitHub Actions**, or
+   - **Deploy from a branch** → **`gh-pages`** / **/(root)**
 
-CI builds `dist/` and deploys it via `actions/deploy-pages` on every push to `main`.
+CI builds `dist/`, pushes it to `gh-pages`, and uploads a Pages artifact on every push to `main`.
 
-**Blank white screen?** View Page Source: if you see `<script src="/src/main.tsx">`, Pages is still serving source files from `main`. Switch the source to **GitHub Actions** as above, then re-run the deploy workflow.
+**Blank screen?** View Page Source: if you see `<script src="/src/main.tsx">`, Pages is still serving source from `main`. Change the source as above, then re-run the deploy workflow.

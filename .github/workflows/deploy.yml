@@ -8,13 +8,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 concurrency:
   group: "pages"
   cancel-in-progress: true
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
@@ -87,13 +90,22 @@ jobs:
       - name: Disable Jekyll (ensure static files are served as built)
         run: touch dist/.nojekyll
 
+      - name: Push built site to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
+          include-hidden-files: true
 
   deploy:
     needs: build
@@ -106,28 +118,51 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Verify live site serves this deployment
+      - name: Verify live site serves built assets
         run: |
           expected="${{ needs.build.outputs.index_bundle }}"
-          for attempt in 1 2 3 4 5; do
-            sleep 15
+          settings_url="https://github.com/${{ github.repository }}/settings/pages"
+
+          for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            sleep 20
             html=$(curl -fsSL "https://elite-mob.github.io/" || true)
+
             if echo "$html" | grep -q '/src/main.tsx'; then
-              echo "Attempt $attempt: still serving source index.html from main..."
+              echo "Attempt $attempt: Pages is still serving source files from main."
               continue
             fi
+
             live=$(echo "$html" | grep -oE 'index-[^"]+\.js' | head -1)
+            if [ -z "$live" ]; then
+              echo "Attempt $attempt: no built index bundle in live HTML yet."
+              continue
+            fi
+
+            react=$(echo "$html" | grep -oE 'react-vendor-[^"]+\.js' | head -1)
+            if [ -n "$react" ] && curl -fsSL "https://elite-mob.github.io/assets/$react" | grep -q 'ui-vendor'; then
+              echo "Attempt $attempt: live react-vendor still imports ui-vendor (broken chunk split)."
+              continue
+            fi
+
             if [ "$live" = "$expected" ]; then
-              react=$(echo "$html" | grep -oE 'react-vendor-[^"]+\.js' | head -1)
-              if curl -fsSL "https://elite-mob.github.io/assets/$react" | grep -q 'ui-vendor'; then
-                echo "::error::Live react-vendor still imports ui-vendor (stale or broken deploy)."
-                exit 1
-              fi
               echo "Live site serves deployed bundle $live (attempt $attempt)."
               exit 0
             fi
-            echo "Attempt $attempt: expected $expected, live has ${live:-none}..."
+
+            echo "Attempt $attempt: expected $expected, live has $live (waiting for Pages CDN)..."
           done
-          echo "::error::Live site did not pick up bundle $expected."
-          echo "Check Settings → Pages → Source is GitHub Actions, then re-run this workflow."
+
+          html=$(curl -fsSL "https://elite-mob.github.io/" || true)
+          if echo "$html" | grep -q '/src/main.tsx'; then
+            echo "::error::GitHub Pages is still serving the main branch source tree."
+            echo "Fix once: $settings_url"
+            echo "  Source must be GitHub Actions OR Deploy from branch → gh-pages / (root)"
+            echo "  (not Deploy from branch → main)"
+            exit 1
+          fi
+
+          live=$(echo "$html" | grep -oE 'index-[^"]+\.js' | head -1)
+          echo "::error::Live site did not pick up bundle $expected (live: ${live:-none})."
+          echo "If live shows an older index-*.js hash, wait a few minutes and re-run the workflow."
+          echo "Otherwise check Pages source: $settings_url"
           exit 1
