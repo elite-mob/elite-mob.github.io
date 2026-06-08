@@ -1,18 +1,34 @@
-import { useEffect } from 'react';
+import { lazy, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Navigation } from '@/components/Navigation';
 import { HeroSection } from '@/components/HeroSection';
-import { LogoStrip } from '@/components/LogoStrip';
-import { PortfolioSection } from '@/components/PortfolioSection';
-import { AboutSection } from '@/components/AboutSection';
-import { WorkHistorySection } from '@/components/WorkHistorySection';
-import { ReviewsSection } from '@/components/ReviewsSection';
-import { SkillsSection } from '@/components/SkillsSection';
-import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
+import { LazySection } from '@/components/LazySection';
 import { handleHashNavigation, shouldSuppressHashAutoScroll } from '@/lib/navigation';
 import { Seo } from '@/components/Seo';
 import { JsonLdHome } from '@/components/JsonLd';
+
+const LogoStrip = lazy(() =>
+  import('@/components/LogoStrip').then((m) => ({ default: m.LogoStrip })),
+);
+const AboutSection = lazy(() =>
+  import('@/components/AboutSection').then((m) => ({ default: m.AboutSection })),
+);
+const PortfolioSection = lazy(() =>
+  import('@/components/PortfolioSection').then((m) => ({ default: m.PortfolioSection })),
+);
+const WorkHistorySection = lazy(() =>
+  import('@/components/WorkHistorySection').then((m) => ({ default: m.WorkHistorySection })),
+);
+const SkillsSection = lazy(() =>
+  import('@/components/SkillsSection').then((m) => ({ default: m.SkillsSection })),
+);
+const ReviewsSection = lazy(() =>
+  import('@/components/ReviewsSection').then((m) => ({ default: m.ReviewsSection })),
+);
+const ContactSection = lazy(() =>
+  import('@/components/ContactSection').then((m) => ({ default: m.ContactSection })),
+);
 
 const Index = () => {
   const location = useLocation();
@@ -43,13 +59,31 @@ const Index = () => {
       <Navigation />
       <main id="main-content" tabIndex={-1} className="relative z-10 transform-3d outline-none">
         <HeroSection />
-        <LogoStrip />
-        <AboutSection />
-        <PortfolioSection />
-        <WorkHistorySection />
-        <SkillsSection />
-        <ReviewsSection />
-        <ContactSection />
+        <LazySection minHeight="10rem">
+          <LogoStrip />
+        </LazySection>
+        <LazySection minHeight="18rem">
+          <AboutSection />
+        </LazySection>
+        <LazySection
+          minHeight="28rem"
+          rootMargin="480px 0px 520px 0px"
+          sectionId="portfolio"
+        >
+          <PortfolioSection />
+        </LazySection>
+        <LazySection minHeight="20rem">
+          <WorkHistorySection />
+        </LazySection>
+        <LazySection minHeight="16rem">
+          <SkillsSection />
+        </LazySection>
+        <LazySection minHeight="18rem">
+          <ReviewsSection />
+        </LazySection>
+        <LazySection minHeight="22rem">
+          <ContactSection />
+        </LazySection>
       </main>
       <Footer />
     </div>

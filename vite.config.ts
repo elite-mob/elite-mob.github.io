@@ -28,40 +28,16 @@ function resolveBase(): string {
   return "/";
 }
 
-/**
- * Injects the production URL for src/assets/avatar.png into index.html (og:image / twitter:image).
- * Uses Rollup output so the path matches the hashed /assets/avatar-*.png file.
- */
+/** Injects the production URL for public/og/avatar.webp into index.html meta tags. */
 function injectOgImageMeta(): Plugin {
   const siteUrl = (process.env.VITE_SITE_URL ?? "https://elite-mob.github.io").replace(/\/$/, "");
   return {
     name: "inject-og-image-meta",
     transformIndexHtml: {
       order: "post",
-      handler(html, ctx) {
+      handler(html) {
         const base = resolveBase();
-        const bundle = ctx.bundle;
-        if (!bundle) {
-          return html;
-        }
-        let fileName: string | undefined;
-        for (const [, chunk] of Object.entries(bundle)) {
-          if (
-            chunk.type === "asset" &&
-            chunk.fileName.endsWith(".png") &&
-            /(^|\/)avatar[-.]/i.test(chunk.fileName)
-          ) {
-            fileName = chunk.fileName;
-            break;
-          }
-        }
-        if (!fileName) {
-          console.warn(
-            "[inject-og-image-meta] avatar.png asset not found in bundle; og:image placeholder left unchanged",
-          );
-          return html;
-        }
-        const urlPath = base === "/" ? `/${fileName}` : `${base}${fileName}`;
+        const urlPath = base === "/" ? "/og/avatar.webp" : `${base}og/avatar.webp`;
         const fullUrl = `${siteUrl}${urlPath}`;
         return html.replaceAll("__OG_IMAGE_URL__", fullUrl);
       },
@@ -102,7 +78,7 @@ export default defineConfig(({ mode }) => ({
     include: ["react", "react-dom", "react-router", "react-router-dom", "react-helmet-async"],
   },
   build: {
-    target: 'es2015',
+    target: 'es2020',
     minify: 'esbuild',
     cssMinify: true,
     sourcemap: mode === 'development',
@@ -110,7 +86,6 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('framer-motion')) return 'motion-vendor';
             if (id.includes('@emailjs')) return 'emailjs-vendor';
             // Keep React and Radix in one chunk to avoid circular react-vendor <-> ui-vendor imports.
             if (
@@ -126,6 +101,13 @@ export default defineConfig(({ mode }) => ({
           if (id.includes('/src/data/chatKnowledge.json')) return 'chat-knowledge';
           if (id.includes('/src/pages/ProjectDetail')) return 'page-project-detail';
           if (id.includes('/src/components/chatbot/')) return 'chatbot';
+          if (id.includes('/src/components/PortfolioSection')) return 'section-portfolio';
+          if (id.includes('/src/components/AboutSection')) return 'section-about';
+          if (id.includes('/src/components/WorkHistorySection')) return 'section-experience';
+          if (id.includes('/src/components/ReviewsSection')) return 'section-reviews';
+          if (id.includes('/src/components/ContactSection')) return 'section-contact';
+          if (id.includes('/src/components/SkillsSection')) return 'section-skills';
+          if (id.includes('/src/data/portfolioData')) return 'portfolio-data';
         },
       },
     },
