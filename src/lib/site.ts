@@ -1,5 +1,3 @@
-import defaultOgImage from '@/assets/avatar.png';
-
 /**
  * Canonical site URL for SEO, OG tags, and JSON-LD.
  * Override with VITE_SITE_URL in .env for staging or custom domain.
@@ -17,8 +15,8 @@ export const PAGE_TITLE_SUFFIX = SITE_BRAND;
 export const DEFAULT_DESCRIPTION =
   'Full-stack developer portfolio: web, mobile, and AI, trusted by startups and enterprises. 40+ shipped projects. Clear communication, on-time delivery, outcomes you can count on.';
 
-/** Bundled avatar used for og:image / Twitter cards; Vite emits a hashed /assets/... URL in production. */
-export const DEFAULT_OG_IMAGE_PATH = defaultOgImage;
+/** Static WebP generated at build time (see scripts/generate-og-assets.mjs). */
+export const DEFAULT_OG_IMAGE_PATH = '/og/avatar.webp';
 
 export const SAME_AS_LINKS = [
   'https://github.com/elite-mob',
