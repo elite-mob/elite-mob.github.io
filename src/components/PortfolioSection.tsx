@@ -52,35 +52,29 @@ export const PortfolioSection = () => {
       revealPortfolioContent();
     };
 
-    window.addEventListener('portfolioFilterChange', handleFilterChange as EventListener);
-    window.addEventListener('portfolioShowContent', handleShowContent);
-    
-    // Check URL params on mount
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoryParam = urlParams.get('category');
-    if (categoryParam && ['all', 'featured', 'web', 'mobile', 'ai'].includes(categoryParam)) {
-      setActiveFilter(categoryParam as FilterType);
-    }
-
-    if (window.location.hash === '#portfolio') {
-      revealPortfolioContent();
-    }
-
-    return () => {
-      window.removeEventListener('portfolioFilterChange', handleFilterChange as EventListener);
-      window.removeEventListener('portfolioShowContent', handleShowContent);
-    };
-  }, [revealPortfolioContent]);
-
-  useEffect(() => {
     const handleHashChange = () => {
       if (window.location.hash === '#portfolio') {
         revealPortfolioContent();
       }
     };
 
+    window.addEventListener('portfolioFilterChange', handleFilterChange as EventListener);
+    window.addEventListener('portfolioShowContent', handleShowContent);
     window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category');
+    if (categoryParam && ['all', 'featured', 'web', 'mobile', 'ai'].includes(categoryParam)) {
+      setActiveFilter(categoryParam as FilterType);
+    }
+
+    handleHashChange();
+
+    return () => {
+      window.removeEventListener('portfolioFilterChange', handleFilterChange as EventListener);
+      window.removeEventListener('portfolioShowContent', handleShowContent);
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, [revealPortfolioContent]);
 
   // Featured first, then curated display order (scale → trust → breadth)

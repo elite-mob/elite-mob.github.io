@@ -380,6 +380,8 @@ export const ContactSection = () => {
                   </label>
                   <Input
                     id="name"
+                    name="name"
+                    autoComplete="name"
                     value={formData.name}
                     onChange={(e) => {
                       setFormData({ ...formData, name: e.target.value });
@@ -401,7 +403,9 @@ export const ContactSection = () => {
                   </label>
                   <Input
                     id="email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     value={formData.email}
                     onChange={(e) => {
                       setFormData({ ...formData, email: e.target.value });
@@ -423,6 +427,8 @@ export const ContactSection = () => {
                   </label>
                   <Textarea
                     id="message"
+                    name="message"
+                    autoComplete="off"
                     value={formData.message}
                     onChange={(e) => {
                       setFormData({ ...formData, message: e.target.value });

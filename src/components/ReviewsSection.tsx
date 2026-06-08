@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { Quote } from 'lucide-react';
 import { testimonials, type Testimonial } from '@/data/testimonials';
-import { testimonialAvatarSrc } from '@/lib/linkedinProfile';
+import { testimonialAvatarSrc } from '@/lib/testimonialAvatar';
 import { cn } from '@/lib/utils';
 import { SectionBackdrop } from '@/components/SectionBackdrop';
 import { SectionHeader } from '@/components/SectionHeader';

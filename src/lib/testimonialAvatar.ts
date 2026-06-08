@@ -14,6 +14,17 @@ export function linkedInSyncedAvatarPath(slug: string): string {
   return `/testimonials/avatars/${slug}.webp`;
 }
 
+/** LinkedIn slugs that have a synced file in public/testimonials/avatars/. */
+const SYNCED_AVATAR_SLUGS = new Set([
+  'jeremy-freund-a4079313',
+  'jscottelam',
+  'kevin-ludlow',
+  'lindsaybuck',
+  'louis-long',
+  'opezachary',
+  'william-krackomberger-7044b51b5',
+]);
+
 export function testimonialAvatarSrc(testimonial: {
   linkedinUrl?: string;
   avatarUrl?: string;
@@ -22,5 +33,6 @@ export function testimonialAvatarSrc(testimonial: {
   const slug = testimonial.linkedinUrl
     ? parseLinkedInProfileSlug(testimonial.linkedinUrl)
     : null;
-  return slug ? linkedInSyncedAvatarPath(slug) : null;
+  if (!slug || !SYNCED_AVATAR_SLUGS.has(slug)) return null;
+  return linkedInSyncedAvatarPath(slug);
 }

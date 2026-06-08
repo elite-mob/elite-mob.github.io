@@ -13,7 +13,7 @@
 2. **Environment variables** (see `.env.example`)
    - EmailJS: `VITE_EMAILJS_*` for the contact form
    - Optional: `VITE_CONTACT_EMAIL`, `VITE_SCHEDULE_MEETING_URL`, `VITE_CHAT_API_URL`
-   - Firebase: `VITE_FIREBASE_*` for analytics and visit stats (see `docs/`)
+   - Optional chat API: `VITE_CHAT_API_URL` (Firebase Function; see `docs/CHATBOT.md`)
 
 2. **GitHub Secrets**, mirror the same `VITE_*` values for the deploy workflow.
 
@@ -35,4 +35,4 @@
 
 - UI primitives live under `src/components/ui/` (only components in use are kept).
 - Portfolio gallery manifest is generated at build time via `scripts/vite-plugin-portfolio-gallery.mjs`.
-- `console.error` / `console.warn` are limited to dev error boundaries and optional Firebase fallbacks.
+- `console.error` is limited to the root error boundary in development.
