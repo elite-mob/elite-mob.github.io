@@ -2,8 +2,8 @@
 
 ## Automated in CI
 
-- `npm run check`, ESLint + TypeScript
-- `npm run build`, Vite production build + sitemap generation
+- `pnpm run check`, ESLint + TypeScript
+- `pnpm run build`, Vite production build + sitemap generation
 - GitHub Pages deploy (`.github/workflows/deploy.yml`)
 
 ## Before deploying
@@ -25,10 +25,10 @@
 
 4. **Local production preview**
    ```bash
-   npm ci
-   npm run check
-   npm run build
-   npm run preview
+   pnpm install --frozen-lockfile
+   pnpm run check
+   pnpm run build
+   pnpm run preview
    ```
 
 ## Codebase conventions

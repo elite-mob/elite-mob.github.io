@@ -27,20 +27,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: "24"
-          cache: "npm"
+          cache: "pnpm"
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Lint and typecheck
-        run: npm run check
+        run: pnpm run check
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}

@@ -14,11 +14,11 @@ Personal portfolio website for Hans Chan, published at [https://elite-mob.github
 ## Development
 
 ```sh
-# Install dependencies
-npm install
+# Install dependencies (pnpm; see packageManager in package.json)
+pnpm install
 
 # Start development server
-npm run dev
+pnpm run dev
 ```
 
 The dev server runs at [http://localhost:8080](http://localhost:8080).
@@ -26,7 +26,7 @@ The dev server runs at [http://localhost:8080](http://localhost:8080).
 ## Build
 
 ```sh
-npm run build
+pnpm run build
 ```
 
 Output is in the `dist/` folder.
