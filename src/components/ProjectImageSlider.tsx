@@ -98,7 +98,7 @@ export function ProjectImageSlider({
               sizes={IMAGE_SIZES[variant]}
               loading="eager"
               decoding="async"
-              fetchPriority={priority && i === 0 ? 'high' : undefined}
+              {...(priority && i === 0 ? { fetchpriority: 'high' as const } : {})}
               draggable={false}
               className={cn(
                 'h-full w-full select-none',

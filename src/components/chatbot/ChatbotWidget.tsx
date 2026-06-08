@@ -26,12 +26,6 @@ import {
 import { sendMeetingIntentEmail } from '@/lib/chatbot/sendMeetingIntent';
 import type { ChatMessage, KnowledgeChunk, ScheduleFlowState } from '@/lib/chatbot/types';
 import { getScheduleMeetingUrl } from '@/lib/scheduleMeeting';
-import {
-  logChatApiCall,
-  logChatIntent,
-  logChatOpen,
-  logChatScheduleComplete,
-} from '@/integrations/firebase/analytics';
 import { getEmailJsConfig } from '@/lib/emailjsConfig';
 import emailjs from '@emailjs/browser';
 import { cn } from '@/lib/utils';
@@ -70,7 +64,6 @@ export const ChatbotWidget = () => {
 
   useEffect(() => {
     if (!open) return;
-    void logChatOpen();
     void loadKnowledgeChunks().then(setKnowledgeChunks);
   }, [open]);
 
@@ -123,7 +116,6 @@ export const ChatbotWidget = () => {
           },
         }),
       );
-      void logChatScheduleComplete();
       void sendMeetingIntentEmail({
         name: state.name,
         email: state.email,
@@ -182,13 +174,11 @@ export const ChatbotWidget = () => {
           }
         }
 
-        const { response, usedRemoteApi } = await sendChatMessage({
+        const { response } = await sendChatMessage({
           message: text,
           chunks,
           conversationId: conversationIdRef.current,
         });
-        if (usedRemoteApi) void logChatApiCall();
-
         setMessages((prev) => {
           const withoutThinking = prev.filter((m) => m.content !== chatbotCopy.thinking);
           return [
@@ -217,13 +207,11 @@ export const ChatbotWidget = () => {
       setInput('');
 
       if (isScheduleActive(scheduleState)) {
-        void logChatIntent({ intent: 'schedule' });
         await runScheduleInput(trimmed);
         return;
       }
 
       const classification = classifyIntent(trimmed);
-      void logChatIntent({ intent: classification.intent });
 
       switch (classification.intent) {
         case 'schedule':

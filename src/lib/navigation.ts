@@ -3,8 +3,21 @@
  */
 import type { NavigateFunction } from 'react-router-dom';
 
-const MAX_SCROLL_ATTEMPTS = 12;
+const MAX_SCROLL_ATTEMPTS = 24;
 const SCROLL_RETRY_MS = 50;
+const LAYOUT_STABLE_MAX_MS = 1500;
+const LAYOUT_STABLE_FRAMES = 4;
+const SCROLL_ALIGN_TOLERANCE_PX = 12;
+
+const HOME_SECTION_IDS = [
+  'home',
+  'about',
+  'portfolio',
+  'experience',
+  'skills',
+  'reviews',
+  'contact',
+] as const;
 
 function normalizeHash(hash: string): string {
   const trimmed = hash.trim();
@@ -14,6 +27,16 @@ function normalizeHash(hash: string): string {
 
 function sectionIdFromHash(hash: string): string {
   return normalizeHash(hash).replace(/^#/, '');
+}
+
+function sectionIndex(sectionId: string): number {
+  return HOME_SECTION_IDS.indexOf(sectionId as (typeof HOME_SECTION_IDS)[number]);
+}
+
+function isBelowPortfolio(sectionId: string): boolean {
+  const portfolioIdx = sectionIndex('portfolio');
+  const targetIdx = sectionIndex(sectionId);
+  return portfolioIdx !== -1 && targetIdx > portfolioIdx;
 }
 
 /** True when the current URL is the site home (respects Vite `BASE_URL`). */
@@ -33,12 +56,103 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+function getScrollPaddingTop(): number {
+  return parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+}
+
+function isScrollAligned(element: Element, tolerance = SCROLL_ALIGN_TOLERANCE_PX): boolean {
+  return Math.abs(element.getBoundingClientRect().top - getScrollPaddingTop()) <= tolerance;
+}
+
 /** Scroll a section into view; fixed nav offset via `scroll-padding-top` on `html`. */
 export function scrollElementIntoView(element: Element): void {
-  element.scrollIntoView({
-    behavior: prefersReducedMotion() ? 'auto' : 'smooth',
-    block: 'start',
+  const behavior: ScrollBehavior = prefersReducedMotion() ? 'auto' : 'smooth';
+  const padding = getScrollPaddingTop();
+  const top = window.scrollY + element.getBoundingClientRect().top - padding;
+  window.scrollTo({ top: Math.max(0, top), left: 0, behavior });
+}
+
+function scheduleScrollCorrection(fragment: string): void {
+  const delays = prefersReducedMotion() ? [50, 200, 400] : [350, 700, 1100, 1600];
+
+  delays.forEach((ms) => {
+    window.setTimeout(() => {
+      const element = document.querySelector(fragment);
+      if (!element || isScrollAligned(element)) return;
+      const padding = getScrollPaddingTop();
+      const top = window.scrollY + element.getBoundingClientRect().top - padding;
+      window.scrollTo({ top: Math.max(0, top), left: 0, behavior: 'auto' });
+    }, ms);
   });
+}
+
+function waitForLayoutStable(callback: () => void, maxMs = LAYOUT_STABLE_MAX_MS): void {
+  let lastHeight = document.documentElement.scrollHeight;
+  let stableFrames = 0;
+  let rafId = 0;
+  let timeoutId = 0;
+  let done = false;
+  const start = performance.now();
+
+  const finish = () => {
+    if (done) return;
+    done = true;
+    if (rafId) cancelAnimationFrame(rafId);
+    if (timeoutId) window.clearTimeout(timeoutId);
+    callback();
+  };
+
+  const tick = () => {
+    const height = document.documentElement.scrollHeight;
+
+    if (height === lastHeight) {
+      stableFrames += 1;
+      if (stableFrames >= LAYOUT_STABLE_FRAMES) {
+        finish();
+        return;
+      }
+    } else {
+      stableFrames = 0;
+      lastHeight = height;
+    }
+
+    if (performance.now() - start >= maxMs) {
+      finish();
+      return;
+    }
+
+    rafId = requestAnimationFrame(tick);
+  };
+
+  timeoutId = window.setTimeout(finish, maxMs);
+  rafId = requestAnimationFrame(tick);
+}
+
+function prepareSectionLayout(sectionId: string): void {
+  if (sectionId === 'portfolio') {
+    applyPortfolioSideEffects();
+    return;
+  }
+
+  if (isBelowPortfolio(sectionId)) {
+    dispatchPortfolioShowContent();
+  }
+}
+
+function scrollToSectionWhenStable(hash: string, attempt = 0): void {
+  const fragment = normalizeHash(hash);
+  if (!fragment) return;
+
+  const element = document.querySelector(fragment);
+  if (!element) {
+    if (attempt < MAX_SCROLL_ATTEMPTS) {
+      window.setTimeout(() => scrollToSectionWhenStable(fragment, attempt + 1), SCROLL_RETRY_MS);
+    }
+    return;
+  }
+
+  scrollElementIntoView(element);
+  scheduleScrollCorrection(fragment);
 }
 
 /** Retry scroll until the target exists (cross-route / lazy sections). */
@@ -62,11 +176,98 @@ export function scrollToSectionAfterPaint(hash: string): void {
   const fragment = normalizeHash(hash);
   if (!fragment) return;
 
+  const sectionId = sectionIdFromHash(fragment);
+  prepareSectionLayout(sectionId);
+
+  const runScroll = () => scrollToSectionWhenStable(fragment);
+
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      scrollToSectionByHash(fragment);
+      waitForLayoutStable(runScroll);
     });
   });
+}
+
+let suppressHashAutoScrollUntil = 0;
+
+function markProgrammaticHashNavigation(durationMs = 800): void {
+  suppressHashAutoScrollUntil = performance.now() + durationMs;
+}
+
+/** Skip Index hash handlers while programmatic navigation is scrolling. */
+export function shouldSuppressHashAutoScroll(): boolean {
+  return performance.now() < suppressHashAutoScrollUntil;
+}
+
+function pinScrollPosition(scrollY: number): void {
+  window.scrollTo({ top: scrollY, left: 0, behavior: 'auto' });
+}
+
+function updateHomeHash(fragment: string, navigate?: NavigateFunction): void {
+  const onHome = isHomePath();
+
+  if (navigate) {
+    navigate({ pathname: '/', hash: fragment }, { replace: onHome });
+    return;
+  }
+
+  if (!onHome) {
+    window.location.href = homeHrefWithHash(fragment);
+    return;
+  }
+
+  window.history.replaceState(null, '', homeHrefWithHash(fragment));
+}
+
+/**
+ * Mobile menu navigation: keep the current scroll offset, update the hash, then
+ * smooth-scroll relative to where the user already is (not from y=0).
+ */
+export function navigateToSectionFromMenu(
+  hash: string,
+  lockedScrollY: number,
+  navigate?: NavigateFunction,
+): void {
+  const fragment = normalizeHash(hash);
+  if (!fragment) return;
+
+  const sectionId = sectionIdFromHash(fragment);
+  prepareSectionLayout(sectionId);
+  markProgrammaticHashNavigation();
+
+  const anchorScrollY = Math.max(0, lockedScrollY || window.scrollY);
+  pinScrollPosition(anchorScrollY);
+
+  updateHomeHash(fragment, navigate);
+  pinScrollPosition(anchorScrollY);
+
+  const scrollToTarget = () => {
+    pinScrollPosition(anchorScrollY);
+    const element = document.querySelector(fragment);
+    if (element) {
+      scrollElementIntoView(element);
+      scheduleScrollCorrection(fragment);
+      return;
+    }
+    scrollToSectionWhenStable(fragment);
+  };
+
+  requestAnimationFrame(() => {
+    pinScrollPosition(anchorScrollY);
+    requestAnimationFrame(scrollToTarget);
+  });
+}
+
+export function navigateToPortfolioFromMenu(
+  lockedScrollY: number,
+  navigate?: NavigateFunction,
+  category?: string,
+): void {
+  if (category) {
+    localStorage.setItem('portfolioCategory', category);
+  }
+  applyPortfolioSideEffects(category);
+  navigateToSectionFromMenu('#portfolio', lockedScrollY, navigate);
 }
 
 function dispatchPortfolioShowContent(): void {
@@ -99,6 +300,7 @@ export const navigateToSection = (hash: string, navigate?: NavigateFunction) => 
   }
 
   if (onHome) {
+    markProgrammaticHashNavigation();
     scrollToSectionAfterPaint(fragment);
   }
 };
@@ -137,6 +339,7 @@ export const navigateToPortfolio = (category?: string, navigate?: NavigateFuncti
   applyPortfolioSideEffects(category);
 
   if (onHome) {
+    markProgrammaticHashNavigation();
     scrollToSectionAfterPaint('#portfolio');
   }
 };
@@ -149,10 +352,11 @@ export const handleHashNavigation = () => {
 
   const id = sectionIdFromHash(fragment);
   if (id === 'portfolio') {
-    dispatchPortfolioShowContent();
     const params = new URLSearchParams(window.location.search);
     const category = params.get('category');
-    if (category) dispatchPortfolioFilter(category);
+    applyPortfolioSideEffects(category ?? undefined);
+  } else if (isBelowPortfolio(id)) {
+    dispatchPortfolioShowContent();
   }
 
   scrollToSectionAfterPaint(fragment);

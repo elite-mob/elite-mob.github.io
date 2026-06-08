@@ -4,7 +4,6 @@ import { RouterNavButton } from '@/components/RouterNavButton';
 import { ProjectImageSlider } from '@/components/ProjectImageSlider';
 import { projects, type Project, getPortfolioDisplayIndex } from '@/data/portfolioData';
 import { getProjectSliderImages } from '@/lib/portfolioGallery';
-import { logProjectDetailView, logProjectCardClick } from '@/integrations/firebase/analytics';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ChevronRight, ExternalLink, Code2, Smartphone, Brain, Calendar, User, Layers, Target, Lightbulb, CheckCircle2, Sparkles, Zap } from 'lucide-react';
 import { Navigation } from '@/components/Navigation';
@@ -108,15 +107,6 @@ const ProjectDetail = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [id]);
-
-  useEffect(() => {
-    if (!project) return;
-    void logProjectDetailView({
-      project_id: project.id,
-      project_title: project.title,
-      category: project.category,
-    });
-  }, [project]);
 
   const sliderImages = useMemo(() => {
     if (!project) return [];
@@ -503,22 +493,10 @@ const ProjectDetail = () => {
                     className={`group glass-card rounded-2xl overflow-hidden shadow-4d hover:shadow-4d-hover hover:scale-[1.02] transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                       isRelatedVisible ? `animate-portfolio-card ${delayClass}` : 'opacity-0'
                     }`}
-                    onClick={() => {
-                      void logProjectCardClick({
-                        project_id: relatedProject.id,
-                        project_title: relatedProject.title,
-                        category: relatedProject.category,
-                      });
-                      navigate(`/project/${relatedProject.id}`);
-                    }}
+                    onClick={() => navigate(`/project/${relatedProject.id}`)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        void logProjectCardClick({
-                          project_id: relatedProject.id,
-                          project_title: relatedProject.title,
-                          category: relatedProject.category,
-                        });
                         navigate(`/project/${relatedProject.id}`);
                       }
                     }}

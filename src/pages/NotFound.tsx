@@ -1,5 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Home, LayoutGrid } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
@@ -7,20 +6,8 @@ import { Footer } from "@/components/Footer";
 import { navigateToPortfolio } from "@/lib/navigation";
 import { Seo } from "@/components/Seo";
 import { pageTitle } from "@/lib/site";
-import { logPageView } from "@/integrations/firebase/analytics";
-
 const NotFound = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const path = `${location.pathname}${location.search}`;
-    void logPageView({
-      page_path: path || "/404",
-      page_title: "Page not found",
-      page_location: typeof window !== "undefined" ? window.location.href : "",
-    });
-  }, [location.pathname, location.search]);
 
   return (
     <div className="min-h-screen relative overflow-hidden">

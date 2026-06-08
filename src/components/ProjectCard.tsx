@@ -4,7 +4,6 @@ import { ProjectImageSlider } from '@/components/ProjectImageSlider';
 import { AppStoreRating } from '@/components/AppStoreRating';
 import { getProjectSliderImages } from '@/lib/portfolioGallery';
 import { getStoreLinksForProject } from '@/lib/appStoreRating';
-import { logProjectCardClick } from '@/integrations/firebase/analytics';
 import { Code2, Smartphone, Brain } from 'lucide-react';
 import { use3DTilt } from '@/hooks/use-3d-tilt';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
@@ -62,14 +61,6 @@ export const ProjectCard = ({ project, index, revealed = true }: ProjectCardProp
 
   const animationDelay = isInView ? (index % 6) * 0.1 : 0;
 
-  const logNavigate = () => {
-    void logProjectCardClick({
-      project_id: project.id,
-      project_title: project.title,
-      category: project.category,
-    });
-  };
-
   const sliderImages = useMemo(
     () => getProjectSliderImages(project.id, project.imageUrl),
     [project.id, project.imageUrl],
@@ -100,7 +91,6 @@ export const ProjectCard = ({ project, index, revealed = true }: ProjectCardProp
         )}
         <RouterNavButton
           to={navigatePath}
-          onClick={logNavigate}
           className="absolute inset-0 z-[5] bg-transparent cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
           aria-label={`Open case study: ${project.title}`}
         />
@@ -120,7 +110,6 @@ export const ProjectCard = ({ project, index, revealed = true }: ProjectCardProp
           <h3 className="font-display text-lg sm:text-xl font-bold text-foreground leading-snug tracking-tight group-hover:text-primary transition-colors">
             <RouterNavButton
               to={navigatePath}
-              onClick={logNavigate}
               className="inline text-left font-inherit p-0 m-0 border-0 bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded cursor-pointer hover:text-primary"
             >
               {project.title}

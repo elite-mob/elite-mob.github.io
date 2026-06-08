@@ -1,7 +1,6 @@
 import { footerTagline } from '@/data/siteContent';
 import { useNavigate } from 'react-router-dom';
 import { RouterNavButton } from '@/components/RouterNavButton';
-import { VisitStats } from '@/components/VisitStats';
 import { navigateToSection, navigateToPortfolio } from '@/lib/navigation';
 
 const footerLinks = [
@@ -59,8 +58,6 @@ export const Footer = () => {
               Privacy Policy
             </RouterNavButton>
           </div>
-
-          <VisitStats />
         </div>
       </div>
     </footer>

@@ -1,11 +1,15 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react';
 import { useMatch, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import { navigateToSection, navigateToPortfolio } from '@/lib/navigation';
+import {
+  navigateToSection,
+  navigateToPortfolio,
+  navigateToSectionFromMenu,
+  navigateToPortfolioFromMenu,
+} from '@/lib/navigation';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SITE_BRAND } from '@/lib/site';
 import { useActiveSection } from '@/hooks/use-active-section';
-import { useDeferredAction } from '@/hooks/use-deferred-action';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
@@ -17,6 +21,8 @@ const navLinks = [
   { href: '#reviews', label: 'Reviews', path: '/' },
   { href: '#contact', label: 'Contact', path: '/' },
 ] as const;
+
+const MOBILE_MENU_OPEN_CLASS = 'mobile-menu-open';
 
 function sectionIdFromHash(hash: string): string {
   return hash.replace(/^#/, '');
@@ -38,7 +44,8 @@ export const Navigation = () => {
   const isHomePage = homeMatch !== null;
   const activeSection = useActiveSection(isHomePage);
 
-  const runOrDeferNav = useDeferredAction(isMobileMenuOpen);
+  const lockedScrollYRef = useRef(0);
+  const pendingMenuNavRef = useRef<((lockedScrollY: number) => void) | null>(null);
 
   const closeMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(false);
@@ -50,43 +57,38 @@ export const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      const scrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      document.body.style.width = '100%';
-    } else {
-      const top = document.body.style.top;
-      const scrollY = top ? Math.abs(parseInt(top, 10) || 0) : 0;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.width = '';
-      if (scrollY > 0) window.scrollTo(0, scrollY);
-    }
+  useLayoutEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    lockedScrollYRef.current = window.scrollY;
+    document.documentElement.classList.add(MOBILE_MENU_OPEN_CLASS);
+
     return () => {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.width = '';
+      document.documentElement.classList.remove(MOBILE_MENU_OPEN_CLASS);
+      const lockedY = lockedScrollYRef.current;
+      const pending = pendingMenuNavRef.current;
+      pendingMenuNavRef.current = null;
+
+      if (pending) {
+        pending(lockedY);
+        return;
+      }
+
+      window.scrollTo({ top: lockedY, left: 0, behavior: 'auto' });
     };
   }, [isMobileMenuOpen]);
 
   const handleNavAction = useCallback(
-    (action: () => void) => {
-      if (isMobileMenuOpen) {
-        runOrDeferNav(action);
+    (action: () => void, menuAction?: (lockedScrollY: number) => void) => {
+      if (isMobileMenuOpen && menuAction) {
+        lockedScrollYRef.current = window.scrollY;
+        pendingMenuNavRef.current = menuAction;
         closeMobileMenu();
-      } else {
-        action();
+        return;
       }
+      action();
     },
-    [isMobileMenuOpen, runOrDeferNav, closeMobileMenu],
+    [isMobileMenuOpen, closeMobileMenu],
   );
 
   const renderNavButton = (link: (typeof navLinks)[number]) => {
@@ -104,12 +106,13 @@ export const Navigation = () => {
         <button
           key={link.href}
           type="button"
-          onClick={() =>
-            handleNavAction(() => {
-              const category = localStorage.getItem('portfolioCategory') || 'featured';
-              navigateToPortfolio(category, navigate);
-            })
-          }
+          onClick={() => {
+            const category = localStorage.getItem('portfolioCategory') || 'featured';
+            handleNavAction(
+              () => navigateToPortfolio(category, navigate),
+              (lockedScrollY) => navigateToPortfolioFromMenu(lockedScrollY, navigate, category),
+            );
+          }}
           className={className}
           aria-current={isActive ? 'true' : undefined}
         >
@@ -122,7 +125,12 @@ export const Navigation = () => {
       <button
         key={link.href}
         type="button"
-        onClick={() => handleNavAction(() => navigateToSection(link.href, navigate))}
+        onClick={() =>
+          handleNavAction(
+            () => navigateToSection(link.href, navigate),
+            (lockedScrollY) => navigateToSectionFromMenu(link.href, lockedScrollY, navigate),
+          )
+        }
         className={className}
         aria-current={isActive ? 'true' : undefined}
       >
@@ -145,7 +153,12 @@ export const Navigation = () => {
       <div className="container mx-auto px-6 flex items-center justify-between">
         <button
           type="button"
-          onClick={() => handleNavAction(() => navigateToSection('#home', navigate))}
+          onClick={() =>
+            handleNavAction(
+              () => navigateToSection('#home', navigate),
+              (lockedScrollY) => navigateToSectionFromMenu('#home', lockedScrollY, navigate),
+            )
+          }
           className="font-display text-2xl font-bold gradient-text text-left focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background rounded"
           aria-label={isHomePage ? 'Scroll to top' : 'Go to home'}
         >

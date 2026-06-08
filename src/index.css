@@ -171,6 +171,14 @@
     -webkit-text-size-adjust: 100%;
   }
 
+  /* Mobile menu: freeze background scroll without position:fixed (preserves scrollY). */
+  html.mobile-menu-open,
+  html.mobile-menu-open body {
+    overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: none;
+  }
+
   section[id] {
     scroll-margin-top: calc(5.5rem + env(safe-area-inset-top, 0px));
   }

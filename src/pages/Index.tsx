@@ -10,7 +10,7 @@ import { ReviewsSection } from '@/components/ReviewsSection';
 import { SkillsSection } from '@/components/SkillsSection';
 import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
-import { handleHashNavigation } from '@/lib/navigation';
+import { handleHashNavigation, shouldSuppressHashAutoScroll } from '@/lib/navigation';
 import { Seo } from '@/components/Seo';
 import { JsonLdHome } from '@/components/JsonLd';
 
@@ -21,7 +21,9 @@ const Index = () => {
     const hash = location.hash || window.location.hash;
 
     if (hash) {
-      handleHashNavigation();
+      if (!shouldSuppressHashAutoScroll()) {
+        handleHashNavigation();
+      }
       return;
     }
 
@@ -39,11 +41,11 @@ const Index = () => {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
-      if (hash) {
-        handleHashNavigation();
-        if (hash === '#portfolio') {
-          window.dispatchEvent(new CustomEvent('portfolioShowContent'));
-        }
+      if (!hash) return;
+      if (shouldSuppressHashAutoScroll()) return;
+      handleHashNavigation();
+      if (hash === '#portfolio') {
+        window.dispatchEvent(new CustomEvent('portfolioShowContent'));
       }
     };
 

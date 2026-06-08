@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { projects, ProjectCategory, getPortfolioDisplayIndex } from '@/data/portfolioData';
 import { ProjectCard } from './ProjectCard';
 import { Button } from '@/components/ui/button';
@@ -26,6 +26,13 @@ export const PortfolioSection = () => {
   const [sectionRef, isSectionVisible] = useIntersectionObserver({ threshold: 0.05, rootMargin: '100px' });
   const [showFilters, setShowFilters] = useState(() => window.location.hash === '#portfolio');
   const [showPortfolioItems, setShowPortfolioItems] = useState(() => window.location.hash === '#portfolio');
+  const hasRevealedContentRef = useRef(showFilters || showPortfolioItems);
+
+  const revealPortfolioContent = useCallback(() => {
+    hasRevealedContentRef.current = true;
+    setShowFilters(true);
+    setShowPortfolioItems(true);
+  }, []);
 
   // Update localStorage when filter changes
   useEffect(() => {
@@ -42,11 +49,7 @@ export const PortfolioSection = () => {
     };
 
     const handleShowContent = () => {
-      // Force show content when navigating back to portfolio
-      setShowFilters(true);
-      setTimeout(() => {
-        setShowPortfolioItems(true);
-      }, 100);
+      revealPortfolioContent();
     };
 
     window.addEventListener('portfolioFilterChange', handleFilterChange as EventListener);
@@ -59,42 +62,26 @@ export const PortfolioSection = () => {
       setActiveFilter(categoryParam as FilterType);
     }
 
-    // Check if we're navigating to portfolio section (hash in URL)
     if (window.location.hash === '#portfolio') {
-      // Delay to ensure component is mounted
-      setTimeout(() => {
-        handleShowContent();
-      }, 50);
+      revealPortfolioContent();
     }
 
     return () => {
       window.removeEventListener('portfolioFilterChange', handleFilterChange as EventListener);
       window.removeEventListener('portfolioShowContent', handleShowContent);
     };
-  }, []);
+  }, [revealPortfolioContent]);
 
-  // Also listen for hash changes and check on mount
   useEffect(() => {
     const handleHashChange = () => {
       if (window.location.hash === '#portfolio') {
-        setShowFilters(true);
-        setTimeout(() => {
-          setShowPortfolioItems(true);
-        }, 100);
+        revealPortfolioContent();
       }
     };
 
-    // Check on mount if we're at portfolio section
-    if (window.location.hash === '#portfolio') {
-      setShowFilters(true);
-      setTimeout(() => {
-        setShowPortfolioItems(true);
-      }, 100);
-    }
-
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  }, [revealPortfolioContent]);
 
   // Featured first, then curated display order (scale → trust → breadth)
   const allProjects = [...projects].sort((a, b) => {
@@ -119,31 +106,26 @@ export const PortfolioSection = () => {
     return `Showing ${n} project${n === 1 ? '' : 's'}. Filter: ${label}.`;
   }, [activeFilter, filteredProjects.length]);
 
-  // Show filters after header animation, then portfolio items after filters
+  // Reveal on scroll for passive visitors; programmatic nav pre-expands via portfolioShowContent.
   useEffect(() => {
-    // Check if we're navigating to portfolio (hash in URL) - show immediately
+    if (hasRevealedContentRef.current) return;
+
     const isNavigatingToPortfolio = window.location.hash === '#portfolio';
-    
+
     if (isSectionVisible || isNavigatingToPortfolio) {
-      // Show filters after header (shorter delay on mobile)
       const timer1 = setTimeout(() => {
         setShowFilters(true);
       }, isNavigatingToPortfolio ? 50 : 120);
-      
+
       const timer2 = setTimeout(() => {
+        hasRevealedContentRef.current = true;
         setShowPortfolioItems(true);
       }, isNavigatingToPortfolio ? 120 : 280);
-      
+
       return () => {
         clearTimeout(timer1);
         clearTimeout(timer2);
       };
-    } else {
-      // Only hide if we're not navigating to portfolio
-      if (!isNavigatingToPortfolio) {
-        setShowFilters(false);
-        setShowPortfolioItems(false);
-      }
     }
   }, [isSectionVisible]);
 
