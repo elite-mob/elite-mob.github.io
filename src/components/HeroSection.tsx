@@ -30,7 +30,7 @@ export const HeroSection = () => {
           width={768}
           height={432}
           decoding="async"
-          fetchPriority="high"
+          fetchpriority="high"
           className="h-full w-full object-cover object-center"
         />
       </picture>

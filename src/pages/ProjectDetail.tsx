@@ -247,6 +247,7 @@ const ProjectDetail = () => {
                 <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] min-h-[220px] max-h-[min(70vh,720px)]">
                   {hasVisual ? (
                     <ProjectImageSlider
+                      key={project.id}
                       images={sliderImages}
                       alt={`${project.title} preview`}
                       priority
@@ -482,36 +483,28 @@ const ProjectDetail = () => {
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
               {relatedProjects.map((relatedProject, index) => {
                 const RelatedIcon = categoryIcons[relatedProject.category];
+                const relatedPath = `/project/${relatedProject.id}`;
                 const relatedImages = getProjectSliderImages(relatedProject.id, relatedProject.imageUrl);
                 const relatedHasVisual =
                   relatedImages.length > 0 && relatedImages[0] !== '/placeholder.svg';
+                const relatedHasMultipleImages = relatedImages.length > 1;
                 const delayClass = index === 0 ? 'stagger-delay-1' : index === 1 ? 'stagger-delay-2' : 'stagger-delay-3';
                 return (
-                  <div
+                  <article
                     key={relatedProject.id}
-                    role="button"
-                    tabIndex={0}
-                    className={`group glass-card rounded-2xl overflow-hidden shadow-4d hover:shadow-4d-hover hover:scale-[1.02] transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+                    className={`group glass-card rounded-2xl overflow-hidden shadow-4d hover:shadow-4d-hover hover:scale-[1.02] transition-all duration-300 ${
                       isRelatedVisible ? `animate-portfolio-card ${delayClass}` : 'opacity-0'
                     }`}
-                    onClick={() => navigate(`/project/${relatedProject.id}`)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        navigate(`/project/${relatedProject.id}`);
-                      }
-                    }}
-                    aria-label={`View related project: ${relatedProject.title}`}
                   >
                     <div className="relative h-40 bg-secondary overflow-hidden">
                       {relatedHasVisual ? (
                         <ProjectImageSlider
                           images={relatedImages}
                           alt={`${relatedProject.title} preview`}
-                          interactive={relatedImages.length > 1}
+                          interactive={relatedHasMultipleImages}
                           onOpenRequest={
-                            relatedImages.length > 1
-                              ? () => navigate(`/project/${relatedProject.id}`)
+                            relatedHasMultipleImages
+                              ? () => navigate(relatedPath)
                               : undefined
                           }
                         />
@@ -523,10 +516,22 @@ const ProjectDetail = () => {
                           </div>
                         </>
                       )}
+                      {relatedHasVisual && !relatedHasMultipleImages && (
+                        <RouterNavButton
+                          to={relatedPath}
+                          className="absolute inset-0 z-[5] bg-transparent cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+                          aria-label={`View related project: ${relatedProject.title}`}
+                        />
+                      )}
                     </div>
                     <div className="p-5">
                       <h3 className="font-display text-lg font-bold text-foreground/85 group-hover:text-primary transition-colors drop-shadow-md">
-                        {relatedProject.title}
+                        <RouterNavButton
+                          to={relatedPath}
+                          className="inline text-left font-inherit p-0 m-0 border-0 bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded cursor-pointer hover:text-primary"
+                        >
+                          {relatedProject.title}
+                        </RouterNavButton>
                       </h3>
                       {projectHasStoreRating(relatedProject) && (
                         <div
@@ -548,7 +553,7 @@ const ProjectDetail = () => {
                         {relatedProject.description}
                       </p>
                     </div>
-                  </div>
+                  </article>
                 );
               })}
             </div>
