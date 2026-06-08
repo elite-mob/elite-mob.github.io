@@ -8,14 +8,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -67,25 +69,38 @@ jobs:
       - name: Disable Jekyll (ensure static files are served as built)
         run: touch dist/.nojekyll
 
-      - name: Deploy built site to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
-          force_orphan: true
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
-      - name: Verify GitHub Pages serves built assets (not main branch source)
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Verify live site serves built assets
         run: |
-          html=$(curl -fsSL "https://elite-mob.github.io/")
-          if echo "$html" | grep -q '/src/main.tsx'; then
-            echo "::error::GitHub Pages is serving source files from main, not the built site on gh-pages."
-            echo "Fix once: Repository → Settings → Pages → Deploy from a branch → gh-pages / (root)"
-            echo "View Page Source should show /assets/index-*.js, not /src/main.tsx."
-            exit 1
-          fi
-          if ! echo "$html" | grep -qE '/assets/index-[^"]+\.js'; then
-            echo "::error::Live site HTML does not reference a built JS bundle. Check Pages source branch."
-            exit 1
-          fi
-          echo "Live site serves production bundle."
+          for attempt in 1 2 3 4 5; do
+            sleep 15
+            html=$(curl -fsSL "https://elite-mob.github.io/" || true)
+            if echo "$html" | grep -qE '/assets/index-[^"]+\.js'; then
+              echo "Live site serves production bundle (attempt $attempt)."
+              exit 0
+            fi
+            echo "Attempt $attempt: still waiting for production bundle..."
+          done
+          echo "::error::Live site still serves source files from main, not the built dist/."
+          echo "Fix once: https://github.com/${{ github.repository }}/settings/pages"
+          echo "  Source → GitHub Actions (not Deploy from a branch → main)"
+          echo "Then re-run this workflow. View Page Source should show /assets/index-*.js."
+          exit 1
