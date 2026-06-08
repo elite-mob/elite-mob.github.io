@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useNearViewport } from '@/hooks/use-near-viewport';
 import { cn } from '@/lib/utils';
 
@@ -18,9 +19,10 @@ const defaultFallback = (
   <div className="w-full animate-pulse rounded-2xl bg-muted/30" aria-hidden />
 );
 
-function hashTargetsSection(sectionId?: string) {
-  if (!sectionId || typeof window === 'undefined') return false;
-  return window.location.hash === `#${sectionId}`;
+function hashTargetsSection(sectionId: string | undefined, hash: string) {
+  if (!sectionId) return false;
+  const normalized = hash.startsWith('#') ? hash : hash ? `#${hash}` : '';
+  return normalized === `#${sectionId}`;
 }
 
 export function LazySection({
@@ -31,7 +33,9 @@ export function LazySection({
   sectionId,
   fallback = defaultFallback,
 }: LazySectionProps) {
-  const [hashEager, setHashEager] = useState(() => hashTargetsSection(sectionId));
+  const location = useLocation();
+  const routerHash = location.hash || (typeof window !== 'undefined' ? window.location.hash : '');
+  const [hashEager, setHashEager] = useState(() => hashTargetsSection(sectionId, routerHash));
   const [ref, isNear] = useNearViewport({
     nearMargin: rootMargin,
     visibleMargin: '0px',
@@ -40,11 +44,8 @@ export function LazySection({
 
   useEffect(() => {
     if (!sectionId) return;
-    const sync = () => setHashEager(hashTargetsSection(sectionId));
-    sync();
-    window.addEventListener('hashchange', sync);
-    return () => window.removeEventListener('hashchange', sync);
-  }, [sectionId]);
+    setHashEager(hashTargetsSection(sectionId, routerHash));
+  }, [sectionId, routerHash]);
 
   const shouldMount = isNear || hashEager;
 

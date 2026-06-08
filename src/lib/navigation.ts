@@ -5,9 +5,10 @@ import type { NavigateFunction } from 'react-router-dom';
 
 const MAX_SCROLL_ATTEMPTS = 24;
 const SCROLL_RETRY_MS = 50;
-const LAYOUT_STABLE_MAX_MS = 1500;
-const LAYOUT_STABLE_FRAMES = 4;
+const LAYOUT_STABLE_MAX_MS = 900;
+const LAYOUT_STABLE_FRAMES = 3;
 const SCROLL_ALIGN_TOLERANCE_PX = 12;
+const PROGRAMMATIC_SCROLL_SUPPRESS_MS = 1400;
 
 const HOME_SECTION_IDS = [
   'home',
@@ -18,6 +19,9 @@ const HOME_SECTION_IDS = [
   'reviews',
   'contact',
 ] as const;
+
+let activeScrollId = 0;
+let suppressHashAutoScrollUntil = 0;
 
 function normalizeHash(hash: string): string {
   const trimmed = hash.trim();
@@ -64,24 +68,37 @@ function isScrollAligned(element: Element, tolerance = SCROLL_ALIGN_TOLERANCE_PX
   return Math.abs(element.getBoundingClientRect().top - getScrollPaddingTop()) <= tolerance;
 }
 
+function scrollTopForElement(element: Element): number {
+  const padding = getScrollPaddingTop();
+  return Math.max(0, window.scrollY + element.getBoundingClientRect().top - padding);
+}
+
 /** Scroll a section into view; fixed nav offset via `scroll-padding-top` on `html`. */
 export function scrollElementIntoView(element: Element): void {
   const behavior: ScrollBehavior = prefersReducedMotion() ? 'auto' : 'smooth';
-  const padding = getScrollPaddingTop();
-  const top = window.scrollY + element.getBoundingClientRect().top - padding;
-  window.scrollTo({ top: Math.max(0, top), left: 0, behavior });
+  window.scrollTo({ top: scrollTopForElement(element), left: 0, behavior });
 }
 
-function scheduleScrollCorrection(fragment: string): void {
-  const delays = prefersReducedMotion() ? [50, 200, 400] : [350, 700, 1100, 1600];
+function beginProgrammaticScroll(): number {
+  activeScrollId += 1;
+  suppressHashAutoScrollUntil = performance.now() + PROGRAMMATIC_SCROLL_SUPPRESS_MS;
+  return activeScrollId;
+}
+
+/** One late correction after smooth scroll / lazy layout — avoids multi-hop bounce. */
+function scheduleScrollCorrection(fragment: string, scrollId: number): void {
+  const delays = prefersReducedMotion() ? [80] : [520, 1100];
 
   delays.forEach((ms) => {
     window.setTimeout(() => {
+      if (scrollId !== activeScrollId) return;
       const element = document.querySelector(fragment);
       if (!element || isScrollAligned(element)) return;
-      const padding = getScrollPaddingTop();
-      const top = window.scrollY + element.getBoundingClientRect().top - padding;
-      window.scrollTo({ top: Math.max(0, top), left: 0, behavior: 'auto' });
+      window.scrollTo({
+        top: scrollTopForElement(element),
+        left: 0,
+        behavior: 'auto',
+      });
     }, ms);
   });
 }
@@ -128,31 +145,61 @@ function waitForLayoutStable(callback: () => void, maxMs = LAYOUT_STABLE_MAX_MS)
   rafId = requestAnimationFrame(tick);
 }
 
+function dispatchPortfolioShowContent(): void {
+  window.dispatchEvent(new CustomEvent('portfolioShowContent'));
+}
+
+function dispatchPortfolioFilter(category: string): void {
+  localStorage.setItem('portfolioCategory', category);
+  window.dispatchEvent(new CustomEvent('portfolioFilterChange', { detail: { category } }));
+}
+
+function applyPortfolioSideEffects(category?: string): void {
+  dispatchPortfolioShowContent();
+  if (category) dispatchPortfolioFilter(category);
+}
+
+/**
+ * Expanding the portfolio grid adds height above later sections. Only do that when
+ * navigating downward; expanding while scrolling up causes visible bounce.
+ */
+function shouldPreExpandPortfolio(sectionId: string): boolean {
+  if (!isBelowPortfolio(sectionId)) return false;
+
+  const target = document.getElementById(sectionId);
+  if (!target) return true;
+
+  const targetY = target.getBoundingClientRect().top + window.scrollY;
+  return targetY > window.scrollY + 64;
+}
+
 function prepareSectionLayout(sectionId: string): void {
   if (sectionId === 'portfolio') {
     applyPortfolioSideEffects();
     return;
   }
 
-  if (isBelowPortfolio(sectionId)) {
+  if (shouldPreExpandPortfolio(sectionId)) {
     dispatchPortfolioShowContent();
   }
 }
 
-function scrollToSectionWhenStable(hash: string, attempt = 0): void {
-  const fragment = normalizeHash(hash);
-  if (!fragment) return;
+function scrollToSectionWhenStable(fragment: string, scrollId: number, attempt = 0): void {
+  if (scrollId !== activeScrollId) return;
 
   const element = document.querySelector(fragment);
   if (!element) {
     if (attempt < MAX_SCROLL_ATTEMPTS) {
-      window.setTimeout(() => scrollToSectionWhenStable(fragment, attempt + 1), SCROLL_RETRY_MS);
+      window.setTimeout(
+        () => scrollToSectionWhenStable(fragment, scrollId, attempt + 1),
+        SCROLL_RETRY_MS,
+      );
     }
     return;
   }
 
   scrollElementIntoView(element);
-  scheduleScrollCorrection(fragment);
+  scheduleScrollCorrection(fragment, scrollId);
 }
 
 /** Retry scroll until the target exists (cross-route / lazy sections). */
@@ -172,35 +219,24 @@ export function scrollToSectionByHash(hash: string, attempt = 0): boolean {
   return false;
 }
 
-export function scrollToSectionAfterPaint(hash: string): void {
+export function scrollToSectionAfterPaint(hash: string, scrollId?: number): void {
   const fragment = normalizeHash(hash);
   if (!fragment) return;
 
+  const id = scrollId ?? beginProgrammaticScroll();
   const sectionId = sectionIdFromHash(fragment);
   prepareSectionLayout(sectionId);
 
-  const runScroll = () => scrollToSectionWhenStable(fragment);
-
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      waitForLayoutStable(runScroll);
+      waitForLayoutStable(() => scrollToSectionWhenStable(fragment, id));
     });
   });
-}
-
-let suppressHashAutoScrollUntil = 0;
-
-function markProgrammaticHashNavigation(durationMs = 800): void {
-  suppressHashAutoScrollUntil = performance.now() + durationMs;
 }
 
 /** Skip Index hash handlers while programmatic navigation is scrolling. */
 export function shouldSuppressHashAutoScroll(): boolean {
   return performance.now() < suppressHashAutoScrollUntil;
-}
-
-function pinScrollPosition(scrollY: number): void {
-  window.scrollTo({ top: scrollY, left: 0, behavior: 'auto' });
 }
 
 function updateHomeHash(fragment: string, navigate?: NavigateFunction): void {
@@ -219,43 +255,33 @@ function updateHomeHash(fragment: string, navigate?: NavigateFunction): void {
   window.history.replaceState(null, '', homeHrefWithHash(fragment));
 }
 
+function runSectionNavigation(
+  hash: string,
+  navigate?: NavigateFunction,
+  anchorScrollY?: number,
+): void {
+  const fragment = normalizeHash(hash);
+  if (!fragment) return;
+
+  const scrollId = beginProgrammaticScroll();
+
+  if (typeof anchorScrollY === 'number') {
+    window.scrollTo({ top: Math.max(0, anchorScrollY), left: 0, behavior: 'auto' });
+  }
+
+  updateHomeHash(fragment, navigate);
+  scrollToSectionAfterPaint(fragment, scrollId);
+}
+
 /**
- * Mobile menu navigation: keep the current scroll offset, update the hash, then
- * smooth-scroll relative to where the user already is (not from y=0).
+ * Mobile menu navigation: restore the frozen scroll offset, then scroll to target.
  */
 export function navigateToSectionFromMenu(
   hash: string,
   lockedScrollY: number,
   navigate?: NavigateFunction,
 ): void {
-  const fragment = normalizeHash(hash);
-  if (!fragment) return;
-
-  const sectionId = sectionIdFromHash(fragment);
-  prepareSectionLayout(sectionId);
-  markProgrammaticHashNavigation();
-
-  const anchorScrollY = Math.max(0, lockedScrollY || window.scrollY);
-  pinScrollPosition(anchorScrollY);
-
-  updateHomeHash(fragment, navigate);
-  pinScrollPosition(anchorScrollY);
-
-  const scrollToTarget = () => {
-    pinScrollPosition(anchorScrollY);
-    const element = document.querySelector(fragment);
-    if (element) {
-      scrollElementIntoView(element);
-      scheduleScrollCorrection(fragment);
-      return;
-    }
-    scrollToSectionWhenStable(fragment);
-  };
-
-  requestAnimationFrame(() => {
-    pinScrollPosition(anchorScrollY);
-    requestAnimationFrame(scrollToTarget);
-  });
+  runSectionNavigation(hash, navigate, lockedScrollY);
 }
 
 export function navigateToPortfolioFromMenu(
@@ -267,51 +293,23 @@ export function navigateToPortfolioFromMenu(
     localStorage.setItem('portfolioCategory', category);
   }
   applyPortfolioSideEffects(category);
-  navigateToSectionFromMenu('#portfolio', lockedScrollY, navigate);
-}
-
-function dispatchPortfolioShowContent(): void {
-  window.dispatchEvent(new CustomEvent('portfolioShowContent'));
-}
-
-function dispatchPortfolioFilter(category: string): void {
-  localStorage.setItem('portfolioCategory', category);
-  window.dispatchEvent(new CustomEvent('portfolioFilterChange', { detail: { category } }));
-}
-
-function applyPortfolioSideEffects(category?: string): void {
-  dispatchPortfolioShowContent();
-  if (category) dispatchPortfolioFilter(category);
+  runSectionNavigation('#portfolio', navigate, lockedScrollY);
 }
 
 export const navigateToSection = (hash: string, navigate?: NavigateFunction) => {
-  const fragment = normalizeHash(hash);
-  if (!fragment) return;
-
-  const onHome = isHomePath();
-
-  if (navigate) {
-    navigate({ pathname: '/', hash: fragment }, { replace: onHome });
-  } else if (!onHome) {
-    window.location.href = homeHrefWithHash(fragment);
-    return;
-  } else {
-    window.history.replaceState(null, '', homeHrefWithHash(fragment));
-  }
-
-  if (onHome) {
-    markProgrammaticHashNavigation();
-    scrollToSectionAfterPaint(fragment);
-  }
+  runSectionNavigation(hash, navigate);
 };
 
 export const navigateToPortfolio = (category?: string, navigate?: NavigateFunction) => {
-  const onHome = isHomePath();
-  const search = category ? `?category=${encodeURIComponent(category)}` : '';
-
   if (category) {
     localStorage.setItem('portfolioCategory', category);
   }
+
+  const scrollId = beginProgrammaticScroll();
+  applyPortfolioSideEffects(category);
+
+  const onHome = isHomePath();
+  const search = category ? `?category=${encodeURIComponent(category)}` : '';
 
   if (navigate) {
     navigate(
@@ -336,28 +334,14 @@ export const navigateToPortfolio = (category?: string, navigate?: NavigateFuncti
     window.history.replaceState(null, '', homeHrefWithHash('#portfolio'));
   }
 
-  applyPortfolioSideEffects(category);
-
-  if (onHome) {
-    markProgrammaticHashNavigation();
-    scrollToSectionAfterPaint('#portfolio');
-  }
+  scrollToSectionAfterPaint('#portfolio', scrollId);
 };
 
-// Handle hash navigation on page load / route change
+// Handle hash navigation on page load / direct URL with fragment
 export const handleHashNavigation = () => {
   const raw = window.location.hash || '';
   const fragment = normalizeHash(raw);
   if (!fragment) return;
-
-  const id = sectionIdFromHash(fragment);
-  if (id === 'portfolio') {
-    const params = new URLSearchParams(window.location.search);
-    const category = params.get('category');
-    applyPortfolioSideEffects(category ?? undefined);
-  } else if (isBelowPortfolio(id)) {
-    dispatchPortfolioShowContent();
-  }
 
   scrollToSectionAfterPaint(fragment);
 };

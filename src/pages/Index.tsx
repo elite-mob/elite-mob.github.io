@@ -44,7 +44,7 @@ const Index = () => {
     }
 
     const scrollHomeTop = window.setTimeout(() => {
-      if (!window.location.hash) {
+      if (!window.location.hash && !shouldSuppressHashAutoScroll()) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }, 100);
@@ -62,7 +62,7 @@ const Index = () => {
         <LazySection minHeight="10rem">
           <LogoStrip />
         </LazySection>
-        <LazySection minHeight="18rem">
+        <LazySection minHeight="18rem" sectionId="about">
           <AboutSection />
         </LazySection>
         <LazySection
@@ -72,16 +72,16 @@ const Index = () => {
         >
           <PortfolioSection />
         </LazySection>
-        <LazySection minHeight="20rem">
+        <LazySection minHeight="20rem" sectionId="experience">
           <WorkHistorySection />
         </LazySection>
-        <LazySection minHeight="16rem">
+        <LazySection minHeight="16rem" sectionId="skills">
           <SkillsSection />
         </LazySection>
-        <LazySection minHeight="18rem">
+        <LazySection minHeight="18rem" sectionId="reviews">
           <ReviewsSection />
         </LazySection>
-        <LazySection minHeight="22rem">
+        <LazySection minHeight="22rem" sectionId="contact">
           <ContactSection />
         </LazySection>
       </main>
