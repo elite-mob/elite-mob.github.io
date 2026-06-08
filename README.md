@@ -35,11 +35,6 @@ Output is in the `dist/` folder.
 
 This site is deployed to GitHub Pages via GitHub Actions. Pushing to the `main` branch triggers an automatic build and deployment to [https://elite-mob.github.io](https://elite-mob.github.io).
 
-**GitHub Pages setup:**
-1. Go to Repository → Settings → Pages
-2. Under "Build and deployment", set Source to **Deploy from a branch**
-3. Branch: **`gh-pages`** / **/(root)**
+**GitHub Pages setup:** CI deploys the built `dist/` folder via GitHub Actions (`deploy-pages`). On first deploy, ensure Repository → Settings → Pages → **Source: GitHub Actions** (the workflow also tries to switch this automatically).
 
-CI pushes the built `dist/` folder to `gh-pages` on every push to `main`.
-
-**Blank white screen?** View Page Source: if you see `<script src="/src/main.tsx">`, Pages is serving source files from `main` instead of the built site on `gh-pages`. Set the branch to **`gh-pages`** as above.
+**Blank white screen?** View Page Source: if you see `<script src="/src/main.tsx">`, Pages is still serving source files from the `main` branch instead of the CI build. Set Source to **GitHub Actions**, or re-run the deploy workflow after that change.
