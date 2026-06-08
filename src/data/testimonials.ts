@@ -69,7 +69,7 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       'I couldn’t have asked for a better partner to bring our app to life. He took the time to really understand our needs and delivered something even better than we imagined. He was easy to communicate with, always responsive, and his expertise added value at every stage. I’d gladly work with him again.',
-    attribution: 'Zachary P · Founder',
+    attribution: 'Zachary P. · Founder',
     initials: 'ZP',
     context: 'Web & iOS & Android',
     linkedinUrl: 'https://www.linkedin.com/in/popezachary/'
@@ -77,15 +77,15 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       'Working with them was a very fluid and easy process. They responded quickly and clearly to my ideas and questions and worked collaboratively to help me develop a custom app...',
-    attribution: 'Lindsay · Founder',
-    initials: 'LI',
+    attribution: 'Lindsay B. · Founder',
+    initials: 'LB',
     context: 'iOS & Android',
     linkedinUrl: 'https://www.linkedin.com/in/lindsaybuck/'
   },
   {
     quote:
       'Professional, reliable, and incredibly talented. He exceeded all expectations. He delivered an app our users genuinely love, and the entire process felt smooth and well-managed from start to finish.',
-    attribution: 'Jeremy Freund. · CTO',
+    attribution: 'Jeremy F. · CTO',
     initials: 'JF',
     context: 'Web',
     linkedinUrl: 'https://www.linkedin.com/in/jeremy-freund-a4079313/'
