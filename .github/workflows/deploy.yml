@@ -28,7 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Ensure Pages serves built output (not main source tree)
+      - name: Preflight GitHub Pages source
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -39,14 +39,25 @@ jobs:
           echo "Pages build_type=${build_type} source.branch=${branch}"
 
           if [ "$build_type" = "legacy" ] && [ "$branch" = "main" ]; then
-            echo "::warning::Pages was serving the main branch source tree (blank screen). Switching to GitHub Actions deployment."
-            gh api "repos/${GITHUB_REPOSITORY}/pages" -X PUT -f build_type=workflow
-          elif [ "$build_type" != "workflow" ]; then
-            echo "Setting Pages build_type=workflow so deploy-pages publishes dist/."
-            gh api "repos/${GITHUB_REPOSITORY}/pages" -X PUT -f build_type=workflow || {
-              echo "::warning::Could not set workflow build_type via API. If the site is blank, open ${settings_url}"
-              echo "::warning::and set Source to GitHub Actions or Deploy from branch → gh-pages / (root)."
-            }
+            echo "::error::Pages is serving the main branch source tree — the live site will be blank."
+            echo "Fix once (repo admin): ${settings_url}"
+            echo "  Set Source to GitHub Actions"
+            echo "  OR Deploy from a branch → gh-pages / (root)"
+            echo "View Page Source on the live site: broken deploys reference /src/main.tsx instead of /assets/index-*.js"
+            echo "Re-run this workflow after changing the setting."
+            exit 1
+          fi
+
+          if [ "$build_type" = "workflow" ]; then
+            echo "Pages uses GitHub Actions deployment."
+          elif [ "$build_type" = "legacy" ] && [ "$branch" = "gh-pages" ]; then
+            echo "Pages uses gh-pages branch deployment."
+          elif [ "$build_type" != "unknown" ]; then
+            echo "::error::Unexpected Pages source (build_type=${build_type}, branch=${branch})."
+            echo "Fix at ${settings_url}: use GitHub Actions or gh-pages / (root)."
+            exit 1
+          else
+            echo "::warning::Could not read Pages settings; continuing build."
           fi
 
       - name: Install pnpm
