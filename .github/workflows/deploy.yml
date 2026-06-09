@@ -39,23 +39,18 @@ jobs:
           echo "Pages build_type=${build_type} source.branch=${branch}"
 
           if [ "$build_type" = "legacy" ] && [ "$branch" = "main" ]; then
-            echo "::error::Pages is serving the main branch source tree — the live site will be blank."
+            echo "::warning::Pages is serving the main branch source tree — the live site will be blank until you fix this."
             echo "Fix once (repo admin): ${settings_url}"
             echo "  Set Source to GitHub Actions"
             echo "  OR Deploy from a branch → gh-pages / (root)"
-            echo "View Page Source on the live site: broken deploys reference /src/main.tsx instead of /assets/index-*.js"
-            echo "Re-run this workflow after changing the setting."
-            exit 1
-          fi
-
-          if [ "$build_type" = "workflow" ]; then
+            echo "This workflow will still build and push dist/ to gh-pages so either option works after you switch."
+          elif [ "$build_type" = "workflow" ]; then
             echo "Pages uses GitHub Actions deployment."
           elif [ "$build_type" = "legacy" ] && [ "$branch" = "gh-pages" ]; then
             echo "Pages uses gh-pages branch deployment."
           elif [ "$build_type" != "unknown" ]; then
-            echo "::error::Unexpected Pages source (build_type=${build_type}, branch=${branch})."
+            echo "::warning::Unexpected Pages source (build_type=${build_type}, branch=${branch})."
             echo "Fix at ${settings_url}: use GitHub Actions or gh-pages / (root)."
-            exit 1
           else
             echo "::warning::Could not read Pages settings; continuing build."
           fi
