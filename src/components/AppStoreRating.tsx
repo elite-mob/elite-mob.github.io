@@ -4,6 +4,7 @@ import {
   formatRatingCount,
   formatRatingCountFull,
   hasDisplayableRating,
+  pickHighestRated,
   sortRatingsByPlatform,
   storePlatformLabel,
   type AppRating,
@@ -20,6 +21,8 @@ type AppStoreRatingProps = {
   enabled?: boolean;
   /** Fetch ratings before `enabled` as the user scrolls near the card. */
   prefetch?: boolean;
+  /** Compact home grid: show only the higher-rated store when both are linked. */
+  showBestOnly?: boolean;
 };
 
 function StarRating({
@@ -317,18 +320,24 @@ export function AppStoreRating({
   variant = 'detail',
   enabled = true,
   prefetch = enabled,
+  showBestOnly = false,
 }: AppStoreRatingProps) {
   const links = storeLinks.filter(Boolean);
   const ratingState = useAppRating(links.length > 0 ? links : undefined, { enabled, prefetch });
 
   if (links.length === 0) return null;
 
-  const ratings =
-    ratingState.status === 'success'
-      ? sortRatingsByPlatform(
-          ratingState.data.filter((d) => hasDisplayableRating(d.rating, d.ratingCount)),
-        )
-      : [];
+  const useBestOnly = showBestOnly && variant === 'compact';
+
+  const ratings = (() => {
+    if (ratingState.status !== 'success') return [];
+    const displayable = sortRatingsByPlatform(
+      ratingState.data.filter((d) => hasDisplayableRating(d.rating, d.ratingCount)),
+    );
+    return useBestOnly ? pickHighestRated(displayable) : displayable;
+  })();
+
+  const placeholderSlots = useBestOnly ? 1 : links.length;
 
   const showPlaceholder =
     enabled && (ratingState.status === 'idle' || ratingState.status === 'loading');
@@ -349,7 +358,7 @@ export function AppStoreRating({
             showRatings ? 'pointer-events-none absolute inset-0 opacity-0' : 'opacity-100',
           )}
         >
-          <RatingPlaceholder variant={variant} slotCount={links.length} />
+          <RatingPlaceholder variant={variant} slotCount={placeholderSlots} />
         </div>
       )}
       {showRatings && (

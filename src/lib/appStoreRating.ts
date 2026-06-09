@@ -180,6 +180,21 @@ export function sortRatingsByPlatform(ratings: AppRating[]): AppRating[] {
   return [...ratings].sort((a, b) => order[a.platform] - order[b.platform]);
 }
 
+/** Home grid: show the stronger store when a project lists iOS and Android. */
+export function pickHighestRated(ratings: AppRating[]): AppRating[] {
+  if (ratings.length <= 1) return ratings;
+
+  const best = ratings.reduce((leader, candidate) => {
+    if (candidate.rating > leader.rating) return candidate;
+    if (candidate.rating < leader.rating) return leader;
+    if (candidate.ratingCount > leader.ratingCount) return candidate;
+    if (candidate.ratingCount < leader.ratingCount) return leader;
+    return leader;
+  });
+
+  return [best];
+}
+
 export function formatRatingCount(count: number): string {
   return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(
     count,

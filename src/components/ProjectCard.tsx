@@ -159,15 +159,11 @@ export const ProjectCard = ({ project, index, revealed = true }: ProjectCardProp
             </RouterNavButton>
           </h3>
           {storeLinks.length > 0 && (
-            <div
-              className={cn(
-                'w-full min-w-0',
-                storeLinks.length > 1 ? 'pt-2 pb-1 min-h-[88px] md:min-h-[52px]' : 'pt-1.5 pb-0.5 min-h-[52px]',
-              )}
-            >
+            <div className="w-full min-w-0 pt-1.5 pb-0.5 min-h-[52px]">
               <AppStoreRating
                 storeLinks={storeLinks}
                 variant="compact"
+                showBestOnly
                 prefetch={shouldPreload}
                 enabled={shouldPreload}
               />
