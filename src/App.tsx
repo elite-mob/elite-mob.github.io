@@ -10,6 +10,7 @@ import { RouteAnnouncer } from '@/components/RouteAnnouncer';
 import { PageRouteFallback } from '@/components/PageRouteFallback';
 import { DeferredChatbot } from '@/components/chatbot/DeferredChatbot';
 import { SiteBackground } from '@/components/SiteBackground';
+import { BackgroundStars } from '@/components/BackgroundStars';
 import { NeuralSpotlight } from '@/components/NeuralSpotlight';
 import Index from './pages/Index';
 
@@ -50,6 +51,7 @@ const App = () => {
           >
             <RouteErrorBoundary>
               <SiteBackground />
+              <BackgroundStars />
               <NeuralSpotlight />
               <SkipToMain />
               <RouteAnnouncer />
