@@ -28,6 +28,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Ensure Pages serves built output (not main source tree)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          settings_url="https://github.com/${GITHUB_REPOSITORY}/settings/pages"
+          config=$(gh api "repos/${GITHUB_REPOSITORY}/pages" 2>/dev/null || echo '{}')
+          build_type=$(echo "$config" | jq -r '.build_type // "unknown"')
+          branch=$(echo "$config" | jq -r '.source.branch // "unknown"')
+          echo "Pages build_type=${build_type} source.branch=${branch}"
+
+          if [ "$build_type" = "legacy" ] && [ "$branch" = "main" ]; then
+            echo "::warning::Pages was serving the main branch source tree (blank screen). Switching to GitHub Actions deployment."
+            gh api "repos/${GITHUB_REPOSITORY}/pages" -X PUT -f build_type=workflow
+          elif [ "$build_type" != "workflow" ]; then
+            echo "Setting Pages build_type=workflow so deploy-pages publishes dist/."
+            gh api "repos/${GITHUB_REPOSITORY}/pages" -X PUT -f build_type=workflow || {
+              echo "::warning::Could not set workflow build_type via API. If the site is blank, open ${settings_url}"
+              echo "::warning::and set Source to GitHub Actions or Deploy from branch → gh-pages / (root)."
+            }
+          fi
+
       - name: Install pnpm
         uses: pnpm/action-setup@v5
 
@@ -131,7 +152,7 @@ jobs:
             sleep 20
             html=$(curl -fsSL "https://elite-mob.github.io/" || true)
 
-            if echo "$html" | grep -q '/src/main.tsx'; then
+            if echo "$html" | grep -q '/src/main.tsx' || echo "$html" | grep -q '__OG_IMAGE_URL__'; then
               echo "Attempt $attempt: Pages is still serving source files from main."
               continue
             fi
@@ -157,11 +178,12 @@ jobs:
           done
 
           html=$(curl -fsSL "https://elite-mob.github.io/" || true)
-          if echo "$html" | grep -q '/src/main.tsx'; then
+          if echo "$html" | grep -q '/src/main.tsx' || echo "$html" | grep -q '__OG_IMAGE_URL__'; then
             echo "::error::GitHub Pages is still serving the main branch source tree."
             echo "Fix once: $settings_url"
             echo "  Source must be GitHub Actions OR Deploy from branch → gh-pages / (root)"
             echo "  (not Deploy from branch → main)"
+            echo "View Page Source on the live site: broken deploys reference /src/main.tsx instead of /assets/index-*.js"
             exit 1
           fi
 
