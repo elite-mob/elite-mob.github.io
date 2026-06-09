@@ -332,7 +332,7 @@
       transition: none !important;
     }
 
-    .pointer-fireworks {
+    .neural-spotlight {
       display: none !important;
     }
 
@@ -445,8 +445,8 @@
     mask-image: radial-gradient(ellipse 95% 85% at 50% 40%, black 15%, transparent 78%);
   }
 
-  /* Cursor fireworks — above hero/section overlays, below chat (z-40) and nav (z-50) */
-  .pointer-fireworks {
+  /* Neural spotlight — above hero/section overlays, below chat (z-40) and nav (z-50) */
+  .neural-spotlight {
     position: fixed;
     inset: 0;
     z-index: 35;
@@ -454,7 +454,7 @@
     mix-blend-mode: screen;
   }
 
-  .dark .pointer-fireworks {
+  .dark .neural-spotlight {
     mix-blend-mode: plus-lighter;
   }
 
