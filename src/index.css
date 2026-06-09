@@ -243,6 +243,44 @@
     opacity: 0;
   }
 
+  .scroll-progress-fill {
+    min-width: 0;
+    transition: width 0.05s linear;
+  }
+
+  .scroll-progress-glow {
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-primary);
+    border-radius: 0 999px 999px 0;
+    box-shadow:
+      0 0 12px hsl(var(--primary) / 0.65),
+      0 0 24px hsl(var(--primary) / 0.3);
+  }
+
+  .scroll-progress-glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      90deg,
+      hsl(var(--primary) / 0.15) 0%,
+      hsl(0 0% 100% / 0.22) 72%,
+      hsl(0 0% 100% / 0.45) 100%
+    );
+    opacity: 0.9;
+  }
+
+  .dark .scroll-progress-glow::after {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--primary) / 0.1) 0%,
+      hsl(var(--primary) / 0.35) 70%,
+      hsl(187 80% 72% / 0.55) 100%
+    );
+  }
+
   @keyframes hero-content-reveal {
     from {
       opacity: 0;
@@ -288,6 +326,14 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+    }
+
+    .scroll-progress-fill {
+      transition: none !important;
+    }
+
+    .pointer-fireworks {
+      display: none !important;
     }
 
     /* Entrance utilities start at opacity:0; near-zero duration can leave content invisible; force final state */
@@ -397,6 +443,19 @@
     background-image: radial-gradient(circle at center, var(--page-grid) 0.75px, transparent 0.75px);
     background-size: 28px 28px;
     mask-image: radial-gradient(ellipse 95% 85% at 50% 40%, black 15%, transparent 78%);
+  }
+
+  /* Cursor fireworks — above hero/section overlays, below chat (z-40) and nav (z-50) */
+  .pointer-fireworks {
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
+  .dark .pointer-fireworks {
+    mix-blend-mode: plus-lighter;
   }
 
   .site-background__vignette {

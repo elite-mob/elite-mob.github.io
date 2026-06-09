@@ -10,6 +10,7 @@ import { RouteAnnouncer } from '@/components/RouteAnnouncer';
 import { PageRouteFallback } from '@/components/PageRouteFallback';
 import { DeferredChatbot } from '@/components/chatbot/DeferredChatbot';
 import { SiteBackground } from '@/components/SiteBackground';
+import { PointerFireworks } from '@/components/PointerFireworks';
 import Index from './pages/Index';
 
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
@@ -49,6 +50,7 @@ const App = () => {
           >
             <RouteErrorBoundary>
               <SiteBackground />
+              <PointerFireworks />
               <SkipToMain />
               <RouteAnnouncer />
               <Suspense fallback={<PageRouteFallback />}>

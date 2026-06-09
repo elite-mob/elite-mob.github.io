@@ -8,6 +8,7 @@ import {
   navigateToPortfolioFromMenu,
 } from '@/lib/navigation';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { ScrollProgressBar } from '@/components/ScrollProgressBar';
 import { SITE_BRAND } from '@/lib/site';
 import { useActiveSection } from '@/hooks/use-active-section';
 import { cn } from '@/lib/utils';
@@ -183,6 +184,8 @@ export const Navigation = () => {
           </button>
         </div>
       </div>
+
+      <ScrollProgressBar />
 
       {isMobileMenuOpen && (
         <>
