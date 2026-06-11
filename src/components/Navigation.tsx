@@ -10,7 +10,7 @@ import {
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { ScrollProgressBar } from '@/components/ScrollProgressBar';
 import { SITE_BRAND } from '@/lib/site';
-import { useActiveSection } from '@/hooks/use-active-section';
+import { useActiveSection, type HomeSectionId } from '@/hooks/use-active-section';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
@@ -43,7 +43,9 @@ export const Navigation = () => {
   const navigate = useNavigate();
   const homeMatch = useMatch({ path: '/', end: true });
   const isHomePage = homeMatch !== null;
-  const activeSection = useActiveSection(isHomePage);
+  const scrollActiveSection = useActiveSection(isHomePage);
+  const [pendingSection, setPendingSection] = useState<HomeSectionId | null>(null);
+  const activeSection = pendingSection ?? scrollActiveSection;
 
   const lockedScrollYRef = useRef(0);
   const pendingMenuNavRef = useRef<((lockedScrollY: number) => void) | null>(null);
@@ -56,6 +58,20 @@ export const Navigation = () => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!isHomePage) {
+      setPendingSection(null);
+      return;
+    }
+    if (pendingSection && scrollActiveSection === pendingSection) {
+      setPendingSection(null);
+    }
+  }, [isHomePage, pendingSection, scrollActiveSection]);
+
+  const selectSection = useCallback((id: HomeSectionId) => {
+    setPendingSection(id);
   }, []);
 
   useLayoutEffect(() => {
@@ -108,6 +124,7 @@ export const Navigation = () => {
           key={link.href}
           type="button"
           onClick={() => {
+            selectSection('portfolio');
             const category = localStorage.getItem('portfolioCategory') || 'featured';
             handleNavAction(
               () => navigateToPortfolio(category, navigate),
@@ -126,12 +143,13 @@ export const Navigation = () => {
       <button
         key={link.href}
         type="button"
-        onClick={() =>
+        onClick={() => {
+          selectSection(id as HomeSectionId);
           handleNavAction(
             () => navigateToSection(link.href, navigate),
             (lockedScrollY) => navigateToSectionFromMenu(link.href, lockedScrollY, navigate),
-          )
-        }
+          );
+        }}
         className={className}
         aria-current={isActive ? 'true' : undefined}
       >
@@ -154,12 +172,13 @@ export const Navigation = () => {
       <div className="container mx-auto px-6 flex items-center justify-between">
         <button
           type="button"
-          onClick={() =>
+          onClick={() => {
+            selectSection('home');
             handleNavAction(
               () => navigateToSection('#home', navigate),
               (lockedScrollY) => navigateToSectionFromMenu('#home', lockedScrollY, navigate),
-            )
-          }
+            );
+          }}
           className="font-display text-2xl font-bold gradient-text text-left focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background rounded"
           aria-label={isHomePage ? 'Scroll to top' : 'Go to home'}
         >

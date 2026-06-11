@@ -6,7 +6,7 @@ import { projects, type Project } from '@/data/portfolioData';
 import { getPortfolioDisplayIndex } from '@/data/portfolioDisplayOrder';
 import { getProjectSliderImages } from '@/lib/portfolioGallery';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ChevronRight, ExternalLink, Code2, Smartphone, Brain, Calendar, User, Layers, Target, Lightbulb, CheckCircle2, Sparkles, Zap } from 'lucide-react';
+import { ArrowLeft, ChevronRight, ExternalLink, Code2, Smartphone, Brain, Calendar, User, Layers, Target, Lightbulb, ClipboardList, Sparkles, Zap } from 'lucide-react';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
@@ -101,7 +101,7 @@ const ProjectDetail = () => {
   const [technologiesRef, isTechnologiesVisible] = useIntersectionObserver({ threshold: 0.1 });
   const [challengeRef, isChallengeVisible] = useIntersectionObserver({ threshold: 0.1 });
   const [solutionRef, isSolutionVisible] = useIntersectionObserver({ threshold: 0.1 });
-  const [featuresRef, isFeaturesVisible] = useIntersectionObserver({ threshold: 0.1 });
+  const [deliverablesRef, isDeliverablesVisible] = useIntersectionObserver({ threshold: 0.1 });
   const [relatedRef, isRelatedVisible] = useIntersectionObserver({ threshold: 0.1 });
 
   // Scroll to top when component mounts or project ID changes
@@ -433,41 +433,39 @@ const ProjectDetail = () => {
           </section>
         )}
 
-        {/* Key Features Section - Enhanced */}
-        {project.features && project.features.length > 0 && (
-          <section className="container mx-auto px-4 sm:px-6 mb-10 sm:mb-12 md:mb-20 relative" ref={featuresRef}>
+        {/* What I Delivered */}
+        {project.deliverables && project.deliverables.length > 0 && (
+          <section className="container mx-auto px-4 sm:px-6 mb-10 sm:mb-12 md:mb-20 relative" ref={deliverablesRef}>
             <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5 rounded-xl sm:rounded-2xl md:rounded-3xl" />
             <div className={`relative glass-card rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 border border-primary/20 transform-3d shadow-4d hover:shadow-4d-hover hover:translate-y-[-8px] hover:translate-z-30 transition-all duration-300 ${
-              isFeaturesVisible ? 'animate-fade-in-up' : 'opacity-0'
+              isDeliverablesVisible ? 'animate-fade-in-up' : 'opacity-0'
             }`}>
               <div className={`flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 md:mb-8 lg:mb-10 ${
-                isFeaturesVisible ? 'animate-fade-in-scale stagger-delay-1' : 'opacity-0'
+                isDeliverablesVisible ? 'animate-fade-in-scale stagger-delay-1' : 'opacity-0'
               }`}>
                 <div className="p-1.5 sm:p-2 md:p-3 rounded-lg sm:rounded-xl bg-gradient-to-br from-accent/20 to-accent/10 border border-accent/30">
-                  <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-accent" />
+                  <ClipboardList className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-accent" />
                 </div>
                 <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground/85 drop-shadow-md">
-                  Key <span className="gradient-text-transparent drop-shadow-md">Features</span>
+                  What I <span className="gradient-text-transparent drop-shadow-md">Delivered</span>
                 </h2>
               </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
-                {project.features.map((feature, index) => {
+              <ul className="space-y-3 sm:space-y-4 md:space-y-5 max-w-4xl">
+                {project.deliverables.map((item, index) => {
                   const delayClass = index < 6 ? `stagger-delay-${Math.min(index + 2, 8)}` : 'stagger-delay-1';
                   return (
-                    <div
-                      key={feature}
-                      className={`group flex items-start gap-2 sm:gap-3 md:gap-4 p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/50 border border-primary/10 hover:border-primary/40 hover:from-primary/10 hover:to-primary/5 transform-3d shadow-4d hover:shadow-4d-hover hover:translate-y-[-5px] hover:translate-z-20 transition-all duration-300 active:scale-95 ${
-                        isFeaturesVisible ? `animate-fade-in-scale ${delayClass}` : 'opacity-0'
+                    <li
+                      key={`${project.id}-deliverable-${index}`}
+                      className={`flex items-start gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl bg-gradient-to-br from-secondary/80 to-secondary/50 border border-primary/10 hover:border-primary/30 transition-colors duration-300 ${
+                        isDeliverablesVisible ? `animate-fade-in-scale ${delayClass}` : 'opacity-0'
                       }`}
                     >
-                      <div className="mt-0.5 sm:mt-1 p-1 sm:p-1.5 md:p-2 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/30 group-hover:scale-110 transition-transform duration-300">
-                        <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-primary" />
-                      </div>
-                      <span className="text-xs sm:text-sm md:text-base text-foreground/85 font-medium leading-relaxed flex-1 drop-shadow-sm">{feature}</span>
-                    </div>
+                      <span className="mt-1.5 sm:mt-2 h-2 w-2 shrink-0 rounded-full bg-primary shadow-[0_0_8px_hsl(var(--primary)/0.5)]" />
+                      <span className="text-xs sm:text-sm md:text-base text-foreground/85 leading-relaxed drop-shadow-sm">{item}</span>
+                    </li>
                   );
                 })}
-              </div>
+              </ul>
             </div>
           </section>
         )}

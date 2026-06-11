@@ -124,7 +124,7 @@ export function buildKnowledgeChunks(projects: readonly Project[]): KnowledgeChu
       project.resultMetric && `Result: ${project.resultMetric}`,
       project.challenge && `Challenge: ${project.challenge}`,
       project.solution && `Solution: ${project.solution}`,
-      project.features?.length && `Features: ${project.features.join('; ')}`,
+      project.deliverables?.length && `Deliverables: ${project.deliverables.join('; ')}`,
     ].filter(Boolean);
 
     chunks.push(

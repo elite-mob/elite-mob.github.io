@@ -17,7 +17,7 @@ export interface Project {
   role?: string;
   challenge?: string;
   solution?: string;
-  features?: string[];
+  deliverables?: string[];
   outcomeHighlight?: string;
   resultMetric?: string;
 }
@@ -38,15 +38,10 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The platform needed to support a multi-vendor marketplace with real-time inventory, booking workflows, payments, and mapping data at scale while remaining maintainable as usage grew.`,
     solution: `I built a React-based frontend backed by Firebase for real-time synchronization and fast operational updates. Mapbox powered stream, guide, and access discovery, while Stripe handled multi-vendor payment flows. I also delivered internal tooling for inventory, bookings, vendor operations, and analytics so the product could scale reliably in production.`,
-    features: [
-      'Multi-vendor marketplace',
-      'Real-time booking',
-      'Map integration',
-      'Stripe payments',
-      'Guide and location discovery',
-      'Analytics dashboard',
-      'CSV import/export',
-      'Responsive'
+    deliverables: [
+      'I built a React-based frontend backed by Firebase for real-time synchronization and fast operational updates.',
+      'Mapbox powered stream, guide, and access discovery, while Stripe handled multi-vendor payment flows.',
+      'I also delivered internal tooling for inventory, bookings, vendor operations, and analytics so the product could scale reliably in production.',
     ],
   },
   {
@@ -73,17 +68,10 @@ export const projects: Project[] = [
     role: 'Team Lead & Full Stack Developer',
     challenge: `The product had to support multiple clinics, specialists, user account flows, and complex scheduling APIs while delivering a responsive and intuitive experience across devices. Internationalization and state consistency were especially important throughout the booking journey.`,
     solution: `I led the frontend architecture using React 18, TypeScript, Redux Toolkit, and MUI. I implemented robust API integration with Axios, including interceptors, retries, and session handling. The booking flow was designed with optimistic UI patterns, clear loading states, and step-by-step progression, while i18next enabled multilingual support, including RTL-ready rendering where needed.`,
-    features: [
-      'Multi-clinic and specialist booking',
-      'Doctor and clinic profiles',
-      'Real-time availability',
-      'Step-by-step booking flow',
-      'Auth and user accounts',
-      'Multi-language (i18next)',
-      'Mobile-first',
-      'Redux Toolkit state',
-      'Optimistic UI and skeletons',
-      'Toasts and progress'
+    deliverables: [
+      'I led the frontend architecture using React 18, TypeScript, Redux Toolkit, and MUI.',
+      'I implemented robust API integration with Axios, including interceptors, retries, and session handling.',
+      'The booking flow was designed with optimistic UI patterns, clear loading states, and step-by-step progression, while i18next enabled multilingual support, including RTL-ready rendering where needed.',
     ],
   },
   {
@@ -99,15 +87,10 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The platform needed to deliver a clean user experience around AI workflows while keeping latency low and usage costs visible. Request efficiency, caching strategy, and error resilience were key technical requirements.`,
     solution: `I developed the frontend in React and TypeScript with a Node.js backend powering AI workflows and developer-facing APIs. I integrated OpenAI services with request optimization and caching layers to improve responsiveness and reduce unnecessary cost. I also implemented management surfaces for workflow execution, AI operations, and cost tracking to support both technical and non-technical users.`,
-    features: [
-      'AI automation',
-      'OpenAI API',
-      'Real-time responses',
-      'Workflows',
-      'Cost tracking',
-      'Developer API',
-      'Business tools',
-      'TypeScript'
+    deliverables: [
+      'I developed the frontend in React and TypeScript with a Node.js backend powering AI workflows and developer-facing APIs.',
+      'I integrated OpenAI services with request optimization and caching layers to improve responsiveness and reduce unnecessary cost.',
+      'I also implemented management surfaces for workflow execution, AI operations, and cost tracking to support both technical and non-technical users.',
     ],
   },
   {
@@ -123,15 +106,10 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The platform required real-time synchronization across web and mobile clients while supporting team collaboration, shared files, and project data under concurrent usage. Consistency and responsiveness were critical to the product experience.`,
     solution: `I worked across both the React web application and React Native mobile apps, supported by a shared Node.js backend. GraphQL provided a flexible data layer, while WebSockets enabled real-time collaboration, messaging, and live updates. The result was a unified cross-platform experience that kept teams in sync without sacrificing performance.`,
-    features: [
-      'Real-time collaboration',
-      'File sharing',
-      'Project management',
-      'Team chat',
-      'Web and mobile',
-      'GraphQL',
-      'WebSockets',
-      'Cross-platform'
+    deliverables: [
+      'I worked across both the React web application and React Native mobile apps, supported by a shared Node.js backend.',
+      'GraphQL provided a flexible data layer, while WebSockets enabled real-time collaboration, messaging, and live updates.',
+      'The result was a unified cross-platform experience that kept teams in sync without sacrificing performance.',
     ],
   },
   {
@@ -146,15 +124,10 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The product needed to balance regulated commerce requirements with a polished shopping experience, while also supporting SEO, structured inventory, and educational content that built customer trust.`,
     solution: `I developed the platform with Next.js and TypeScript, leveraging SSR to improve search visibility and page performance. PostgreSQL and AWS supported the backend infrastructure, while Stripe powered payments. I structured the product catalog so transactional flows and educational content worked together naturally, which helped the brand feel both credible and easy to navigate.`,
-    features: [
-      'E-commerce',
-      'Product catalog',
-      'Education content',
-      'Stripe payments',
-      'Inventory',
-      'SEO (SSR)',
-      'AWS',
-      'Compliance'
+    deliverables: [
+      'I developed the platform with Next.js and TypeScript, leveraging SSR to improve search visibility and page performance.',
+      'PostgreSQL and AWS supported the backend infrastructure, while Stripe powered payments.',
+      'I structured the product catalog so transactional flows and educational content worked together naturally, which helped the brand feel both credible and easy to navigate.',
     ],
   },
   {
@@ -169,15 +142,9 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The application needed to organize a large volume of documents and educational materials while making them searchable, readable, and easy to explore. Community-facing features also had to coexist cleanly with content-heavy interfaces.`,
     solution: `I built a React frontend with a Node.js and MongoDB backend to manage content and user interactions. PDF.js was integrated for seamless in-browser document viewing, while resource search, categorization, and community functionality were designed to keep the platform accessible and easy to navigate.`,
-    features: [
-      'Document management',
-      'PDF viewer',
-      'Community',
-      'Educational resources',
-      'Search and categories',
-      'User profiles',
-      'Content sharing',
-      'Responsive'
+    deliverables: [
+      'I built a React frontend with a Node.js and MongoDB backend to manage content and user interactions.',
+      'PDF.js was integrated for seamless in-browser document viewing, while resource search, categorization, and community functionality were designed to keep the platform accessible and easy to navigate.',
     ],
   },
   {
@@ -192,15 +159,9 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The platform needed to support referral matching, fee tracking, compliance-sensitive workflows, and secure payment processing, all while remaining straightforward for both seekers and agents.`,
     solution: `I developed the frontend in React with a Node.js backend and Firebase for real-time workflow updates. Matching logic, referral tracking, payment flows, and transaction history were designed to keep the experience transparent and trustworthy, while Stripe handled secure finder fee payments.`,
-    features: [
-      'Agent matching',
-      'Referral tracking',
-      'Finder fee payments',
-      'User-agent links',
-      'Transaction history',
-      'Real-time updates',
-      'Stripe payments',
-      'Compliance'
+    deliverables: [
+      'I developed the frontend in React with a Node.js backend and Firebase for real-time workflow updates.',
+      'Matching logic, referral tracking, payment flows, and transaction history were designed to keep the experience transparent and trustworthy, while Stripe handled secure finder fee payments.',
     ],
   },
 
@@ -220,15 +181,10 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The app had to deliver a dependable native mapping experience across iOS and Android, including offline support, location layers, trip planning, public versus private access data, stream conditions, and regulations. Performance, usability in low-signal areas, and scalability were central to the product.`,
     solution: `I built native iOS and Android functionality in Swift and Java, supported by Firebase for user data and operational workflows. Mapbox powered the interactive GPS experience, layered access data, and offline map packs. I also integrated stream conditions, weather-related data, and trip-planning tools so the app could serve anglers reliably in real-world field conditions.`,
-    features: [
-      'GPS maps for trout streams (48 states)',
-      '50k+ streams, 280k+ curated access points',
-      'Public/private land and water access',
-      'Real-time conditions & USGS gage / flow insight',
-      'Regulations, fly shops, parking & trail logistics',
-      'Offline maps and markups',
-      'Species filters & trip planning (multi-state)',
-      'iOS and Android'
+    deliverables: [
+      'I built native iOS and Android functionality in Swift and Java, supported by Firebase for user data and operational workflows.',
+      'Mapbox powered the interactive GPS experience, layered access data, and offline map packs.',
+      'I also integrated stream conditions, weather-related data, and trip-planning tools so the app could serve anglers reliably in real-world field conditions.',
     ],
   },
   {
@@ -244,15 +200,10 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The app needed to bring together workout generation, large video libraries, nutrition tools, subscription tiers, and coaching flows in a way that felt clear and motivating. Monetization and retention depended on clean paywall experiences, reliable tracking, and a polished day-to-day fitness workflow.`,
     solution: `I developed native mobile features in Swift and Kotlin, with Firebase supporting backend data and user progress. Superwall was used to optimize subscription surfaces, while Stripe handled billing-related workflows. I also integrated Apple Health on iOS, built tracking and timer flows, and helped unify workout, nutrition, and coaching experiences into a single product that supported both engagement and revenue growth.`,
-    features: [
-      'Custom workout generator (equipment, home/gym, duration)',
-      '70+ plans & large video library',
-      'Macro calculator & nutrition guide / recipes',
-      'Sesh+ 1:1 coaching tier',
-      'Progress, reps, rest timer, check-ins',
-      'Apple Health integration',
-      'Subscriptions (Basic, Premium, Sesh+)',
-      'iOS and Android'
+    deliverables: [
+      'I developed native mobile features in Swift and Kotlin, with Firebase supporting backend data and user progress.',
+      'Superwall was used to optimize subscription surfaces, while Stripe handled billing-related workflows.',
+      'I also integrated Apple Health on iOS, built tracking and timer flows, and helped unify workout, nutrition, and coaching experiences into a single product that supported both engagement and revenue growth.',
     ],
   },
   {
@@ -269,15 +220,10 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The product needed to feel social and engaging while preserving trust in the recommendation experience. Rich media support, creator workflows, and fast content delivery all had to work together without making the platform feel noisy or overly commercial.`,
     solution: `I built the mobile experience in React Native and TypeScript with a GraphQL-driven backend powered by Node.js and AWS. The app included feed experiences, recommendation flows, media-heavy posting, and video tooling using Banuba and img.ly. The overall system was designed to support real-time social interactions while keeping recommendations human-centered and easy to engage with.`,
-    features: [
-      'Human-driven recommendations',
-      'Users, creators, and brands',
-      'Discover, share, and earn',
-      'Feed and social posts',
-      'Video and media tooling',
-      'GraphQL API',
-      'iOS and Android',
-      'AWS backend'
+    deliverables: [
+      'I built the mobile experience in React Native and TypeScript with a GraphQL-driven backend powered by Node.js and AWS.',
+      'The app included feed experiences, recommendation flows, media-heavy posting, and video tooling using Banuba and img.ly.',
+      'The overall system was designed to support real-time social interactions while keeping recommendations human-centered and easy to engage with.',
     ],
   },
   {
@@ -293,15 +239,10 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The app needed to support spontaneous and scheduled video interactions, low-latency messaging, rich profile preferences, and social engagement features without compromising responsiveness or trust. Real-time reliability was a major part of the product experience.`,
     solution: `I built the iOS client in Swift and supported the backend with Node.js, AWS, and WebSockets for messaging and presence. VoxImplant was integrated for LiveMatch video sessions, while Firebase handled authentication and profile-related data. I also worked on matchmaking and feed flows to ensure updates felt immediate and the product remained performant during peak usage.`,
-    features: [
-      'LiveMatch (real-time video, IRL-style)',
-      'Swipe & schedule video / dates on your time',
-      'Stories (24h photos & videos)',
-      'Flavors conversation starters',
-      'Likes, comments, unlimited likes',
-      'Preference-based matching',
-      'iOS',
-      'Real-time messaging & video'
+    deliverables: [
+      'I built the iOS client in Swift and supported the backend with Node.js, AWS, and WebSockets for messaging and presence.',
+      'VoxImplant was integrated for LiveMatch video sessions, while Firebase handled authentication and profile-related data.',
+      'I also worked on matchmaking and feed flows to ensure updates felt immediate and the product remained performant during peak usage.',
     ],
   },
   {
@@ -317,15 +258,9 @@ export const projects: Project[] = [
     role: 'Android Developer',
     challenge: `The app needed reliable overnight audio playback, sound mixing across multiple streams, and timer-based sleep flows without draining battery or interrupting the core user experience. Background stability was essential.`,
     solution: `I implemented the Android functionality in Kotlin using background-friendly playback patterns and media service architecture tuned for long-duration sessions. I also supported audio mixing, fade-out behavior, reminders, and the freemium feature set so users could move naturally between free and premium experiences without friction.`,
-    features: [
-      'Rain, thunder, nature, white/brown/green noise & more',
-      'Mixer: combine sounds; up to three at once',
-      'Favorites; no cap on playback length',
-      'Fade-out timer & bedtime reminder',
-      'Sleep, focus, anxiety & tinnitus-friendly catalog',
-      '50 free sounds; 60+ premium + trial',
-      'Android background audio',
-      'Press: NYT, Buzzfeed, Lifehacker'
+    deliverables: [
+      'I implemented the Android functionality in Kotlin using background-friendly playback patterns and media service architecture tuned for long-duration sessions.',
+      'I also supported audio mixing, fade-out behavior, reminders, and the freemium feature set so users could move naturally between free and premium experiences without friction.',
     ],
   },
   {
@@ -341,15 +276,9 @@ export const projects: Project[] = [
     role: 'iOS Developer',
     challenge: `The app needed to support a wide range of social features, rich expression tools, push notifications, discovery surfaces, and monetization without sacrificing responsiveness or user trust. The experience had to remain smooth despite high engagement volume.`,
     solution: `I worked in Swift on the iOS codebase, integrating Spotify-powered profile music, StoreKit subscriptions, and Firebase-backed feed and engagement systems. I also supported discovery, sharing, reposting, and communication features, helping ensure the app remained dynamic, expressive, and performant as usage scaled.`,
-    features: [
-      'Music section (themes + Spotify)',
-      'Color themes & zodiac',
-      'Discover: trending, new, communities',
-      'Asks (creator Q&A)',
-      'Repost, share, reply, GIFs',
-      'Chronological home feed',
-      'Organic reach-friendly ranking',
-      'Subscriptions & push (FCM)'
+    deliverables: [
+      'I worked in Swift on the iOS codebase, integrating Spotify-powered profile music, StoreKit subscriptions, and Firebase-backed feed and engagement systems.',
+      'I also supported discovery, sharing, reposting, and communication features, helping ensure the app remained dynamic, expressive, and performant as usage scaled.',
     ],
   },
   {
@@ -365,15 +294,10 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The application needed to coordinate provider workflows across job matching, scheduling, route efficiency, payment visibility, and live operational updates. The product had to be simple for workers in the field while still meeting business-side coordination needs.`,
     solution: `I built the mobile experience in React Native with a Node.js and Express backend. Google Maps powered routing and location-aware workflows, while Stripe supported provider payments and earnings flows. I also helped shape real-time status updates and job lifecycle experiences so the app worked reliably for both field technicians and operations teams.`,
-    features: [
-      'Provider network & skill-matched jobs',
-      'Scheduling & route optimization',
-      'Stripe payments & earnings flow',
-      'Real-time job tracking',
-      'Location & mapping',
-      'Service history & provider tooling',
-      'iOS and Android',
-      'Customer & provider experiences'
+    deliverables: [
+      'I built the mobile experience in React Native with a Node.js and Express backend.',
+      'Google Maps powered routing and location-aware workflows, while Stripe supported provider payments and earnings flows.',
+      'I also helped shape real-time status updates and job lifecycle experiences so the app worked reliably for both field technicians and operations teams.',
     ],
   },
   {
@@ -389,15 +313,10 @@ export const projects: Project[] = [
     role: 'iOS Developer',
     challenge: `The product needed to combine guided rituals, audio experiences, journaling flows, subscriptions, and community elements into a cohesive experience that felt both immersive and technically dependable. Offline-friendly usage and content continuity also mattered.`,
     solution: `I developed the app using Swift and SwiftUI, with AudioKit supporting guided breathwork and sound-driven experiences. CoreData handled local persistence for rituals, journaling, and progress, while StoreKit supported auto-renewing subscriptions. I focused on creating a stable, structured experience where ritual content, user progress, and premium access all worked together naturally.`,
-    features: [
-      'SoulPrint quiz & custom 21-day ritual paths',
-      'Daily rituals: breathwork, teaching, reflection; mantra & visualization',
-      'Pod community: SoulSparks, LightDrops, leaderboard',
-      'Soulseer oracle cards & journaling',
-      'Sleep Portal (rest as nervous-system support)',
-      'Portals: grief, integration, walking, soundscapes, and more',
-      'Science + mysticism; subscriptions (StoreKit)',
-      'iOS'
+    deliverables: [
+      'I developed the app using Swift and SwiftUI, with AudioKit supporting guided breathwork and sound-driven experiences.',
+      'CoreData handled local persistence for rituals, journaling, and progress, while StoreKit supported auto-renewing subscriptions.',
+      'I focused on creating a stable, structured experience where ritual content, user progress, and premium access all worked together naturally.',
     ],
   },
   {
@@ -414,15 +333,10 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The app needed to preserve an established native experience while expanding workout content, monetization, and media features through a React Native migration. The challenge was balancing maintainability with performance across both platforms.`,
     solution: `I worked on a React Native architecture supported by native bridges into the existing Objective-C and Java codebases. This allowed the product to preserve platform-specific functionality while introducing shared logic and UI where appropriate. I also supported workout flows, timers, premium content gating, offline video behavior, and HealthKit integration for a more modern and maintainable mobile stack.`,
-    features: [
-      '105 exercises (30 free + 70+ via IAP), 4-8 min workouts',
-      'HD video demos by Jeff Cavaliere',
-      'Ab-shredding meal plans & Shuffle (1M+ combos)',
-      'Progress photos & social sharing',
-      'Health app integration & offline video',
-      'Music from other apps while training',
-      'Freemium + single IAP upgrade',
-      'iOS and Android (React Native + bridge)'
+    deliverables: [
+      'I worked on a React Native architecture supported by native bridges into the existing Objective-C and Java codebases.',
+      'This allowed the product to preserve platform-specific functionality while introducing shared logic and UI where appropriate.',
+      'I also supported workout flows, timers, premium content gating, offline video behavior, and HealthKit integration for a more modern and maintainable mobile stack.',
     ],
   },
   {
@@ -439,15 +353,10 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The app needed to support very different user roles, installer configuration workflows and homeowner control experiences, while maintaining real-time state awareness across security systems, smart devices, alerts, and history. Hardware variability added another layer of complexity.`,
     solution: `I developed native iOS and Android functionality in Swift and Java, using WebSockets for live state updates and command delivery. I helped build flows for automation, device control, user management, scenes, and system history, while also supporting installer-specific programming and setup experiences. The result was a mobile-first interface that replaced more cumbersome legacy workflows with a more focused and responsive product.`,
-    features: [
-      'Installer: E27 program & manage from mobile',
-      'Security: arm/disarm, monitoring, alerts, history',
-      'Smart home: lights, locks, thermostats, garage, scenes',
-      'Users & access (family, guests, staff)',
-      'Favorites, automation, notifications',
-      'Z-Wave, WiFi, Bluetooth',
-      'Real-time (WebSockets)',
-      'iOS and Android'
+    deliverables: [
+      'I developed native iOS and Android functionality in Swift and Java, using WebSockets for live state updates and command delivery.',
+      'I helped build flows for automation, device control, user management, scenes, and system history, while also supporting installer-specific programming and setup experiences.',
+      'The result was a mobile-first interface that replaced more cumbersome legacy workflows with a more focused and responsive product.',
     ],
   },
   {
@@ -463,15 +372,10 @@ export const projects: Project[] = [
     role: 'iOS Developer',
     challenge: `The app needed a polished creative workflow for designing cards while also handling templates, media, freemium limits, subscription entitlements, and cross-channel sharing. The experience had to feel simple for casual users despite a relatively rich feature set.`,
     solution: `I built the app in Swift with Firebase supporting catalog data, user content, and sending workflows. StoreKit was integrated for monthly and annual subscription handling, including entitlement-based access to templates, favorites, and unlimited sends. I also focused on building an intuitive editor experience that made personalization feel easy without losing flexibility.`,
-    features: [
-      'Exclusive designs & growing library',
-      'Customize fonts, colors, size; camera-roll photos',
-      'Search, categories, Welcome Pack + 5 free sends/mo',
-      'Subscribe: unlimited sends, templates, favorites',
-      'Share: text, email, social, print',
-      'Cards, invites, photo cards, tags, recipes, and more',
-      'StoreKit subscriptions',
-      'iOS'
+    deliverables: [
+      'I built the app in Swift with Firebase supporting catalog data, user content, and sending workflows.',
+      'StoreKit was integrated for monthly and annual subscription handling, including entitlement-based access to templates, favorites, and unlimited sends.',
+      'I also focused on building an intuitive editor experience that made personalization feel easy without losing flexibility.',
     ],
   },
   {
@@ -488,15 +392,10 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The product needed to support trust-based sports coordination with real-time visibility into who was playing, where games were happening, and what level or vibe to expect. Location and scheduling accuracy were essential to user confidence.`,
     solution: `I built native features in Swift and Kotlin with Firebase powering live game, user, and scheduling data. Google Maps supported court discovery and nearby activity, while the UX was designed to make it easy for users to either plan ahead or join spontaneous same-day games. The result was a social sports experience that felt both practical and community-driven.`,
-    features: [
-      'Find local games & court rental',
-      'See who’s playing; invite or meet new players',
-      'Skill level & vibe-based games',
-      'Indoor/outdoor courts; maps & discovery',
-      'Real-time matchmaking & scheduling',
-      'Location-aware pickup experience',
-      'Community-first pickleball',
-      'iOS and Android'
+    deliverables: [
+      'I built native features in Swift and Kotlin with Firebase powering live game, user, and scheduling data.',
+      'Google Maps supported court discovery and nearby activity, while the UX was designed to make it easy for users to either plan ahead or join spontaneous same-day games.',
+      'The result was a social sports experience that felt both practical and community-driven.',
     ],
   },
   {
@@ -511,15 +410,9 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The app needed to bridge educational storytelling, regional trail content, plant data, and location-based gameplay without feeling fragmented. It also had to work both on-site in parks and as a standalone educational tool.`,
     solution: `I built the mobile experience in React Native with a Node.js, Express, and Firebase backend for content, maps, and game state. The architecture supported multi-park storytelling, structured plant profiles, and interpretive gameplay tied to physical signage, while still providing value to users outside the park environment.`,
-    features: [
-      'Native plant profiles & maps',
-      'On-trail games (single-park & cross-park)',
-      'Stand-alone + on-site interpretive use',
-      'Robert Ney Regional Park, Pond Loop',
-      'Bde Hehaka park, Lower Prairie Loop at Two Inlets',
-      'MnPAIR / Greater MN Regional Parks & Trails',
-      'Partners: Sherburne & Wright County Parks',
-      'Legacy Amendment-funded initiative'
+    deliverables: [
+      'I built the mobile experience in React Native with a Node.js, Express, and Firebase backend for content, maps, and game state.',
+      'The architecture supported multi-park storytelling, structured plant profiles, and interpretive gameplay tied to physical signage, while still providing value to users outside the park environment.',
     ],
   },
   {
@@ -559,14 +452,9 @@ export const projects: Project[] = [
     role: 'iOS Developer',
     challenge: `The app needed to handle measurement-heavy workflows, project organization, scanned documents, media management, and 3D rendering, all within a mobile interface that remained clear and dependable under real-world usage.`,
     solution: `I developed the application in Swift and UIKit, using AR-driven workflows for measurement capture, SceneKit for 3D visualization, and VisionKit for document scanning. CoreData supported local project organization so floorplans, contracts, photos, and related records remained structured and accessible within each job.`,
-    features: [
-      'Advanced measuring & floorplan sketching',
-      'Project hub: details, photos, video, scans, communications',
-      'Progress tracking & task-oriented workflows',
-      '2D sketches to immersive 3D rendering',
-      'Photos, videos, contracts & docs in one place',
-      'Share and reference project documentation easily',
-      'Swift · iOS'
+    deliverables: [
+      'I developed the application in Swift and UIKit, using AR-driven workflows for measurement capture, SceneKit for 3D visualization, and VisionKit for document scanning.',
+      'CoreData supported local project organization so floorplans, contracts, photos, and related records remained structured and accessible within each job.',
     ],
   },
   {
@@ -581,15 +469,10 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The product needed to support end-to-end warehouse workflows while migrating from separate native codebases to a more maintainable shared architecture. Reliability, scanning accuracy, and real-time data visibility were central to daily operations.`,
     solution: `I helped migrate the mobile experience to React Native while preserving critical native functionality where necessary. The backend was supported with Node.js and AWS, enabling real-time inventory updates, order workflows, shipment tracking, and barcode-driven operations. The result was a more maintainable platform without losing the operational stability required in warehouse environments.`,
-    features: [
-      'Inventory',
-      'Order processing',
-      'Shipment tracking',
-      'Stock control',
-      'Barcode scanning',
-      'Real-time',
-      'Analytics',
-      'Multi-location'
+    deliverables: [
+      'I helped migrate the mobile experience to React Native while preserving critical native functionality where necessary.',
+      'The backend was supported with Node.js and AWS, enabling real-time inventory updates, order workflows, shipment tracking, and barcode-driven operations.',
+      'The result was a more maintainable platform without losing the operational stability required in warehouse environments.',
     ],
   },
   {
@@ -629,15 +512,9 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The app needed to track user activity accurately in the background, integrate with health data sources, and provide workout progress visibility without compromising battery performance or usability.`,
     solution: `I developed the app in React Native and integrated HealthKit on iOS for health and workout data synchronization. Background activity support and progress-tracking flows were implemented to keep data reliable while maintaining a smooth user experience across both mobile platforms.`,
-    features: [
-      'Workout plans',
-      'HealthKit',
-      'Background tracking',
-      'Activity logging',
-      'Progress',
-      'Analytics',
-      'iOS and Android',
-      'Health sync'
+    deliverables: [
+      'I developed the app in React Native and integrated HealthKit on iOS for health and workout data synchronization.',
+      'Background activity support and progress-tracking flows were implemented to keep data reliable while maintaining a smooth user experience across both mobile platforms.',
     ],
   },
   {
@@ -734,13 +611,9 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The app needed to present 3D anatomy and educational content in a way that felt approachable and visually clear, while connecting that exploration to supporting product and wellness narratives.`,
     solution: `I built native iOS and Android experiences in Swift and Java, using SceneKit-driven 3D visualization and structured UI flows to present the body interactively. The content architecture was designed so educational material and product context felt organized and easy to understand rather than overwhelming.`,
-    features: [
-      '3D exploration of the human body',
-      'Kenrico pads & Sporolife education',
-      'Nervous, circulatory & lymphatic context',
-      'Whole-body wellness narrative',
-      'iOS and Android',
-      'SceneKit · UIKit'
+    deliverables: [
+      'I built native iOS and Android experiences in Swift and Java, using SceneKit-driven 3D visualization and structured UI flows to present the body interactively.',
+      'The content architecture was designed so educational material and product context felt organized and easy to understand rather than overwhelming.',
     ],
   },
   {
@@ -755,14 +628,9 @@ export const projects: Project[] = [
     role: 'iOS Developer',
     challenge: `The product needed to make live capacity, advance reservations, and pass activation feel fast and dependable, while still supporting legacy native modules and offline-sensitive entry flows.`,
     solution: `I built the application with Swift-first UIKit architecture while bridging into existing Objective-C modules where necessary. The result supported real-time availability, pass purchasing, activation flows, and a reliable entry experience designed around how users actually move through parks and reservation systems.`,
-    features: [
-      'Reserve spots & beat the line',
-      'Real-time availability',
-      'Park busyness before you go',
-      'Passes: buy ahead, activate at entry',
-      'Swift / Objective-C bridge',
-      'PassKit',
-      'iOS'
+    deliverables: [
+      'I built the application with Swift-first UIKit architecture while bridging into existing Objective-C modules where necessary.',
+      'The result supported real-time availability, pass purchasing, activation flows, and a reliable entry experience designed around how users actually move through parks and reservation systems.',
     ],
   },
   {
@@ -778,25 +646,9 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The app needed to support group purchasing, neighborhood coordination, and service management while keeping checkout, scheduling, and billing simple for individual homeowners.`,
     solution: `I built the mobile experience in React Native with a Node.js and Express backend, using Stripe to support payment and purchasing flows. The architecture and UX were designed to handle neighborhood-level service bundles while still feeling clean and approachable from the perspective of a single homeowner managing their property.`,
-    features: [
-      'Group purchasing & consolidated payments',
-      'Lawn mowing',
-      'Aeration',
-      'Fertilization service',
-      'Fertilization',
-      'Dallisgrass control',
-      'Pet waste removal',
-      'Fire ant treatment',
-      'Grub treatment',
-      'Mosquito control',
-      'Bush trimming',
-      'Leaf cleanup',
-      'Mulch installation',
-      'Weed pulling',
-      'Pool cleaning service',
-      'House cleaning (coming soon)',
-      'Christmas lights service (coming soon)',
-      'iOS and Android'
+    deliverables: [
+      'I built the mobile experience in React Native with a Node.js and Express backend, using Stripe to support payment and purchasing flows.',
+      'The architecture and UX were designed to handle neighborhood-level service bundles while still feeling clean and approachable from the perspective of a single homeowner managing their property.',
     ],
   },
   {
@@ -811,15 +663,9 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The app needed to make a large, highly searchable music archive feel fast and usable on mobile, including complex boolean filters, deep metadata exploration, and offline-friendly browsing.`,
     solution: `I built native mobile experiences in Objective-C and Java with CoreData-backed local storage to support fast querying and offline use. The search UX was structured to handle advanced combinations of criteria without feeling like a desktop database, while streaming, favorites, attendance tracking, and statistical views rounded out the power-user experience.`,
-    features: [
-      'Multi-criteria search with AND / OR / NOT',
-      'Set lists matched to your filters (venue, song, city, year, guest, date, etc.)',
-      'Milestone searches (birthdays, anniversaries) & deep drill-down',
-      'Custom playlists; attended shows; favorites',
-      'First / last / total played stats per song, venue, city, state, country, guest',
-      'Stream shows when a recording is available (online)',
-      'Standalone digital database, no ads (paid app)',
-      'iOS and Android'
+    deliverables: [
+      'I built native mobile experiences in Objective-C and Java with CoreData-backed local storage to support fast querying and offline use.',
+      'The search UX was structured to handle advanced combinations of criteria without feeling like a desktop database, while streaming, favorites, attendance tracking, and statistical views rounded out the power-user experience.',
     ],
   },
   {
@@ -836,16 +682,10 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The platform needed to release picks quickly, support multiple subscription tiers, synchronize billing across web and mobile, and deliver timely push notifications before odds shifted. Reliability and clarity were especially important for subscriber trust.`,
     solution: `I worked across React web, React Native mobile, and backend services powered by Node.js, PHP, MongoDB, and AWS. RevenueCat and Stripe handled subscription and payment workflows, while OneSignal supported real-time pick alerts. I also helped ensure the product maintained clear subscriber lifecycle management, coherent package handling, and a dependable cross-platform experience.`,
-    features: [
-      'Real-time pick push (before the line moves)',
-      'Live odds & line movement (Don Best)',
-      'Major sports + smaller markets (WNBA, XFL, NASCAR, etc.)',
-      'News, tips & Krack’s commentary',
-      'Premium / Standard / Basic subscription packages',
-      'Free install; tiered plays per week & pricing',
-      'RevenueCat, Stripe, OneSignal',
-      'Web, iOS, Android · AWS',
-      'Responsible gaming resources (e.g. 1-800-GAMBLER)'
+    deliverables: [
+      'I worked across React web, React Native mobile, and backend services powered by Node.js, PHP, MongoDB, and AWS.',
+      'RevenueCat and Stripe handled subscription and payment workflows, while OneSignal supported real-time pick alerts.',
+      'I also helped ensure the product maintained clear subscriber lifecycle management, coherent package handling, and a dependable cross-platform experience.',
     ],
   },
   {
@@ -860,14 +700,9 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The platform needed to make a multi-step service workflow feel simple and low-friction for users, while still handling accounts, pickup logistics, notifications, and payment confirmation reliably.`,
     solution: `I built the mobile experience in React Native with a PHP backend hosted on AWS. OneSignal powered status notifications throughout the pickup and delivery lifecycle, while the app itself focused on reducing the process down to a clean, intuitive flow from onboarding through payment and order completion.`,
-    features: [
-      'Account creation & free Gowivo bag request',
-      'One-tap pick-up scheduling & payment',
-      'Wash, dry, fold & 24-hour turnaround',
-      'Door pickup or handoff when you are home',
-      'Status push: picked up, en route, delivered',
-      'PHP backend · AWS',
-      'iOS, Android, Web'
+    deliverables: [
+      'I built the mobile experience in React Native with a PHP backend hosted on AWS.',
+      'OneSignal powered status notifications throughout the pickup and delivery lifecycle, while the app itself focused on reducing the process down to a clean, intuitive flow from onboarding through payment and order completion.',
     ],
   },
   {
@@ -882,15 +717,9 @@ export const projects: Project[] = [
     role: 'iOS Developer',
     challenge: `The app needed to support connection discovery, profile-driven interaction, and social feed behavior while maintaining a user experience that felt clear, welcoming, and safe.`,
     solution: `I built the app in Swift and UIKit with Firebase supporting real-time data, user relationships, and feed activity. CoreData was used to improve local access to user lists and related content, helping the app remain responsive while supporting lightweight offline behavior where it mattered.`,
-    features: [
-      'Buddy finding',
-      'Connections',
-      'Social feed',
-      'Profiles',
-      'Real-time (Firebase)',
-      'Offline friend list',
-      'CoreData',
-      'iOS'
+    deliverables: [
+      'I built the app in Swift and UIKit with Firebase supporting real-time data, user relationships, and feed activity.',
+      'CoreData was used to improve local access to user lists and related content, helping the app remain responsive while supporting lightweight offline behavior where it mattered.',
     ],
   },
   {
@@ -905,15 +734,9 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The product needed to support content delivery for students while also giving educators and administrators reliable tools for managing materials, users, and progress across web and mobile.`,
     solution: `I worked across React Native mobile apps, a React-based admin environment, and backend services powered by PHP, Firebase, and AWS. The system was designed to support structured course content, study resources, progress tracking, and content administration in a way that remained maintainable and easy to operate.`,
-    features: [
-      'Course materials',
-      'Study tools',
-      'Resources',
-      'Progress tracking',
-      'Admin panel',
-      'Content management',
-      'AWS',
-      'iOS, Android, Web'
+    deliverables: [
+      'I worked across React Native mobile apps, a React-based admin environment, and backend services powered by PHP, Firebase, and AWS.',
+      'The system was designed to support structured course content, study resources, progress tracking, and content administration in a way that remained maintainable and easy to operate.',
     ],
   },
   {
@@ -928,14 +751,9 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The app needed to support healthcare-adjacent booking and retail workflows without losing the calm, trust-based feel of the brand. Service discovery, promotions, and clinic information all had to coexist cleanly.`,
     solution: `I built the app in React Native with Node.js-backed APIs for appointments, commerce, and content delivery. Google Maps supported clinic directions, and the product structure was carefully designed so booking, shopping, gift cards, and updates felt integrated without turning the app into a cluttered storefront.`,
-    features: [
-      'Appointment booking',
-      'Retail: clean, cruelty-free products',
-      'Gift cards',
-      'News, events & specials',
-      'Clinic location & directions (Maps)',
-      'Personalized wellness positioning (Eastern + modern care)',
-      'iOS and Android'
+    deliverables: [
+      'I built the app in React Native with Node.js-backed APIs for appointments, commerce, and content delivery.',
+      'Google Maps supported clinic directions, and the product structure was carefully designed so booking, shopping, gift cards, and updates felt integrated without turning the app into a cluttered storefront.',
     ],
   },
   {
@@ -950,15 +768,9 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The product needed to feel premium and intentional rather than like another algorithmic video feed. Playback, content organization, and push-driven discovery all had to work together in a way that respected the user's time.`,
     solution: `I built the mobile experience in React Native with REST-based content APIs and integrated media playback for short-form educational video. OneSignal supported content release notifications, while the app structure focused on curated rails, editorial categorization, and a streamlined learning experience that felt deliberate and high-signal.`,
-    features: [
-      'Expert interviews & founder lessons',
-      'Podcast summaries in digestible snippets',
-      'Animations that clarify complex ideas',
-      'Curated clips from top “growth” podcasts, talks & courses',
-      'Human-curated paths (not feed-the-algorithm noise)',
-      'Actionable, business-focused learning',
-      'Push (OneSignal) · REST API',
-      'iOS and Android'
+    deliverables: [
+      'I built the mobile experience in React Native with REST-based content APIs and integrated media playback for short-form educational video.',
+      'OneSignal supported content release notifications, while the app structure focused on curated rails, editorial categorization, and a streamlined learning experience that felt deliberate and high-signal.',
     ],
   },
   {
@@ -973,14 +785,9 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The product needed to present deal content in a trustworthy, easy-to-scan format while supporting outbound product links, notifications, and useful browsing behavior even in weaker connectivity scenarios.`,
     solution: `I built the mobile application in React Native with AWS-backed infrastructure and curated deal content workflows. Amazon Product API integration was used where product metadata added value, and CoreData supported lightweight offline access to recent or saved deal content so the app remained useful on the go.`,
-    features: [
-      'Curated deals, sales, coupons & promotions',
-      'Plain-language explanations with item links',
-      'Occasional free samples, freebies & bonus promos',
-      'Offline access to saved/recent deals (CoreData)',
-      'Notifications for new offers',
-      'Amazon Product API where applicable',
-      'iOS, Android, Web · AWS'
+    deliverables: [
+      'I built the mobile application in React Native with AWS-backed infrastructure and curated deal content workflows.',
+      'Amazon Product API integration was used where product metadata added value, and CoreData supported lightweight offline access to recent or saved deal content so the app remained useful on the go.',
     ],
   },
   {
@@ -995,14 +802,9 @@ export const projects: Project[] = [
     role: 'iOS Developer',
     challenge: `The app needed to support multiple content types, including long-form video, machine catalog data, audio, and updates, without feeling fragmented or difficult to navigate.`,
     solution: `I developed the app in Swift and UIKit with AVKit for media playback and CoreData for resilient access to key catalog content. The interface was structured to give the brand a unified mobile presence where equipment, content, and updates all felt part of the same cohesive product.`,
-    features: [
-      'REPURPOSED docuseries streaming',
-      'Machine catalog browsing',
-      'Sierra podcast',
-      'News & updates from Sierra',
-      'Offline-friendly catalog (CoreData)',
-      'Swift · UIKit · AVKit',
-      'iOS'
+    deliverables: [
+      'I developed the app in Swift and UIKit with AVKit for media playback and CoreData for resilient access to key catalog content.',
+      'The interface was structured to give the brand a unified mobile presence where equipment, content, and updates all felt part of the same cohesive product.',
     ],
   },
   {
@@ -1017,15 +819,10 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The app needed to model detailed cooking sessions with structured data, media, weather, and ingredient flows while still feeling approachable for hobbyists and pitmasters alike.`,
     solution: `I built the mobile application in React Native with Firebase supporting authentication, storage, and secure cook-session persistence. WeatherKit was integrated for environmental data, QR scanning supported ingredient logging, and Node.js services handled supporting APIs and data shaping. The product was designed to make detailed session tracking feel organized rather than overwhelming.`,
-    features: [
-      'Cook & smoke session database',
-      'Prep steps & ingredient QR scanning',
-      'Meat temperature logging',
-      'Automatic weather temperature',
-      'Rate appearance, taste & tenderness',
-      'Photo your finished cook & save the full log securely',
-      'Privacy: https://www.smokelabapp.com/privacy · Terms: https://www.smokelabapp.com/terms',
-      'iOS, Android, Web'
+    deliverables: [
+      'I built the mobile application in React Native with Firebase supporting authentication, storage, and secure cook-session persistence.',
+      'WeatherKit was integrated for environmental data, QR scanning supported ingredient logging, and Node.js services handled supporting APIs and data shaping.',
+      'The product was designed to make detailed session tracking feel organized rather than overwhelming.',
     ],
   },
   {
@@ -1041,15 +838,10 @@ export const projects: Project[] = [
     role: 'Full Stack Mobile Developer',
     challenge: `The platform needed to support a wide range of service categories, real-time matching, quote comparisons, bookings, and payments, all while maintaining a simple and intuitive user experience. Handling provider discovery and user trust at scale was a key challenge.`,
     solution: `I developed a cross-platform mobile experience with React Native, supported by a Node.js backend and Firebase for real-time interactions. The system matched users with service providers based on requirements, enabled direct communication via chat, and supported booking and payment workflows. I also implemented search, filtering, and map-based discovery to help users easily find nearby services and compare options.`,
-    features: [
-      'Instant matching with service providers',
-      'Quote comparison and direct chat',
-      'Service booking and scheduling',
-      'Map-based provider discovery',
-      'Bookmarks and favorites',
-      'Multi-category marketplace (800+ services)',
-      'Secure payments (online and offline)',
-      'Promotions and discounts'
+    deliverables: [
+      'I developed a cross-platform mobile experience with React Native, supported by a Node.js backend and Firebase for real-time interactions.',
+      'The system matched users with service providers based on requirements, enabled direct communication via chat, and supported booking and payment workflows.',
+      'I also implemented search, filtering, and map-based discovery to help users easily find nearby services and compare options.',
     ],
   },
   {
@@ -1065,15 +857,11 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The app needed to provide reliable real-time ride matching, accurate pricing, driver tracking, and multiple ride flows including immediate requests, scheduled rides, and street hailing with digital payment. Ensuring consistency across cities and maintaining low latency was critical.`,
     solution: `I built the mobile experience using React Native with real-time communication powered by WebSockets. Maps and location services were used for driver discovery, routing, and live tracking. The app supported multiple ride flows including on-demand, scheduled rides, and pair-and-pay for street hails. Payment processing was integrated to allow seamless, contactless transactions at the end of each trip.`,
-    features: [
-      'Real-time ride requests',
-      'Scheduled rides (up to 48 hours)',
-      'Live driver tracking',
-      'Upfront pricing estimates',
-      'Pair & Pay for street hailing',
-      'Multiple vehicle types',
-      'Secure in-app payments',
-      'Nationwide availability'
+    deliverables: [
+      'I built the mobile experience using React Native with real-time communication powered by WebSockets.',
+      'Maps and location services were used for driver discovery, routing, and live tracking.',
+      'The app supported multiple ride flows including on-demand, scheduled rides, and pair-and-pay for street hails.',
+      'Payment processing was integrated to allow seamless, contactless transactions at the end of each trip.',
     ],
   },
   {
@@ -1089,15 +877,10 @@ export const projects: Project[] = [
     role: 'iOS Developer',
     challenge: `The app required strong privacy protections around user data, messaging, and media. Features like anonymous login, screenshot protection, private media sharing, and incognito browsing needed to work seamlessly without degrading user experience.`,
     solution: `I developed the iOS application in Swift, integrating Firebase for authentication and real-time messaging. I implemented privacy-focused features such as screenshot detection and prevention, private photo visibility controls, and incognito mode. Subscription functionality was handled through StoreKit, enabling premium features like unlimited likes, visibility controls, and advanced filtering.`,
-    features: [
-      'Anonymous sign-in (Apple ID)',
-      'Secure messaging with screenshot protection',
-      'Private photo sharing',
-      'Incognito browsing mode',
-      'Match-based interactions',
-      'Premium subscriptions (StoreKit)',
-      'User activity indicators',
-      'Privacy-first architecture'
+    deliverables: [
+      'I developed the iOS application in Swift, integrating Firebase for authentication and real-time messaging.',
+      'I implemented privacy-focused features such as screenshot detection and prevention, private photo visibility controls, and incognito mode.',
+      'Subscription functionality was handled through StoreKit, enabling premium features like unlimited likes, visibility controls, and advanced filtering.',
     ],
   },
   {
@@ -1113,15 +896,10 @@ export const projects: Project[] = [
     role: 'Mobile Developer',
     challenge: `The platform needed to support high-concurrency live streaming with real-time video, chat, and gifting interactions across a global user base. Latency, scalability, and reliability were critical, especially during peak events and large live sessions.`,
     solution: `I worked on mobile features across iOS and Android, integrating real-time streaming using a live video SDK and WebSocket-based communication for chat and engagement. I supported virtual gifting systems, user interaction layers, and subscription flows, ensuring smooth performance even under high traffic. The experience was designed to keep users engaged through real-time feedback, events, and interactive features while maintaining stability at scale.`,
-    features: [
-      'Live video streaming (real-time)',
-      'Interactive live chat',
-      'Virtual gifting system',
-      'Creator monetization',
-      'User badges and engagement rewards',
-      'Content discovery based on interests',
-      'Event participation and leaderboards',
-      'Premium subscriptions'
+    deliverables: [
+      'I worked on mobile features across iOS and Android, integrating real-time streaming using a live video SDK and WebSocket-based communication for chat and engagement.',
+      'I supported virtual gifting systems, user interaction layers, and subscription flows, ensuring smooth performance even under high traffic.',
+      'The experience was designed to keep users engaged through real-time feedback, events, and interactive features while maintaining stability at scale.',
     ],
   },
 
@@ -1139,15 +917,9 @@ export const projects: Project[] = [
     role: 'AI Mobile Developer',
     challenge: `The app needed to bring AI image generation to mobile in a way that felt fast, high quality, and practical for everyday users. On-device execution, inference performance, and image transformation quality were all critical.`,
     solution: `I implemented mobile AI workflows in Swift and Kotlin, using Stable Diffusion and Core ML to support on-device image generation and transformation. The pipeline was tuned for responsive inference and consistent styling behavior so users could generate mood- and style-based outputs without relying entirely on remote processing.`,
-    features: [
-      'AI photo generation',
-      'Stable Diffusion',
-      'Mood and style filters',
-      'On-device (Core ML)',
-      'Image pipeline',
-      'iOS and Android',
-      'Swift + Kotlin',
-      'Fast inference'
+    deliverables: [
+      'I implemented mobile AI workflows in Swift and Kotlin, using Stable Diffusion and Core ML to support on-device image generation and transformation.',
+      'The pipeline was tuned for responsive inference and consistent styling behavior so users could generate mood- and style-based outputs without relying entirely on remote processing.',
     ],
   },
   {
@@ -1163,15 +935,9 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The platform needed to deliver useful multi-turn AI conversations with strong context handling, low latency, and clear escalation paths when human support was required.`,
     solution: `I built the frontend in Next.js and the backend in FastAPI, integrating OpenAI models through LangChain-based orchestration. I implemented conversation memory, contextual response handling, and human handoff flows, while optimizing request patterns to keep the experience responsive and production-ready.`,
-    features: [
-      'Natural language understanding',
-      'Context',
-      'Human handoff',
-      'Conversation memory',
-      'Multi-turn',
-      'FastAPI',
-      'LangChain',
-      'Real-time'
+    deliverables: [
+      'I built the frontend in Next.js and the backend in FastAPI, integrating OpenAI models through LangChain-based orchestration.',
+      'I implemented conversation memory, contextual response handling, and human handoff flows, while optimizing request patterns to keep the experience responsive and production-ready.',
     ],
   },
   {
@@ -1187,15 +953,10 @@ export const projects: Project[] = [
     role: 'Full Stack Developer',
     challenge: `The platform needed to support accurate and fast visual understanding across multiple AI model providers, while giving users a consistent workflow for search, classification, and comparison.`,
     solution: `I built the frontend in React and Next.js and the backend in Python with FastAPI. The platform integrated OpenAI, Gemini, and Claude for vision-based use cases, with supporting image-processing and model-comparison workflows. This made it possible to deliver a flexible visual AI product while keeping the interface and API layer consistent for end users.`,
-    features: [
-      'Object detection',
-      'Classification',
-      'Visual search',
-      'OpenAI, Gemini, Claude',
-      'Real-time',
-      'Image pipeline',
-      'Model comparison',
-      'FastAPI'
+    deliverables: [
+      'I built the frontend in React and Next.js and the backend in Python with FastAPI.',
+      'The platform integrated OpenAI, Gemini, and Claude for vision-based use cases, with supporting image-processing and model-comparison workflows.',
+      'This made it possible to deliver a flexible visual AI product while keeping the interface and API layer consistent for end users.',
     ],
   },
 ];

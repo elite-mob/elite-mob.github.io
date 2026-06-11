@@ -12,40 +12,71 @@ const HOME_SECTION_IDS = [
 
 export type HomeSectionId = (typeof HOME_SECTION_IDS)[number];
 
+function getScrollMarker(): number {
+  const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop);
+  return (Number.isFinite(padding) ? padding : 88) + 1;
+}
+
+/** Section whose top has crossed the fixed-header marker (last match wins). */
+export function measureActiveSection(): HomeSectionId {
+  const marker = getScrollMarker();
+  let active: HomeSectionId = 'home';
+
+  for (const id of HOME_SECTION_IDS) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    if (el.getBoundingClientRect().top <= marker) {
+      active = id;
+    }
+  }
+
+  return active;
+}
+
 /**
- * Highlights the nav link for whichever homepage section is most visible.
+ * Highlights the nav link for whichever homepage section is in view.
+ * Uses scroll position (not IntersectionObserver) so every section is evaluated consistently.
  */
 export function useActiveSection(enabled = true): HomeSectionId | null {
-  const [active, setActive] = useState<HomeSectionId | null>('home');
+  const [active, setActive] = useState<HomeSectionId | null>(enabled ? 'home' : null);
 
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled) {
+      setActive(null);
+      return;
+    }
 
-    const elements = HOME_SECTION_IDS.map((id) => document.getElementById(id)).filter(
-      (el): el is HTMLElement => el != null,
-    );
+    let rafId = 0;
 
-    if (elements.length === 0) return;
+    const update = () => {
+      rafId = 0;
+      const next = measureActiveSection();
+      setActive((prev) => (prev === next ? prev : next));
+    };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+    const scheduleUpdate = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(update);
+    };
 
-        const top = visible[0]?.target.id;
-        if (top && HOME_SECTION_IDS.includes(top as HomeSectionId)) {
-          setActive(top as HomeSectionId);
-        }
-      },
-      {
-        rootMargin: '-42% 0px -48% 0px',
-        threshold: [0, 0.12, 0.25, 0.4],
-      },
-    );
+    update();
 
-    for (const el of elements) observer.observe(el);
-    return () => observer.disconnect();
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', scheduleUpdate, { passive: true });
+
+    const main = document.getElementById('main-content');
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined' && main
+        ? new ResizeObserver(scheduleUpdate)
+        : null;
+    resizeObserver?.observe(main);
+
+    return () => {
+      window.removeEventListener('scroll', scheduleUpdate);
+      window.removeEventListener('resize', scheduleUpdate);
+      resizeObserver?.disconnect();
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, [enabled]);
 
   return active;
